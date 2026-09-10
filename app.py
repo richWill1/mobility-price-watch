@@ -12,16 +12,16 @@ session = requests.Session()
 session.headers.update({'User-Agent': 'Mozilla/5.0 (compatible; MobilityPriceWatch/1.0)'})
 cache = {'ts': 0, 'products': []}
 
-# Words that describe condition/category rather than the actual model.
+# Never use these words as evidence that two products are the same.
 GENERIC = {
     'ex', 'demo', 'display', 'used', 'refurbished', 'refurb', 'preowned', 'pre',
     'owned', 'second', 'hand', 'new', 'clearance', 'sale', 'portable', 'lightweight',
     'mobility', 'scooter', 'powerchair', 'power', 'chair', 'electric', 'folding',
-    'foldable', 'premium', 'excellent', 'fair', 'good', 'purple', 'black', 'blue',
-    'white', 'red', 'grey', 'gray', '2024', '2025', '2026', 'li', 'sle', '3', '4'
+    'foldable', 'premium', 'excellent', 'fair', 'good',
+    'purple', 'black', 'blue', 'white', 'red', 'grey', 'gray',
+    '2024', '2025', '2026'
 }
 
-# Brand names are useful for identity, but are not enough to establish a match.
 BRANDS = {'abilize', 'careco', 'li-tech', 'litech', 'i-go', 'igo', 'prolite', 'pride', 'drive', 'kymco', 'rascal', 'solax'}
 
 
@@ -38,7 +38,12 @@ def tokens(name):
     return {x for x in s.split() if len(x) > 1}
 
 
-def model_tokens(name):
+def identity_tokens(name):
+    """Extract product identity tokens only.
+
+    Generic sales language is ignored, but model numbers/suffixes are retained.
+    This is intentionally strict: an uncertain product is NOT compared.
+    """
     return tokens(name) - GENERIC
 
 
@@ -46,31 +51,63 @@ def brand_tokens(name):
     return tokens(name) & BRANDS
 
 
-def match_score(a, b):
-    """Conservative model matcher.
+def confident_match(a, b):
+    """Return a confidence score only for a defensible exact-model match.
 
-    A shared brand, 'li', '3', 'portable', etc. is NOT sufficient.
-    The listings must share at least one distinctive model token such as
-    'stratus', 'aeron', 'ranger', 'evisu' or 'vector'.
+    Rules:
+    1. Both listings must expose the same brand when both expose a known brand.
+    2. At least one distinctive model token must be shared.
+    3. If either listing contains model numbers, they must agree.
+    4. Conflicting distinctive model names mean NO MATCH.
+    5. Generic category/condition words can never create a match.
+
+    This deliberately prefers false negatives over false positives.
     """
-    ma, mb = model_tokens(a), model_tokens(b)
-    distinctive = ma & mb
-    brands = brand_tokens(a) & brand_tokens(b)
+    ta = identity_tokens(a)
+    tb = identity_tokens(b)
+    ba = brand_tokens(a)
+    bb = brand_tokens(b)
 
-    # No distinctive model word = no automatic comparison.
-    if not distinctive:
-        return 0
-
-    # If both sides expose a brand, require the same brand.
-    ba, bb = brand_tokens(a), brand_tokens(b)
     if ba and bb and not (ba & bb):
         return 0
 
-    # One or more distinctive model tokens is strong evidence. Multiple is stronger.
-    score = min(1.0, 0.72 + (0.10 * max(0, len(distinctive) - 1)))
-    if brands:
-        score += 0.08
-    return round(min(score, 0.99), 3)
+    # Product/model numbers are strong identity evidence. If either side has
+    # numbers, require the same number(s) rather than treating them as noise.
+    nums_a = {x for x in ta if x.isdigit()}
+    nums_b = {x for x in tb if x.isdigit()}
+    if (nums_a or nums_b) and nums_a != nums_b:
+        return 0
+
+    shared = ta & tb
+    if not shared:
+        return 0
+
+    # Remove brand words from the model identity comparison.
+    model_a = ta - ba
+    model_b = tb - bb
+    shared_model = model_a & model_b
+    if not shared_model:
+        return 0
+
+    # A distinctive model name must agree. If both sides have multiple
+    # distinctive words, require meaningful overlap rather than one accidental word.
+    if len(shared_model) >= 2:
+        return 0.99
+
+    # Single-word model matches are accepted only when that word is distinctive
+    # enough to identify a model (e.g. Stratus, Evisu, Aeron, Ranger, Vector).
+    word = next(iter(shared_model))
+    if len(word) < 5:
+        return 0
+
+    # If both sides have other distinctive alphabetic model words, a mismatch
+    # is evidence that these are different models (Aeron vs Ranger).
+    alpha_a = {x for x in model_a if x.isalpha() and len(x) >= 5}
+    alpha_b = {x for x in model_b if x.isalpha() and len(x) >= 5}
+    if alpha_a and alpha_b and not (alpha_a & alpha_b):
+        return 0
+
+    return 0.95
 
 
 def fetch_shopify(base):
@@ -121,22 +158,28 @@ def scrape():
         for i, b in enumerate(mobigo):
             if i in used:
                 continue
-            s = match_score(a['title'], b['title'])
-            if s:
+            s = confident_match(a['title'], b['title'])
+            if s >= 0.95:
                 candidates.append((s, i, b))
 
+        # Only accept a match when there is exactly one best candidate.
+        # Ties/ambiguity are deliberately excluded.
         candidates.sort(key=lambda x: x[0], reverse=True)
-        if candidates and candidates[0][0] >= 0.80:
-            s, i, b = candidates[0]
-            used.add(i)
-            diff = round(a['price'] - b['price'], 2)
-            matches.append({
-                'product': a['title'],
-                'gms': a,
-                'mobigo': b,
-                'difference': diff,
-                'match_score': s,
-            })
+        if candidates:
+            best = candidates[0]
+            tied = [c for c in candidates if c[0] == best[0]]
+            if len(tied) == 1:
+                s, i, b = best
+                used.add(i)
+                diff = round(a['price'] - b['price'], 2)
+                matches.append({
+                    'product': a['title'],
+                    'gms': a,
+                    'mobigo': b,
+                    'difference': diff,
+                    'match_score': s,
+                    'match_status': 'Verified match',
+                })
 
     matches.sort(key=lambda x: abs(x['difference']), reverse=True)
     return matches
