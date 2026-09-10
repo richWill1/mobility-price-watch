@@ -12,14 +12,17 @@ session = requests.Session()
 session.headers.update({'User-Agent': 'Mozilla/5.0 (compatible; MobilityPriceWatch/1.0)'})
 cache = {'ts': 0, 'products': []}
 
-# Never use these words as evidence that two products are the same.
+# These words are not product identity. They must NEVER be enough to create
+# a comparison. In particular, "Li" is a battery/variant descriptor, not a
+# model name: Aeron Li and Ranger Li are different products.
 GENERIC = {
     'ex', 'demo', 'display', 'used', 'refurbished', 'refurb', 'preowned', 'pre',
     'owned', 'second', 'hand', 'new', 'clearance', 'sale', 'portable', 'lightweight',
     'mobility', 'scooter', 'powerchair', 'power', 'chair', 'electric', 'folding',
-    'foldable', 'premium', 'excellent', 'fair', 'good',
+    'foldable', 'premium', 'excellent', 'fair', 'good', 'li',
     'purple', 'black', 'blue', 'white', 'red', 'grey', 'gray',
-    '2024', '2025', '2026'
+    '2023', '2024', '2025', '2026',
+    '4mph', '3mph', '4', '3'
 }
 
 BRANDS = {'abilize', 'careco', 'li-tech', 'litech', 'i-go', 'igo', 'prolite', 'pride', 'drive', 'kymco', 'rascal', 'solax'}
@@ -39,11 +42,7 @@ def tokens(name):
 
 
 def identity_tokens(name):
-    """Extract product identity tokens only.
-
-    Generic sales language is ignored, but model numbers/suffixes are retained.
-    This is intentionally strict: an uncertain product is NOT compared.
-    """
+    """Extract only tokens that can safely contribute to model identity."""
     return tokens(name) - GENERIC
 
 
@@ -52,62 +51,50 @@ def brand_tokens(name):
 
 
 def confident_match(a, b):
-    """Return a confidence score only for a defensible exact-model match.
+    """Return a score only when the exact product identity is defensible.
 
-    Rules:
-    1. Both listings must expose the same brand when both expose a known brand.
-    2. At least one distinctive model token must be shared.
-    3. If either listing contains model numbers, they must agree.
-    4. Conflicting distinctive model names mean NO MATCH.
-    5. Generic category/condition words can never create a match.
-
-    This deliberately prefers false negatives over false positives.
+    This is intentionally conservative. A shared brand, category word or
+    suffix such as "Li" is never enough. Different model names (Aeron vs
+    Ranger, Vector vs Evisu, etc.) are an explicit NO MATCH.
     """
     ta = identity_tokens(a)
     tb = identity_tokens(b)
     ba = brand_tokens(a)
     bb = brand_tokens(b)
 
+    # If both expose a recognised brand, it must be the same brand.
     if ba and bb and not (ba & bb):
         return 0
 
-    # Product/model numbers are strong identity evidence. If either side has
-    # numbers, require the same number(s) rather than treating them as noise.
-    nums_a = {x for x in ta if x.isdigit()}
-    nums_b = {x for x in tb if x.isdigit()}
-    if (nums_a or nums_b) and nums_a != nums_b:
-        return 0
-
-    shared = ta & tb
-    if not shared:
-        return 0
-
-    # Remove brand words from the model identity comparison.
+    # Compare actual model identity after removing brand words.
     model_a = ta - ba
     model_b = tb - bb
-    shared_model = model_a & model_b
+
+    # There must be at least one distinctive model word on each side.
+    alpha_a = {x for x in model_a if x.isalpha() and len(x) >= 5}
+    alpha_b = {x for x in model_b if x.isalpha() and len(x) >= 5}
+    if not alpha_a or not alpha_b:
+        return 0
+
+    # Exact overlap of a distinctive model token is mandatory.
+    shared_model = alpha_a & alpha_b
     if not shared_model:
         return 0
 
-    # A distinctive model name must agree. If both sides have multiple
-    # distinctive words, require meaningful overlap rather than one accidental word.
-    if len(shared_model) >= 2:
-        return 0.99
+    # If both listings contain multiple distinctive model words, all distinctive
+    # words need to be compatible. This prevents e.g. "Vector Plus" matching
+    # "Vector" when the extra model word identifies a different variant.
+    if len(alpha_a) > 1 and len(alpha_b) > 1:
+        if alpha_a != alpha_b:
+            return 0
 
-    # Single-word model matches are accepted only when that word is distinctive
-    # enough to identify a model (e.g. Stratus, Evisu, Aeron, Ranger, Vector).
-    word = next(iter(shared_model))
-    if len(word) < 5:
+    # If one side has additional distinctive model words, do not guess that the
+    # shorter title is the same product. Only accept a subset when the extra
+    # words are clearly descriptive; otherwise omit the comparison.
+    if alpha_a != alpha_b:
         return 0
 
-    # If both sides have other distinctive alphabetic model words, a mismatch
-    # is evidence that these are different models (Aeron vs Ranger).
-    alpha_a = {x for x in model_a if x.isalpha() and len(x) >= 5}
-    alpha_b = {x for x in model_b if x.isalpha() and len(x) >= 5}
-    if alpha_a and alpha_b and not (alpha_a & alpha_b):
-        return 0
-
-    return 0.95
+    return 0.99
 
 
 def fetch_shopify(base):
@@ -159,11 +146,11 @@ def scrape():
             if i in used:
                 continue
             s = confident_match(a['title'], b['title'])
-            if s >= 0.95:
+            if s >= 0.99:
                 candidates.append((s, i, b))
 
-        # Only accept a match when there is exactly one best candidate.
-        # Ties/ambiguity are deliberately excluded.
+        # A product is shown only when there is one unique verified candidate.
+        # If two Mobigo listings are equally plausible, do not guess.
         candidates.sort(key=lambda x: x[0], reverse=True)
         if candidates:
             best = candidates[0]
