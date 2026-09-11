@@ -1,11 +1,12 @@
 import json, re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urljoin, urlparse, urlunparse
+from difflib import SequenceMatcher
 import requests
 from bs4 import BeautifulSoup
 
 CARECO='https://www.careco.co.uk'; COMPLETE='https://completecareshop.co.uk'
-UA='Mozilla/5.0 (compatible; CareCoPriceWatch/2.0)'; TIMEOUT=25
+UA='Mozilla/5.0 (compatible; CareCoPriceWatch/2.1)'; TIMEOUT=25
 session=requests.Session(); session.headers.update({'User-Agent':UA,'Accept-Language':'en-GB,en;q=0.9'})
 GENERIC=set('the and for with from careco mobility scooter scooters wheelchair wheelchairs powerchair powerchairs electric chair chairs folding foldable travel pavement road model product new sale offer offers lightweight premium comfort standard deluxe size colour color black blue red green grey white'.split())
 BAD_PREFIX=('blog','media','customer','account','checkout','search','contact','privacy','terms','pricing','sitemap','guides','videos','brochure','careers','showroom','returns','warranty','order-','track-','tv-ad','christmas','about','faq')
@@ -17,6 +18,10 @@ def money(s):
     m=re.search(r'£\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)',str(s)); return float(m.group(1).replace(',','')) if m else None
 def norm(s):
     s=(s or '').lower().replace('&',' and '); s=re.sub(r'[^a-z0-9]+',' ',s); return ' '.join(w for w in s.split() if w not in GENERIC)
+def compact(s): return re.sub(r'[^a-z0-9]','',str(s or '').lower())
+def model_tokens(s):
+    raw=re.findall(r'[a-z]+\d+[a-z0-9]*|\d+[a-z]+[a-z0-9]*|[a-z]{1,5}-\d+[a-z0-9-]*',str(s or '').lower())
+    return {compact(x) for x in raw if len(compact(x))>=3}
 def brand(title,vendor=''):
     x=(vendor+' '+title).lower(); known=['careco','abilize','li-tech','litech','i-go','igo','x-go','xgo','pride','drive','kymco','rascal','solax','quickie','motion healthcare','nrs','invacare','days','freestyle','homecraft','trulife','strident']
     for b in known:
@@ -105,35 +110,52 @@ def complete_products():
         except Exception:break
         if not batch:break
         for p in batch:
-            h=p.get('handle');
+            h=p.get('handle')
             if not h or h in seen:continue
             seen.add(h); vs=p.get('variants') or []; prices=[money(v.get('price')) for v in vs if money(v.get('price')) is not None]
             if prices:out.append({'title':clean(p.get('title')),'price':min(prices),'url':COMPLETE+'/products/'+h,'sku':clean((vs[0].get('sku') if vs else '') or ''),'vendor':clean(p.get('vendor')),'retailer':'Complete Care Shop','brand':brand(p.get('title',''),p.get('vendor',''))})
         if len(batch)<250:break
     return out
 
-def match(care,complete):
-    if care.get('sku'):
-        cs=care['sku'].lower()
-        for p in complete:
-            if cs and cs==p.get('sku','').lower():return p,1.0,'Exact SKU'
-    cn=norm(care['title']); cb=care.get('brand',''); best=None; bestscore=0
+def match(care,complete,used):
+    # 1. Exact MPN/SKU is the strongest signal.
+    cm=compact(care.get('sku'))
+    if cm:
+        hits=[p for p in complete if compact(p.get('sku'))==cm and id(p) not in used]
+        if hits:return hits[0],1.0,'Exact MPN/SKU'
+
+    cn=norm(care['title']); cb=care.get('brand',''); cmodels=model_tokens(care['title']+' '+care.get('sku',''))
+    candidates=[]
     for p in complete:
-        pn=norm(p['title']); pb=p.get('brand','')
-        if cb and pb and cb!=pb:continue
-        if cn==pn:return p,.99,'Exact product name'
-        a=set(cn.split()); b=set(pn.split())
-        if not a or not b:continue
-        score=len(a&b)/len(a|b)
-        if score>bestscore and score>=.72 and len(a&b)>=2:best,bestscore=p,score
-    return (best,bestscore,'Strong name match') if best else (None,0,'No match')
+        if id(p) in used: continue
+        pb=p.get('brand','')
+        # Never use a known conflicting brand as a match.
+        if cb and pb and cb!=pb: continue
+        pn=norm(p['title']); pmodels=model_tokens(p['title']+' '+p.get('sku',''))
+        model_overlap=len(cmodels & pmodels)
+        if cmodels and pmodels and model_overlap==0: continue
+        seq=SequenceMatcher(None,cn,pn).ratio()
+        at=set(cn.split()); bt=set(pn.split()); token=(len(at&bt)/max(1,len(at|bt)))
+        score=.58*seq+.42*token
+        if model_overlap: score += min(.22,.11*model_overlap)
+        if cb and pb and cb==pb: score += .12
+        candidates.append((score,seq,token,model_overlap,p))
+    if not candidates:return None,0,'No match'
+    candidates.sort(key=lambda x:x[0],reverse=True); score,seq,token,mo,p=candidates[0]
+    # Require materially strong evidence; model overlap can lower title threshold.
+    if mo and score>=.73 and seq>=.62:return p,min(score,0.98),'Model + name match'
+    if score>=.84 and seq>=.76:return p,score,'Strong name match'
+    if score>=.77 and seq>=.70 and token>=.55:return p,score,'Likely name match'
+    return None,score,'No confident match'
 
 def compare(limit=None,progress=None):
-    care=scrape_careco(limit); complete=complete_products()
+    care=scrape_careco(limit); complete=complete_products(); used=set()
     if progress:progress('Matching',0,len(care))
     rows=[]
     for i,c in enumerate(care,1):
-        m,score,status=match(c,complete); d=round(c['price']-m['price'],2) if m else None
+        m,score,status=match(c,complete,used)
+        if m:used.add(id(m))
+        d=round(c['price']-m['price'],2) if m else None
         rows.append({'careco':c,'complete':m,'match_score':score,'match_status':status,'difference':d,'cheaper':('Complete Care Shop' if d>0 else ('CareCo' if d<0 else 'Same price')) if d is not None else 'No match'})
         if progress and (i%25==0 or i==len(care)):progress('Matching',i,len(care))
     return rows
