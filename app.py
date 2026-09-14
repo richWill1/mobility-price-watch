@@ -1,25 +1,32 @@
 from flask import Flask, jsonify, render_template, Response
-import csv, io, threading, time, re
+import csv, io, threading, time, re, traceback
 import requests
 from rapidfuzz import fuzz, process
 
 app=Flask(__name__)
 SHEET_ID='1dG7BtpO48dln4R30tLNK3uMO6T9LFkFpxmmJOUr4gCc'
-CARECO_GID='0'
-CCS_GID='1199687859'
 state={'rows':[],'updated':0,'running':False,'error':None,'stage':'Idle','progress':0,'total':0}
 lock=threading.Lock()
 
-def sheet_csv(gid):
-    url=f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={gid}'
-    r=requests.get(url,timeout=60)
+
+def sheet_csv(sheet_name):
+    url=f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={requests.utils.quote(sheet_name)}'
+    r=requests.get(url,timeout=60,headers={'User-Agent':'Mozilla/5.0'})
     r.raise_for_status()
-    return list(csv.DictReader(io.StringIO(r.text)))
+    text=r.text
+    if not text.strip() or '<html' in text[:500].lower():
+        raise RuntimeError(f'Google Sheet tab {sheet_name!r} did not return CSV data')
+    rows=list(csv.DictReader(io.StringIO(text)))
+    if not rows:
+        raise RuntimeError(f'Google Sheet tab {sheet_name!r} returned no rows')
+    return rows
+
 
 def norm(s):
     s=str(s or '').lower().replace('&amp;','and')
     s=re.sub(r'[^a-z0-9]+',' ',s)
     return re.sub(r'\s+',' ',s).strip()
+
 
 def price(row):
     for k in ('sale price','price'):
@@ -29,11 +36,12 @@ def price(row):
             except:pass
     return None
 
+
 def compare_sheets(progress=None):
     if progress: progress('Downloading CareCo',0,1)
-    care=sheet_csv(CARECO_GID)
+    care=sheet_csv('CareCo')
     if progress: progress('Downloading Complete Care Shop',0,1)
-    ccs=sheet_csv(CCS_GID)
+    ccs=sheet_csv('CCS')
     choices=[norm(x.get('title')) for x in ccs]
     rows=[]
     total=len(care)
@@ -45,12 +53,10 @@ def compare_sheets(progress=None):
             c=ccs[j]
             brand=fuzz.ratio(norm(r.get('brand')),norm(c.get('brand'))) if r.get('brand') and c.get('brand') else 0
             typ=fuzz.token_set_ratio(norm(r.get('product type')),norm(c.get('product type'))) if r.get('product type') and c.get('product type') else 0
-            # Strong title similarity is the main signal; brand/type help distinguish variants.
             score=ts*0.72+typ*0.18+brand*0.10
             if best is None or score>best[0]: best=(score,ts,typ,brand,j)
         if best:
             score,ts,typ,brand,j=best; c=ccs[j]
-            # Conservative thresholds to avoid false equivalents.
             conf='High' if score>=82 and ts>=78 else ('Review' if score>=70 and ts>=65 else 'No confident match')
         else:
             score=ts=typ=brand=0; c={}; conf='No confident match'
@@ -65,24 +71,36 @@ def compare_sheets(progress=None):
         if progress and (i==1 or i%25==0 or i==total): progress('Matching products',i,total)
     return rows
 
+
+def progress(stage, current, total):
+    with lock:
+        state.update(stage=stage,progress=current,total=total)
+
+
 def worker():
     with lock:
         if state['running']: return
         state.update(running=True,error=None,stage='Starting',progress=0,total=0)
     try:
         rows=compare_sheets(progress)
-        with lock: state.update(rows=rows,updated=time.time(),stage='Complete',progress=len(rows),total=len(rows))
+        with lock: state.update(rows=rows,updated=time.time(),stage='Complete',progress=len(rows),total=len(rows),error=None)
     except Exception as e:
-        with lock: state.update(error=str(e),stage='Error')
+        err=f'{type(e).__name__}: {e}'
+        print(f'PRICE WATCH LOAD ERROR: {err}', flush=True)
+        traceback.print_exc()
+        with lock: state.update(error=err,stage='Error')
     finally:
         with lock: state['running']=False
+
 
 @app.route('/')
 def home(): return render_template('index.html')
 
 @app.route('/api/data')
 def data():
-    with lock: snapshot=dict(state); snapshot['count']=len(state['rows'])
+    with lock:
+        snapshot=dict(state)
+        snapshot['count']=len(state['rows'])
     return jsonify(snapshot)
 
 @app.post('/api/refresh')
@@ -103,7 +121,6 @@ def export_csv():
 @app.get('/health')
 def health(): return {'status':'ok','running':state['running'],'count':len(state['rows']),'error':state['error']}
 
-# Load the Google Sheet automatically when the service starts.
 threading.Thread(target=worker,daemon=True).start()
 
 if __name__=='__main__': app.run(host='0.0.0.0',port=10000)
