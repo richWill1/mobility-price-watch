@@ -4,12 +4,15 @@ on:
   schedule:
     - cron: '0 6 * * *'
   workflow_dispatch:
+  push:
+    branches: [price-movement-watch]
 
 permissions:
   contents: write
 
 jobs:
   scrape:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
