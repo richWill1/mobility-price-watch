@@ -1,17 +1,15 @@
 from flask import Flask, jsonify, render_template, request
-import os, re, time, threading
+import os, re, time, threading, json
 from html import unescape
 import requests
-try:
-    import psycopg2
-except ImportError:
-    psycopg2 = None
+
 app=Flask(__name__)
 SITES={'CareCo':'https://www.careco.co.uk','GMS Mobility':'https://www.gmsmobility.co.uk','Mobigo':'https://mobigo.co.uk'}
-session=requests.Session();session.headers.update({'User-Agent':'Mozilla/5.0 (compatible; MobilityPriceWatch/8.0)'})
+session=requests.Session();session.headers.update({'User-Agent':'Mozilla/5.0 (compatible; MobilityPriceWatch/9.0)'})
 cache={'ts':0,'rows':[],'running':False,'error':None}
 GENERIC=set('ex demo display used refurbished refurb preowned pre owned second hand new clearance sale portable lightweight mobility scooter scooters powerchair powerchairs power chair chairs electric folding foldable buggy wheelchair transportable road pavement comfort comforter car boot colour color offer offers fantastic value popular brilliant stunning super excellent fair good premium quality fully checked model late bought sold inc including lithium carbon fibre fiber for the with and from to price special actual item manufacturer images image condition grade version edition series now save was rrp right left hand heat massage beige purple black blue white red grey gray teal dune yellow orange green silver gold cream navy pink latte cocoa mink oatmeal plum spray charcoal graphite metallic brown azure iron sand small medium large xlarge xl xxl pack pair single inch inches ft foot feet cm mm amp amps a v'.split())
 BRAND_ALIASES={'careco':'careco','care-co':'careco','abilize':'abilize','li-tech':'litech','litech':'litech','i-go':'igo','igo':'igo','prolite':'prolite','pro-lite':'prolite','pride':'pride','drive':'drive','kymco':'kymco','rascal':'rascal','solax':'solax','quickie':'quickie','movinglife':'movinglife','scooterpac':'scooterpac','quingo':'quingo','motion':'motion','tuni':'tuni','komfi':'komfi','x-go':'xgo','xgo':'xgo','efoldi':'efoldi','e-foldi':'efoldi','one':'one','monarch':'monarch','muick':'muick','muicksandy':'muicksandy'}
+
 def money(v):
     try:return float(str(v).replace(',','').replace('£','').strip())
     except:return None
@@ -73,8 +71,8 @@ def fetch_sitemap_products(base):
         return [u for u in urls if '/product' in u.lower()][:5000]
     except Exception:return []
 def fetch_careco():
-    urls=fetch_sitemap_products(SITES['CareCo']);out=[]
-    for url in urls:
+    out=[]
+    for url in fetch_sitemap_products(SITES['CareCo']):
         try:
             r=session.get(url,timeout=15)
             if not r.ok:continue
@@ -97,27 +95,13 @@ def load_watchlist():
         s=re.sub(r'\s+',' ',line.strip())
         if s and s not in seen:seen.add(s);out.append(s)
     return out
-def db_conn():
-    if not psycopg2 or not os.getenv('DATABASE_URL'):return None
-    return psycopg2.connect(os.getenv('DATABASE_URL'),connect_timeout=10)
-def init_db():
-    conn=db_conn()
-    if not conn:return
-    with conn,conn.cursor() as cur:
-        cur.execute('CREATE TABLE IF NOT EXISTS price_snapshots (id BIGSERIAL PRIMARY KEY, product TEXT NOT NULL, retailer TEXT NOT NULL, price NUMERIC(12,2) NOT NULL, product_url TEXT, scraped_at TIMESTAMPTZ NOT NULL DEFAULT NOW())');cur.execute('CREATE INDEX IF NOT EXISTS idx_price_product_time ON price_snapshots(product,retailer,scraped_at DESC)')
-def save_rows(rows):
-    conn=db_conn()
-    if not conn:return
-    with conn,conn.cursor() as cur:
-        for row in rows:
-            cur.execute('INSERT INTO price_snapshots(product,retailer,price,product_url) VALUES(%s,%s,%s,%s)',(row['product'],'CareCo',row['careco']['price'],row['careco']['url']))
-            for c in row['competitors']:cur.execute('INSERT INTO price_snapshots(product,retailer,price,product_url) VALUES(%s,%s,%s,%s)',(row['product'],c['retailer'],c['price'],c['url']))
-def previous_price(product,retailer):
-    conn=db_conn()
-    if not conn:return None
-    with conn.cursor() as cur:
-        cur.execute('SELECT price FROM price_snapshots WHERE product=%s AND retailer=%s ORDER BY scraped_at DESC OFFSET 1 LIMIT 1',(product,retailer));r=cur.fetchone();return round(float(r[0]),2) if r else None
-def build_rows():
+def history_path():return os.path.join(os.path.dirname(__file__),'data','price_history.json')
+def load_history():
+    try:return json.load(open(history_path(),encoding='utf-8'))
+    except Exception:return []
+def latest_rows():
+    h=load_history();return h[-1]['rows'] if h else []
+def build_rows(previous=None):
     watch=load_watchlist()
     if not watch:return []
     catalog={'CareCo':fetch_careco(),'GMS Mobility':fetch_shopify(SITES['GMS Mobility'],'GMS Mobility'),'Mobigo':fetch_shopify(SITES['Mobigo'],'Mobigo')};indexed={r:{} for r in catalog}
@@ -125,7 +109,7 @@ def build_rows():
         for p in items:
             k=(brand_key(p['title'],p.get('vendor','')),model_identity(p['title'],p.get('vendor',''))[1])
             if k[1]:indexed[retailer].setdefault(k,[]).append(p)
-    rows=[]
+    prev_by={(x['product']):x for x in (previous or [])};rows=[]
     for name in watch:
         k=(brand_key(name),model_identity(name)[1]);own=min(indexed['CareCo'].get(k,[]),key=lambda p:p['price'],default=None)
         if not own:
@@ -137,25 +121,23 @@ def build_rows():
             items=indexed[retailer].get(k,[])
             if items:comps.append(min(items,key=lambda p:p['price']))
         cheapest=min(comps,key=lambda p:p['price'],default=None);gap=round(own['price']-cheapest['price'],2) if cheapest else None;gap_pct=round(gap/cheapest['price']*100,2) if cheapest and cheapest['price'] else None
-        rows.append({'product':name,'careco':own,'cheapest':cheapest,'competitors':comps,'gap':gap,'gap_pct':gap_pct,'careco_movement':None,'competitor_movement':None})
+        old=prev_by.get(name,{});old_c=old.get('careco',{});old_k=old.get('cheapest',{}) or {}
+        rows.append({'product':name,'careco':own,'cheapest':cheapest,'gap':gap,'gap_pct':gap_pct,'careco_movement':round(own['price']-old_c.get('price'),2) if old_c.get('price') is not None else None,'competitor_movement':round(cheapest['price']-old_k.get('price'),2) if cheapest and old_k.get('price') is not None and old_k.get('retailer')==cheapest.get('retailer') else None})
     return rows
 def refresh_worker():
     if cache['running']:return
     cache['running']=True;cache['error']=None
     try:
-        init_db();rows=build_rows();save_rows(rows)
-        for r in rows:
-            prev=previous_price(r['product'],'CareCo');r['careco_movement']=round(r['careco']['price']-prev,2) if prev is not None else None
-            if r['cheapest']:
-                prevc=previous_price(r['product'],r['cheapest']['retailer']);r['competitor_movement']=round(r['cheapest']['price']-prevc,2) if prevc is not None else None
-        cache['rows']=rows;cache['ts']=time.time()
+        rows=build_rows(latest_rows());cache['rows']=rows;cache['ts']=time.time()
     except Exception as exc:cache['error']=str(exc)
     finally:cache['running']=False
 @app.route('/')
 def home():return render_template('index.html')
 @app.route('/api/prices')
 def prices():
-    if (not cache['rows'] or time.time()-cache['ts']>900) and not cache['running']:threading.Thread(target=refresh_worker,daemon=True).start()
+    rows=latest_rows()
+    if rows:cache['rows']=rows;cache['ts']=time.time()
+    elif not cache['running']:threading.Thread(target=refresh_worker,daemon=True).start()
     return jsonify({'updated':cache['ts'],'matches':cache['rows'],'count':len(cache['rows']),'refreshing':cache['running'],'error':cache['error']})
 @app.route('/api/run-daily',methods=['GET','POST'])
 def run_daily():
