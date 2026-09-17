@@ -1,12 +1,12 @@
-import json, os
+from app import scrape_all, save_history, load_history
 from datetime import datetime, timezone
-from app import build_rows, load_history, history_path
 
-history=load_history()
-previous=history[-1]['rows'] if history else []
-rows=build_rows(previous)
-os.makedirs(os.path.dirname(history_path()),exist_ok=True)
-history.append({'date':datetime.now(timezone.utc).isoformat(),'rows':rows})
-history=history[-90:]
-with open(history_path(),'w',encoding='utf-8') as f:json.dump(history,f,ensure_ascii=False,separators=(',',':'))
-print(f'Daily price scrape complete: {len(rows)} products')
+rows, errors = scrape_all()
+history = load_history()
+history.append({
+    'date': datetime.now(timezone.utc).isoformat(),
+    'rows': rows,
+    'errors': errors,
+})
+save_history(history)
+print(f'Daily SERP scrape complete: {len(rows)} terms, {sum(len(r.get("results", [])) for r in rows)} products, {len(errors)} errors')
