@@ -6,10 +6,13 @@ import requests
 app = Flask(__name__)
 SERP_ENDPOINT = "https://serpapi.com/search.json"
 SERP_KEY = os.getenv("SERPAPI_KEY", "").strip()
+SERP_ENGINE = os.getenv("SERP_ENGINE", "google_ads").strip()
 LOCATION = os.getenv("SERP_LOCATION", "United Kingdom")
 GOOGLE_DOMAIN = os.getenv("GOOGLE_DOMAIN", "google.co.uk")
+SERP_GL = os.getenv("SERP_GL", "uk")
+SERP_HL = os.getenv("SERP_HL", "en")
 session = requests.Session()
-session.headers.update({"User-Agent": "Mozilla/5.0 (compatible; MobilityPriceWatch/10.0)"})
+session.headers.update({"User-Agent": "Mozilla/5.0 (compatible; MobilityPriceWatch/11.0)"})
 cache = {"ts": 0, "rows": [], "running": False, "error": None}
 
 DEMO_RESULTS = {"Deluxe Fleece Support Pillow": [
@@ -44,24 +47,37 @@ def load_watchlist():
 
 def serp_search(query):
     if not SERP_KEY: return None,'SERPAPI_KEY not configured'
-    params={'api_key':SERP_KEY,'engine':'google_shopping','q':query,'location':LOCATION,'google_domain':GOOGLE_DOMAIN,'gl':'uk','hl':'en','device':'desktop'}
-    r=session.get(SERP_ENDPOINT,params=params,timeout=45);r.raise_for_status();data=r.json()
+    params={'api_key':SERP_KEY,'engine':SERP_ENGINE,'q':query,'location':LOCATION,'google_domain':GOOGLE_DOMAIN,'gl':SERP_GL,'hl':SERP_HL,'device':'desktop'}
+    r=session.get(SERP_ENDPOINT,params=params,timeout=45)
+    r.raise_for_status()
+    data=r.json()
+    source_results=data.get('shopping_results') or data.get('inline_shopping_results') or []
     results=[]
-    for item in data.get('shopping_results') or []:
+    for item in source_results:
         price=item.get('extracted_price')
         if price is None: price=money(item.get('price'))
         if price is None or not item.get('title'): continue
-        results.append({'position':item.get('position'),'title':norm(item.get('title')),'retailer':item.get('source') or 'Unknown','price':price,'old_price':item.get('extracted_old_price'),'delivery':item.get('delivery') or item.get('shipping') or '','url':item.get('link') or item.get('product_link') or '','rating':item.get('rating'),'reviews':item.get('reviews'),'badge':item.get('tag') or '','condition':item.get('second_hand_condition') or 'New'})
+        results.append({'position':item.get('position') or len(results)+1,'title':norm(item.get('title')),'retailer':item.get('source') or 'Unknown','price':price,'old_price':item.get('extracted_old_price'),'delivery':item.get('delivery') or item.get('shipping') or '','url':item.get('link') or item.get('product_link') or '','rating':item.get('rating'),'reviews':item.get('reviews'),'badge':item.get('tag') or '','condition':item.get('second_hand_condition') or 'New'})
         if len(results)>=5: break
     return results,None
 
+def demo_for(query):
+    if query in DEMO_RESULTS: return DEMO_RESULTS[query]
+    q=query.lower().replace('careco,','').replace('careco |','').strip()
+    for key,rows in DEMO_RESULTS.items():
+        if q == key.lower() or key.lower() in q or q in key.lower(): return rows
+    return None
+
 def analyse(query,results,demo=False):
-    results=results[:5];prices=[r['price'] for r in results if r.get('price') is not None]
+    results=results[:5]
+    prices=[r['price'] for r in results if r.get('price') is not None]
     careco=next((r for r in results if 'careco' in r.get('retailer','').lower() or 'careco' in r.get('title','').lower()),None)
-    competitors=[r for r in results if r is not careco];cp=[r['price'] for r in competitors if r.get('price') is not None]
+    competitors=[r for r in results if r is not careco]
+    cp=[r['price'] for r in competitors if r.get('price') is not None]
     avg=round(sum(prices)/len(prices),2) if prices else None
     comp_avg=round(sum(cp)/len(cp),2) if cp else None
-    vals=sorted(cp);n=len(vals);median=round(vals[n//2] if n%2 else (vals[n//2-1]+vals[n//2])/2,2) if vals else None
+    vals=sorted(cp);n=len(vals)
+    median=round(vals[n//2] if n%2 else (vals[n//2-1]+vals[n//2])/2,2) if vals else None
     cheapest=min(competitors,key=lambda x:x['price'],default=None)
     gap=round(careco['price']-comp_avg,2) if careco and comp_avg is not None else None
     gap_pct=round(gap/comp_avg*100,1) if gap is not None and comp_avg else None
@@ -70,7 +86,8 @@ def analyse(query,results,demo=False):
 def scrape_term(query):
     live,err=serp_search(query)
     if live is not None: return analyse(query,live),None
-    if query in DEMO_RESULTS: return analyse(query,DEMO_RESULTS[query],True),None
+    demo=demo_for(query)
+    if demo is not None: return analyse(query,demo,True),None
     return None,err
 
 def scrape_all():
@@ -96,16 +113,16 @@ def refresh_worker():
 def home(): return render_template('index.html')
 @app.route('/api/prices')
 def prices():
-    if cache['rows']: return jsonify({'updated':cache['ts'],'matches':cache['rows'],'count':len(cache['rows']),'refreshing':cache['running'],'error':cache['error'],'live':bool(SERP_KEY)})
+    if cache['rows']: return jsonify({'updated':cache['ts'],'matches':cache['rows'],'count':len(cache['rows']),'refreshing':cache['running'],'error':cache['error'],'live':bool(SERP_KEY),'engine':SERP_ENGINE})
     h=load_history()
     if h:
         latest=h[-1];cache['rows']=latest.get('rows',[]);cache['ts']=datetime.fromisoformat(latest['date']).timestamp()
     elif not cache['running']: threading.Thread(target=refresh_worker,daemon=True).start()
-    return jsonify({'updated':cache['ts'],'matches':cache['rows'],'count':len(cache['rows']),'refreshing':cache['running'],'error':cache['error'],'live':bool(SERP_KEY)})
+    return jsonify({'updated':cache['ts'],'matches':cache['rows'],'count':len(cache['rows']),'refreshing':cache['running'],'error':cache['error'],'live':bool(SERP_KEY),'engine':SERP_ENGINE})
 @app.route('/api/run-daily',methods=['GET','POST'])
 def run_daily():
     if not cache['running']: threading.Thread(target=refresh_worker,daemon=True).start()
-    return jsonify({'ok':True,'live':bool(SERP_KEY)})
+    return jsonify({'ok':True,'live':bool(SERP_KEY),'engine':SERP_ENGINE})
 @app.route('/api/report/<path:term>')
 def report_term(term):
     term=norm(term)
@@ -117,5 +134,5 @@ def report_term(term):
     row,err=scrape_term(term)
     return jsonify(row) if row else (jsonify({'error':err or 'No result'}),404)
 @app.route('/health')
-def health(): return {'status':'ok','live_serp':bool(SERP_KEY),'count':len(cache['rows']),'refreshing':cache['running']}
+def health(): return {'status':'ok','live_serp':bool(SERP_KEY),'engine':SERP_ENGINE,'count':len(cache['rows']),'refreshing':cache['running']}
 if __name__=='__main__': app.run(host='0.0.0.0',port=int(os.getenv('PORT','10000')))
