@@ -94,7 +94,7 @@ horse:{name:"Beach Horse Riding · stable TBC",lat:7.9740,lng:98.2840,type:"Opti
 amanpuri:{name:"Amanpuri Phuket",lat:7.9685,lng:98.2777,type:"Dinner",detail:"Sunset drinks and dinner"}
 };;
 mapboxgl.accessToken=MAPBOX_TOKEN;
-const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard-satellite',center:[98.32,7.95],zoom:10.8,pitch:25,attributionControl:true});
+const map=new mapboxgl.Map({accessToken:MAPBOX_TOKEN,container:'map',style:'mapbox://styles/mapbox/satellite-streets-v12',center:[98.32,7.95],zoom:10.8,pitch:25,attributionControl:true});
 map.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'bottom-right');
 map.addControl(new mapboxgl.FullscreenControl(),'bottom-right');
 const markers={},allCoords=[];
@@ -107,7 +107,7 @@ function setRoute(day='all'){const ids=routeSets[day]||routeSets.all;const featu
 function focus(id){if(!places[id])return;map.flyTo({center:[places[id].lng,places[id].lat],zoom:13.4,pitch:35,bearing:0,duration:900});markers[id].togglePopup();}
 function fitDay(day){const ids=routeSets[day]||routeSets.all;const bounds=new mapboxgl.LngLatBounds();ids.forEach(id=>bounds.extend([places[id].lng,places[id].lat]));map.fitBounds(bounds,{padding:{top:90,bottom:90,left:90,right:90},maxZoom:13.2,duration:900,pitch:25});}
 function googleRoute(day='all'){const ids=routeSets[day]||routeSets.all,pts=ids.map(id=>places[id]);if(pts.length<2)return;const origin=encodeURIComponent(pts[0].name+', Phuket, Thailand'),destination=encodeURIComponent(pts[pts.length-1].name+', Phuket, Thailand'),waypoints=pts.slice(1,-1).map(p=>encodeURIComponent(p.name+', Phuket, Thailand')).join('|');let url=`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=driving`;if(waypoints)url+=`&waypoints=${waypoints}`;document.getElementById('googleRoute').href=url;}
-map.on('load',()=>{addMarkers();addRoutes();setRoute('all');googleRoute('all');map.fitBounds(new mapboxgl.LngLatBounds(allCoords),{padding:45,maxZoom:12.2});});
+map.on('load',()=>{addMarkers();addRoutes();setRoute('all');googleRoute('all');map.fitBounds(new mapboxgl.LngLatBounds(allCoords),{padding:45,maxZoom:12.2});}); map.on('error',e=>{console.error('Mapbox error',e.error||e);});
 document.querySelectorAll('.stop').forEach(el=>el.addEventListener('click',()=>focus(el.dataset.stop)));
 document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');const day=tab.dataset.day;googleRoute(day);setRoute(day);document.querySelectorAll('.day').forEach(s=>s.classList.toggle('hidden',day!=='all'&&s.dataset.section!==day));fitDay(day);}));
 </script></body></html>
