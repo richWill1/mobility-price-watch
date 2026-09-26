@@ -85,28 +85,24 @@
 .rallyJourneyHead h2{font:500 clamp(50px,6vw,78px)/.88 "Playfair Display",serif;letter-spacing:-.045em;margin:12px 0 0}
 .rallyJourneyHead h2 em{font-style:normal;color:#77817d}
 .rallyJourneyHead>p{font-size:15px;line-height:1.65;color:var(--muted);margin:0;max-width:410px}
-.rallyMapWrap{position:relative;background:#eae4d8;border:1px solid #d9d1c4;border-radius:28px;overflow:hidden;min-height:570px}
-.rallyMap{position:relative;height:570px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.rallyAtlas{position:relative;width:min(560px,82vw);aspect-ratio:1;border-radius:50%;overflow:hidden;background:#dcd5c8;box-shadow:inset -35px -22px 60px rgba(13,42,39,.16),inset 24px 12px 42px rgba(255,255,255,.34),0 25px 55px rgba(13,42,39,.13);border:1px solid rgba(255,255,255,.55)}
-.rallyAtlas:after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.2),transparent 28%),radial-gradient(circle at 70% 70%,rgba(13,42,39,.12),transparent 48%);pointer-events:none;z-index:3}
-.rallyAtlasMap{position:absolute;inset:-1% -11%;width:122%;height:102%;object-fit:cover;opacity:.5;filter:sepia(.2) saturate(.2) contrast(.92);mix-blend-mode:multiply;transform:scale(1.02)}
-.rallyAtlasLines{position:absolute;inset:-10%;border-radius:50%;z-index:2;pointer-events:none;background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 39px,rgba(13,42,39,.055) 40px 41px),linear-gradient(90deg,transparent 49.7%,rgba(13,42,39,.09) 50%,transparent 50.3%);transform:scaleX(.72)}
-.rallyAtlasLines:before,.rallyAtlasLines:after{content:"";position:absolute;inset:8% 20%;border:1px solid rgba(13,42,39,.08);border-radius:50%}
-.rallyAtlasLines:after{inset:20% 8%}
-.rallyRoute{position:absolute;inset:0;z-index:4;pointer-events:none}
-.rallyRoute svg{width:100%;height:100%;overflow:visible}
-.rallyRoute path{fill:none;stroke:#b86f4d;stroke-width:2;stroke-linecap:round;stroke-dasharray:5 8;filter:drop-shadow(0 1px 1px rgba(255,255,255,.5));opacity:.95}
-.rallyMarker{position:absolute;left:76%;top:56%;width:54px;height:54px;border:0;border-radius:50%;background:#d9e52c;box-shadow:0 9px 25px rgba(13,42,39,.28),inset -6px -7px 11px rgba(0,0,0,.12);cursor:pointer;z-index:6;transform:translate(-50%,-50%);transition:transform .22s ease,box-shadow .22s ease}
-.rallyMarker:before,.rallyMarker:after{content:"";position:absolute;inset:8px;border:2px solid rgba(255,255,255,.94);border-radius:50%;transform:rotate(28deg)}
-.rallyMarker:after{transform:rotate(208deg);opacity:.7}
-.rallyMarker:hover,.rallyMarker:focus-visible,.rallyMarker.is-selected{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 14px 32px rgba(13,42,39,.3),inset -6px -7px 11px rgba(0,0,0,.12);outline:none}
-.rallyMarkerRing{position:absolute;left:76%;top:56%;width:84px;height:84px;border:1px solid rgba(184,111,77,.45);border-radius:50%;transform:translate(-50%,-50%);animation:rallyMarkerPulse 2.5s ease-out infinite;pointer-events:none;z-index:5}
-@keyframes rallyMarkerPulse{0%{opacity:.7;transform:translate(-50%,-50%) scale(.5)}80%,100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
-.rallyMarkerLabel{position:absolute;left:76%;top:45%;transform:translate(-50%,-100%);z-index:5;text-align:center;pointer-events:none}
-.rallyMarkerLabel small{display:block;color:#b86f4d;font-size:7px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
-.rallyMarkerLabel strong{display:block;font:500 26px/.9 "Playfair Display",serif;color:var(--ink)}
-.rallyMapHint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#8c877e;z-index:7;white-space:nowrap}
-.rallyMapHint span{display:inline-block;margin-right:7px;font-size:13px;color:var(--ink)}
+.rallyMapWrap{position:relative;background:#eae4d8;border:1px solid #d9d1c4;border-radius:28px;overflow:hidden;min-height:610px}
+.rallyMap{position:relative;height:610px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rallyGlobe{position:relative;width:min(570px,84vw);aspect-ratio:1;z-index:2}
+.rallyGlobe svg{width:100%;height:100%;display:block;overflow:visible;cursor:grab}
+.rallyGlobe svg:active{cursor:grabbing}
+.rallyGlobeSphere{fill:#dcd5c8;stroke:rgba(255,255,255,.7);stroke-width:1.5}
+.rallyGlobeGraticule{fill:none;stroke:rgba(13,42,39,.09);stroke-width:.55}
+.rallyGlobeLand{fill:#bdb7ab;stroke:rgba(255,255,255,.18);stroke-width:.35}
+.rallyGlobeLandAlt{fill:#c9c2b5}
+.rallyGlobeRoute{fill:none;stroke:#b86f4d;stroke-width:2;stroke-linecap:round;stroke-dasharray:4 7;opacity:.9}
+.rallyGlobeMarker{fill:#d9e52c;stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 5px 7px rgba(13,42,39,.2));cursor:pointer}
+.rallyGlobeMarkerRing{fill:none;stroke:#b86f4d;stroke-width:1;opacity:.6}
+.rallyGlobeLabel{font:800 8px "DM Sans",sans-serif;letter-spacing:1.5px;fill:#b86f4d;text-transform:uppercase;pointer-events:none}
+.rallyGlobeLabelMain{font:500 25px "Playfair Display",serif;letter-spacing:-.5px;fill:#0d2a27;pointer-events:none}
+.rallyGlobeHint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#8c877e;z-index:4;white-space:nowrap}
+.rallyGlobeHint span{font-size:13px;color:var(--ink);margin-right:7px}
+.rallyGlobeTopLabel{position:absolute;top:24px;left:28px;font-size:7px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#8c877e;z-index:4}
+.rallyGlobeTopLabel strong{color:#b86f4d}
 .rallyPopup{position:absolute;right:28px;top:28px;width:min(350px,38%);background:rgba(255,253,249,.98);border:1px solid #d9d1c4;border-radius:20px;box-shadow:0 20px 55px rgba(13,42,39,.16);z-index:10;overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
 .rallyPopup.is-open{opacity:1;transform:none;pointer-events:auto}
 .rallyPopupImage{height:145px;background-image:url("https://a.cdn-hotels.com/gdcs/production105/d1236/490b0575-83e1-45dd-bdc6-27c5b2c0c952.jpg");background-size:cover;background-position:center}
@@ -127,18 +123,12 @@
  .rallyJourneyHead{display:block;margin-bottom:23px}
  .rallyJourneyHead h2{font-size:45px;line-height:.91;margin-top:9px}
  .rallyJourneyHead>p{font-size:13px;line-height:1.55;margin-top:15px}
- .rallyMapWrap{border-radius:20px;min-height:430px}
- .rallyMap{height:430px}
- .rallyAtlas{width:345px}
- .rallyAtlasLines{transform:scaleX(.72)}
- .rallyMarker{left:76%;top:56%;width:45px;height:45px}
- .rallyMarker:before,.rallyMarker:after{inset:6px}
- .rallyMarkerRing{left:76%;top:56%;width:69px;height:69px}
- .rallyMarkerLabel{left:76%;top:45%}
- .rallyMarkerLabel strong{font-size:22px}
- .rallyMapHint{font-size:6px;bottom:11px}
- .rallyMapHint span{font-size:11px}
- .rallyRoute path{stroke-width:1.5}
+ .rallyMapWrap{border-radius:20px;min-height:450px}
+ .rallyMap{height:450px}
+ .rallyGlobe{width:370px;max-width:94vw}
+ .rallyGlobeLabelMain{font-size:22px}
+ .rallyGlobeTopLabel{top:17px;left:17px}
+ .rallyGlobeHint{font-size:6px;bottom:11px}
  .rallyPopup{left:12px;right:12px;top:auto;bottom:12px;width:auto;border-radius:17px}
  .rallyPopupImage{height:118px}
  .rallyPopupBody{padding:16px 17px 18px}
@@ -169,22 +159,12 @@
       <p>The game is the starting point. The destination is part of the experience.</p>
     </div>
     <div class="rallyMapWrap">
-      <div class="rallyMap" aria-label="Rally destinations globe">
-  <div class="rallyAtlas">
-    <img class="rallyAtlasMap" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/BlankMap_World_simple.svg" alt="" aria-hidden="true">
-    <div class="rallyAtlasLines" aria-hidden="true"></div>
-    <div class="rallyRoute" aria-hidden="true">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M22,40 C37,21 55,25 67,45 C72,53 76,56 76,56"/>
-      </svg>
-    </div>
-    <span class="rallyMarkerRing" aria-hidden="true"></span>
-    <button class="rallyMarker" type="button" aria-label="Open Phuket Tennis Retreat"><span aria-hidden="true"></span></button>
-    <div class="rallyMarkerLabel"><small>Rally 01</small><strong>Phuket</strong></div>
-  </div>
-  <div class="rallyMapHint"><span>⌖</span> Tap a destination</div>
-  <aside class="rallyPopup" aria-hidden="true">
-    <button class="rallyPopupClose" type="button" aria-label="Close destination">×</button>
+      <div class="rallyMap" aria-label="Interactive Rally destinations globe">
+  <div class="rallyGlobeTopLabel">Drag to explore · <strong>Rally destinations</strong></div>
+  <div class="rallyGlobe" id="rallyGlobe" role="application" aria-label="Interactive world globe. Drag to rotate. Tap Phuket to open the retreat."></div>
+  <div class="rallyGlobeHint"><span>↻</span> Drag the globe · Tap Phuket</div>
+  <aside class="rallyPopup" id="rallyPopup" aria-hidden="true">
+    <button class="rallyPopupClose" id="rallyPopupClose" type="button" aria-label="Close destination">×</button>
     <div class="rallyPopupImage" role="img" aria-label="Phuket Old Town"></div>
     <div class="rallyPopupBody">
       <div class="rallyPopupKicker">Phuket · Thailand</div>
@@ -221,32 +201,81 @@
 <footer class="homeFooter"><div class="shell homeFooterGrid"><a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a><div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
 
 
-<script>
-(function(){
-  const map=document.querySelector('.rallyMap');
-  const marker=document.querySelector('.rallyMarker');
-  const popup=document.querySelector('.rallyPopup');
-  const close=document.querySelector('.rallyPopupClose');
-  if(!map||!marker||!popup||!close) return;
-  function open(){
-    map.classList.add('has-selection');
-    marker.classList.add('is-selected');
-    popup.classList.add('is-open');
-    popup.setAttribute('aria-hidden','false');
-    marker.setAttribute('aria-expanded','true');
+<script type="module">
+(async function(){
+  const root=document.getElementById('rallyGlobe');
+  const popup=document.getElementById('rallyPopup');
+  const close=document.getElementById('rallyPopupClose');
+  if(!root||!popup||!close) return;
+  try{
+    const [d3,topo,{default:world}] = await Promise.all([
+      import('https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm'),
+      import('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'),
+      import('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json/+esm')
+    ]);
+    const width=570,height=570;
+    const svg=d3.select(root).append('svg').attr('viewBox','0 0 '+width+' '+height).attr('role','img').attr('aria-label','Rally interactive globe');
+    const projection=d3.geoOrthographic().translate([width/2,height/2]).scale(265).clipAngle(90);
+    const path=d3.geoPath(projection);
+    const sphere=svg.append('circle').attr('class','rallyGlobeSphere').attr('cx',width/2).attr('cy',height/2).attr('r',265);
+    const graticule=svg.append('path').datum(d3.geoGraticule10()).attr('class','rallyGlobeGraticule');
+    const land=svg.append('g').attr('class','rallyGlobeLand');
+    const route=svg.append('path').attr('class','rallyGlobeRoute');
+    const marker=svg.append('g').attr('tabindex',0).attr('role','button').attr('aria-label','Open Phuket Tennis Retreat').style('cursor','pointer');
+    const markerRing=marker.append('circle').attr('class','rallyGlobeMarkerRing').attr('r',18);
+    const markerDot=marker.append('circle').attr('class','rallyGlobeMarker').attr('r',10);
+    const label=svg.append('g').style('pointer-events','none');
+    label.append('text').attr('class','rallyGlobeLabel').text('RALLY 01');
+    label.append('text').attr('class','rallyGlobeLabelMain').text('Phuket');
+    const countries=topo.feature(world,world.objects.countries);
+    land.selectAll('path').data(countries.features).join('path').attr('d',path);
+    const uk=[-2,54], phuket=[98.3923,7.8804];
+    let rotation=[-98.3923,-7.8804,0];
+    projection.rotate(rotation);
+    function greatArc(a,b,steps=80){
+      const interp=d3.geoInterpolate(a,b), coords=[];
+      for(let i=0;i<=steps;i++) coords.push(interp(i/steps));
+      return {type:'LineString',coordinates:coords};
+    }
+    const arc=greatArc(uk,phuket);
+    let dragging=false, last=[0,0], idleTimer;
+    function render(){
+      land.selectAll('path').attr('d',path);
+      graticule.attr('d',path);
+      route.datum(arc).attr('d',path);
+      const p=projection(phuket);
+      const visible=d3.geoDistance(projection.invert([width/2,height/2]),phuket)<Math.PI/2;
+      marker.attr('display',visible?'':'none').attr('transform','translate('+p[0]+','+p[1]+')');
+      label.attr('display',visible?'':'none').attr('transform','translate('+(p[0]+17)+','+(p[1]-19)+')');
+      label.select('.rallyGlobeLabelMain').attr('y',24);
+      label.select('.rallyGlobeLabel').attr('y',0);
+    }
+    function showPopup(){
+      popup.classList.add('is-open'); popup.setAttribute('aria-hidden','false');
+    }
+    function hidePopup(){
+      popup.classList.remove('is-open'); popup.setAttribute('aria-hidden','true');
+    }
+    marker.on('click',showPopup).on('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showPopup();}});
+    close.addEventListener('click',hidePopup);
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape') hidePopup();});
+    svg.call(d3.drag().on('start',(event)=>{dragging=true;last=[event.x,event.y];clearInterval(idleTimer);})
+      .on('drag',(event)=>{
+        const dx=event.x-last[0],dy=event.y-last[1];last=[event.x,event.y];
+        rotation=projection.rotate();
+        rotation[0]+=dx*.42; rotation[1]-=dy*.42; rotation[1]=Math.max(-82,Math.min(82,rotation[1]));
+        projection.rotate(rotation); render();
+      })
+      .on('end',()=>{dragging=false; startIdle();}));
+    function startIdle(){
+      clearInterval(idleTimer);
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      idleTimer=setInterval(()=>{if(!dragging){rotation=projection.rotate();rotation[0]+=0.08;projection.rotate(rotation);render();}},40);
+    }
+    render(); startIdle();
+  }catch(err){
+    root.innerHTML='<div style="padding:40px;text-align:center;color:#68736f;font-size:12px">The globe could not load. Please refresh and try again.</div>';
   }
-  function shut(){
-    map.classList.remove('has-selection');
-    marker.classList.remove('is-selected');
-    popup.classList.remove('is-open');
-    popup.setAttribute('aria-hidden','true');
-    marker.setAttribute('aria-expanded','false');
-  }
-  marker.setAttribute('aria-expanded','false');
-  marker.addEventListener('click',function(e){e.stopPropagation(); open();});
-  close.addEventListener('click',function(e){e.stopPropagation(); shut();});
-  document.addEventListener('click',function(e){if(!popup.contains(e.target)&&e.target!==marker) shut();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape') shut();});
 })();
 </script>
 </body></html>
