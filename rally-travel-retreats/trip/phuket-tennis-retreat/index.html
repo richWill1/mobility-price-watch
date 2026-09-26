@@ -129,8 +129,22 @@
 
 <section id="map">
   <div class="shell">
-    <div class="sectionTop"><div><div class="sectionKicker">Explore Phuket</div><h2>The retreat on the map.</h2></div><p class="lede">Satellite view is on by default. Tap a location for context.</p></div>
-    <div class="mapWrap"><div class="mapBox"><div id="phuketMap"></div><button class="mapToggle" id="toggle">Street map</button></div></div>
+    <div class="sectionTop"><div><div class="sectionKicker">Explore Phuket</div><h2>The retreat on the map.</h2></div><p class="lede">Follow the week from where you’ll stay to the places you’ll play, eat and explore.</p></div>
+    <div class="mapFilters" role="tablist" aria-label="Map categories">
+      <button class="mapFilter active" data-filter="all">All</button>
+      <button class="mapFilter" data-filter="stay">Stay</button>
+      <button class="mapFilter" data-filter="tennis">Tennis</button>
+      <button class="mapFilter" data-filter="beaches">Beaches</button>
+      <button class="mapFilter" data-filter="culture">Food & culture</button>
+      <button class="mapFilter" data-filter="experiences">Experiences</button>
+    </div>
+    <div class="mapWrap">
+      <div class="mapBox">
+        <div id="phuketMap"></div>
+        <button class="mapToggle" id="toggle">Street map</button>
+      </div>
+      <div class="mapCards" id="mapCards" aria-label="Retreat locations"></div>
+    </div>
   </div>
 </section>
 
@@ -174,20 +188,98 @@ setActive("experience");
 
 <script>
 const places=[
-["Sole Mio",[7.9923,98.2937],"Hotel & wellness"],["KĀHLĪ Tennis Academy",[7.9807,98.3027],"Tennis"],["Phuket Old Town",[7.88478,98.38922],"Old Town"],["Sunday Walking Street",[7.8845,98.389],"Night market"],["Paradise Beach",[7.89103,98.26539],"Beach"],["Elephant Beach",[7.8759,98.2787],"Beach"],["Ta Khai · Rosewood Phuket",[7.8745,98.2745],"Dinner"],["Old Phuket Farm",[8.0105,98.3455],"Culture & food"],["Mantra Forest Spa",[8.295,98.407],"Wellness"],["Wat Chalong",[7.84625,98.3371],"Temple"],["Phuket Mountain Elephant Care",[7.86439,98.32042],"Sanctuary"],["Freedom Beach",[7.877,98.278],"Optional beach"],["Amanpuri Phuket",[7.9685,98.2777],"Sunset & dinner"],["Patong",[7.8966,98.2961],"Night out"],["Royal Phuket Marina",[7.9825,98.3784],"Boat departure"],["Private Island-Hopping Charter",[8.06,98.53],"Indicative charter area"],["Phuket International Airport",[8.1132,98.3169],"Arrival / departure"]
+  {name:"Sole Mio",coords:[7.9923,98.2937],category:"stay",label:"Hotel & wellness",description:"Your base in Bang Tao.",icon:"⌂"},
+  {name:"KĀHLĪ Tennis Academy",coords:[7.9807,98.3027],category:"tennis",label:"Tennis",description:"Five mornings on court.",icon:"✦"},
+  {name:"Phuket Old Town",coords:[7.88478,98.38922],category:"culture",label:"Old Town",description:"Colourful streets, food & Sunday Walking Street.",icon:"◈"},
+  {name:"Paradise Beach",coords:[7.89103,98.26539],category:"beaches",label:"Beach",description:"An afternoon on the coast.",icon:"◒"},
+  {name:"Elephant Beach",coords:[7.8759,98.2787],category:"beaches",label:"Beach",description:"A second stop by the sea.",icon:"◒"},
+  {name:"Ta Khai · Rosewood Phuket",coords:[7.8745,98.2745],category:"culture",label:"Dinner",description:"A special dinner on the southwest coast.",icon:"◆"},
+  {name:"Old Phuket Farm",coords:[8.0105,98.3455],category:"culture",label:"Culture & food",description:"One option for the Tuesday afternoon.",icon:"◇"},
+  {name:"Mantra Forest Spa",coords:[8.295,98.407],category:"experiences",label:"Wellness",description:"The longer Tuesday wellness option.",icon:"✧"},
+  {name:"Wat Chalong",coords:[7.84625,98.3371],category:"culture",label:"Temple",description:"A cultural stop on Wednesday.",icon:"◇"},
+  {name:"Phuket Mountain Elephant Care",coords:[7.86439,98.32042],category:"experiences",label:"Sanctuary",description:"Wednesday afternoon experience.",icon:"✧"},
+  {name:"Freedom Beach",coords:[7.877,98.278],category:"beaches",label:"Optional beach",description:"A recovery-afternoon option.",icon:"◒"},
+  {name:"Amanpuri Phuket",coords:[7.9685,98.2777],category:"experiences",label:"Sunset & dinner",description:"Thursday evening at Amanpuri.",icon:"✦"},
+  {name:"Patong",coords:[7.8966,98.2961],category:"experiences",label:"Night out",description:"Optional Friday night.",icon:"◆"},
+  {name:"Royal Phuket Marina",coords:[7.9825,98.3784],category:"experiences",label:"Boat departure",description:"Saturday's island-hopping departure.",icon:"◇"}
 ];
-const map=L.map("phuketMap",{scrollWheelZoom:false,worldCopyJump:true});
+const categoryNames={stay:"Stay",tennis:"Tennis",beaches:"Beaches",culture:"Food & culture",experiences:"Experiences"};
+const map=L.map("phuketMap",{scrollWheelZoom:false,worldCopyJump:true,zoomControl:false});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics, and the GIS User Community"});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
-satellite.addTo(map);L.control.zoom({position:"bottomright"}).addTo(map);
-const bounds=L.latLngBounds([]);
-places.forEach((p)=>{
- const marker=L.marker(p[1],{icon:L.divIcon({className:"",html:'<div class="pin">+</div>',iconSize:[32,32],iconAnchor:[16,16]})}).bindPopup("<b>"+p[0]+"</b><br><span>"+p[2]+"</span>").addTo(map);
- bounds.extend(p[1]);
+satellite.addTo(map);
+L.control.zoom({position:"bottomright"}).addTo(map);
+
+const markerByName={};
+const markerIcon=(active=false)=>L.divIcon({
+  className:"rallyMapPinWrap",
+  html:'<div class="rallyMapPin'+(active?' active':'')+'"></div>',
+  iconSize:[18,18],iconAnchor:[9,9]
 });
-map.fitBounds(bounds,{padding:[45,45],maxZoom:11});
+places.forEach((p)=>{
+  const marker=L.marker(p.coords,{icon:markerIcon()})
+    .bindPopup("<strong>"+p.name+"</strong><br><span>"+p.label+"</span>");
+  markerByName[p.name]=marker;
+  marker.addTo(map);
+});
+
+map.setView([7.94,98.30],11.1);
+
+const cards=document.getElementById("mapCards");
+const filters=[...document.querySelectorAll(".mapFilter")];
+let currentFilter="all";
+let selectedName=places[0].name;
+
+function renderCards(){
+  const visible=places.filter(p=>currentFilter==="all"||p.category===currentFilter);
+  cards.innerHTML=visible.map((p,i)=>`
+    <button class="mapCard${p.name===selectedName?' selected':''}" data-place="${p.name}">
+      <span class="mapCardIcon">${p.icon}</span>
+      <span class="mapCardText">
+        <small>${categoryNames[p.category]}</small>
+        <strong>${p.name}</strong>
+        <em>${p.description}</em>
+      </span>
+      <span class="mapCardArrow">↗</span>
+    </button>`).join("");
+  cards.querySelectorAll(".mapCard").forEach(card=>card.addEventListener("click",()=>{
+    const p=places.find(x=>x.name===card.dataset.place);
+    if(!p)return;
+    selectedName=p.name;
+    Object.entries(markerByName).forEach(([name,m])=>m.setIcon(markerIcon(name===selectedName)));
+    map.flyTo(p.coords,13,{duration:.7});
+    markerByName[p.name].openPopup();
+    renderCards();
+    card.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+  }));
+}
+
+filters.forEach(btn=>btn.addEventListener("click",()=>{
+  currentFilter=btn.dataset.filter;
+  filters.forEach(b=>b.classList.toggle("active",b===btn));
+  places.forEach(p=>{
+    const marker=markerByName[p.name];
+    const show=currentFilter==="all"||p.category===currentFilter;
+    if(show&&!map.hasLayer(marker))marker.addTo(map);
+    if(!show&&map.hasLayer(marker))map.removeLayer(marker);
+  });
+  const first=places.find(p=>currentFilter==="all"||p.category===currentFilter);
+  if(first){
+    selectedName=first.name;
+    Object.entries(markerByName).forEach(([name,m])=>m.setIcon(markerIcon(name===selectedName)));
+    map.flyTo(first.coords,currentFilter==="all"?11.1:12,{duration:.55});
+  }
+  renderCards();
+}));
+
+renderCards();
+
 let sat=true;
-document.getElementById("toggle").onclick=()=>{if(sat){map.removeLayer(satellite);street.addTo(map);document.getElementById("toggle").textContent="Satellite"}else{map.removeLayer(street);satellite.addTo(map);document.getElementById("toggle").textContent="Street map"}sat=!sat};
+document.getElementById("toggle").onclick=()=>{
+  if(sat){map.removeLayer(satellite);street.addTo(map);document.getElementById("toggle").textContent="Satellite"}
+  else{map.removeLayer(street);satellite.addTo(map);document.getElementById("toggle").textContent="Street map"}
+  sat=!sat;
+};
 map.whenReady(()=>setTimeout(()=>map.invalidateSize(),100));
 </script>
 </body>
