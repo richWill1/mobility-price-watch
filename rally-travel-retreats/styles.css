@@ -155,3 +155,19 @@
  .mapVisual{height:350px;min-height:350px}
  .mapPlace{flex-basis:88vw}
 }
+
+/* Leaflet critical reset — keep tiles in a true map layer */
+#phuketMap.leaflet-container{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;overflow:hidden!important;background:#d8d1c5!important}
+#phuketMap.leaflet-container .leaflet-pane,
+#phuketMap.leaflet-container .leaflet-tile-pane,
+#phuketMap.leaflet-container .leaflet-overlay-pane,
+#phuketMap.leaflet-container .leaflet-shadow-pane,
+#phuketMap.leaflet-container .leaflet-marker-pane,
+#phuketMap.leaflet-container .leaflet-tooltip-pane,
+#phuketMap.leaflet-container .leaflet-popup-pane{position:absolute;left:0;top:0}
+#phuketMap.leaflet-container .leaflet-map-pane{position:absolute;left:0;top:0}
+#phuketMap.leaflet-container .leaflet-tile-container{position:absolute;left:0;top:0}
+#phuketMap.leaflet-container .leaflet-tile{position:absolute;left:0;top:0;width:256px;height:256px;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important}
+#phuketMap.leaflet-container img{max-width:none!important;max-height:none!important}
+#phuketMap.leaflet-container .leaflet-control-container{position:absolute;inset:0;pointer-events:none}
+#phuketMap.leaflet-container .leaflet-control{pointer-events:auto}
