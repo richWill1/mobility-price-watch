@@ -275,6 +275,20 @@ h1,h2,h3,h4,.sectionTop h2,.stayRefHead h2,.stayLightboxPanel h3{font-family:var
  .weatherMore summary{padding:16px 17px;font-size:13px}
 }
 
+/* Mobile scroll-performance pass: avoid scroll-linked paint and blur effects. */
+@media(max-width:700px){
+  .sectionNav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#fffdfa!important}
+  .sectionNav a.active{background:rgba(31,111,91,.06)!important}
+  .sectionNav a.active:before{animation:none!important;box-shadow:0 0 0 3px rgba(57,168,115,.13)!important}
+  #week .day{transform:none!important;box-shadow:none!important;transition:none!important}
+  #week .day.is-active{transform:none!important;box-shadow:none!important}
+  #week .dayPhoto,.dayPhotoButton:hover .dayPhoto{transform:none!important;transition:none!important}
+  #week .dayMedia:after{opacity:1}
+  #stay,#week,#experience,#map{content-visibility:auto;contain-intrinsic-size:auto 900px}
+  #week .day{content-visibility:auto;contain-intrinsic-size:auto 520px}
+  .stayGallery img{transition:none!important}
+}
+
 /* Butter-smooth performance layer */
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .sectionNavInner{overscroll-behavior-x:contain}
@@ -702,11 +716,7 @@ stayTiles.forEach(tile=>{
 stayLightbox.querySelectorAll("[data-close-stay]").forEach(el=>el.addEventListener("click",closeStayLightbox));
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&stayLightbox.classList.contains("is-open"))closeStayLightbox();});
 
-const itineraryCards=[...document.querySelectorAll("#week .day")];
-const itineraryObserver=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>entry.target.classList.toggle("is-active",entry.isIntersecting));
-},{root:document.querySelector("#week .days"),threshold:.62});
-itineraryCards.forEach(card=>itineraryObserver.observe(card));
+/* Keep the itinerary visually static while scrolling — no scroll-linked effects. */
 
 const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
 const sectionTargets=[...new Set(sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean))];
@@ -718,9 +728,9 @@ const setActive=(id,scrollNav=false)=>{
  }
 };
 const observer=new IntersectionObserver(entries=>{
- const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
- if(visible)setActive(visible.target.id);
-},{rootMargin:"-18% 0px -65% 0px",threshold:[0,.2,.5,1]});
+ const visible=entries.find(e=>e.isIntersecting);
+ if(visible)setActive(visible.target.id,false);
+},{rootMargin:"-10% 0px -75% 0px",threshold:0});
 sectionTargets.forEach(s=>observer.observe(s));
 sectionLinks.forEach(a=>a.addEventListener("click",e=>{
  if(!a.dataset.section)return;
