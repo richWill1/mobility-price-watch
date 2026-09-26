@@ -212,6 +212,52 @@
 }
 </style>
 <style>
+/* Reference-style compact stay section */
+.hotelSection{background:#fffdfa;padding:54px 0 64px}
+.stayReference{max-width:920px}
+.stayRefHead{text-align:center;margin-bottom:26px}
+.stayRefHead h2{font:500 clamp(34px,5vw,58px)/1 "Playfair Display",serif;letter-spacing:-.025em;margin:7px auto 8px}
+.stayRefLocation{display:flex;justify-content:center;align-items:center;gap:7px;color:var(--muted);font-size:14px}
+.stayRefLocation span{font-size:22px;color:#8e7350}
+.stayRefGallery{position:relative;display:grid;grid-template-columns:1fr 118px;gap:10px;margin:0 auto;min-height:500px}
+.stayRefHero,.stayRefThumbs button{border:0;padding:0;cursor:pointer;position:relative;overflow:hidden;background:#eee}
+.stayRefHero{border-radius:28px;min-height:500px}
+.stayRefHero img{width:100%;height:100%;object-fit:cover;display:block}
+.stayRefShade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,20,16,.58))}
+.stayRefHeroLabel{position:absolute;left:20px;bottom:18px;color:#fff;font-size:10px;font-weight:800;letter-spacing:.16em}
+.stayRefThumbs{display:grid;grid-template-rows:1fr 1fr;gap:10px}
+.stayRefThumbs button{border-radius:20px}
+.stayRefThumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.stayMore{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;background:rgba(5,20,16,.45)}
+.stayRefIntro{max-width:720px;margin:24px auto 28px;text-align:center;color:var(--muted);font-size:16px;line-height:1.6}
+.stayRefDivider{display:flex;align-items:center;gap:12px;max-width:700px;margin:0 auto 14px;color:#9a7652}
+.stayRefDivider:before,.stayRefDivider:after{content:"";height:1px;background:var(--line);flex:1}
+.stayRefDivider span{font-size:14px}
+.stayRefDivider strong{font-size:10px;letter-spacing:.18em;white-space:nowrap}
+.stayIncludeGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:760px;margin:auto}
+.stayIncludeGrid button{min-height:66px;border:1px solid var(--line);border-radius:18px;background:#fff;font:500 13px/1.3 "DM Sans",sans-serif;color:var(--ink);cursor:pointer;text-align:left;padding:12px 16px;display:flex;align-items:center;gap:12px;transition:transform .2s ease,box-shadow .2s ease}
+.stayIncludeGrid button:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(13,42,39,.07)}
+.stayIncludeGrid button span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#f3eee5;color:#9a7652;font-size:9px;font-weight:800;flex:0 0 28px}
+.stayRefNote{text-align:center;color:#8b918d;font-size:10px;letter-spacing:.08em;margin-top:18px}
+@media(max-width:700px){
+ .hotelSection{padding:42px 0 48px}
+ .stayReference{width:100%;padding:0 16px}
+ .stayRefHead{margin-bottom:20px}
+ .stayRefHead h2{font-size:34px;max-width:360px}
+ .stayRefLocation{font-size:13px}
+ .stayRefGallery{grid-template-columns:1fr;display:block;min-height:0;margin:0 -16px}
+ .stayRefHero{width:100%;height:390px;min-height:390px;border-radius:24px}
+ .stayRefHeroLabel{left:18px;bottom:16px;font-size:8px}
+ .stayRefThumbs{display:flex;gap:8px;margin-top:-72px;padding:0 18px;position:relative;z-index:2;justify-content:flex-end}
+ .stayRefThumbs button{width:118px;height:88px;flex:0 0 118px;border:3px solid #fff;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.16)}
+ .stayRefIntro{font-size:14px;line-height:1.55;margin:24px auto 25px;max-width:620px}
+ .stayRefDivider{gap:8px;margin-bottom:12px}
+ .stayRefDivider strong{font-size:8px;letter-spacing:.13em}
+ .stayIncludeGrid{grid-template-columns:1fr 1fr;gap:7px}
+ .stayIncludeGrid button{min-height:62px;border-radius:15px;padding:9px 10px;font-size:10px;gap:7px}
+ .stayIncludeGrid button span{width:23px;height:23px;flex-basis:23px;font-size:8px}
+ .stayRefNote{font-size:8px;margin-top:15px}
+}
 /* Sticky section navigation */
 .sectionNav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(13,42,39,.06)}
 .sectionNavInner{max-width:1240px;margin:auto;padding:0 10px;display:flex;align-items:center;gap:3px;overflow-x:auto;scrollbar-width:none}
@@ -283,73 +329,39 @@
 
 
 <section id="stay" class="hotelSection">
-  <div class="shell hotelShell">
-    <div class="stayIntro">
-      <div>
-        <div class="sectionKicker">Where you’ll stay</div>
-        <h2>Your base for the week.</h2>
-      </div>
-      <p class="lede">Sole Mio Boutique Hotel & Wellness gives the retreat a calm, comfortable hub in Bang Tao — close to the beach and easy between tennis sessions.</p>
+  <div class="shell stayReference">
+    <div class="stayRefHead">
+      <div class="sectionKicker">Where you’ll stay</div>
+      <h2>Sole Mio Boutique Hotel & Wellness</h2>
+      <div class="stayRefLocation"><span>⌖</span> Bang Tao Beach, Phuket</div>
     </div>
 
-    <div class="stayGallery" aria-label="Sole Mio Hotel photography">
-      <div class="stayHeroPhoto">
-        <img src="https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202311241805054211-285101ad-52a2-47dc-be27-9655d66f773e.jpg" alt="Sole Mio rooftop swimming pool">
-        <div class="stayPhotoCaption"><span>SOLE MIO</span><strong>Pool, wellness & slow afternoons.</strong></div>
-      </div>
-      <div class="staySidePhotos">
-        <img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260452402562.jpg" alt="Sole Mio Deluxe Room">
-        <img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260859125684.jpg" alt="Sole Mio Wellness Deluxe Room">
+    <div class="stayRefGallery" aria-label="Sole Mio hotel photography">
+      <button class="stayRefHero" type="button" data-gallery="hotel">
+        <img src="https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202311241805054211-285101ad-52a2-47dc-be27-9655d66f773e.jpg" alt="Sole Mio rooftop pool">
+        <span class="stayRefShade"></span>
+        <span class="stayRefHeroLabel">SOLE MIO · POOL, WELLNESS & SLOW AFTERNOONS</span>
+      </button>
+      <div class="stayRefThumbs">
+        <button type="button" data-gallery="room"><img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260452402562.jpg" alt="Sole Mio Deluxe Room"></button>
+        <button type="button" data-gallery="hotel"><img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260859125684.jpg" alt="Sole Mio Wellness Deluxe Room"><span class="stayMore">+10</span></button>
       </div>
     </div>
 
-    <div class="stayStory">
-      <article class="stayRoom">
-        <div class="stayLabel">The room</div>
-        <h3>Deluxe Room.<br><em>Shared, but your space.</em></h3>
-        <p class="stayCopy">A 36 m² Deluxe Room with a private balcony. For the shared option, we’ll use the twin setup where available, so each guest has their own bed.</p>
+    <p class="stayRefIntro">Sole Mio is a comfortable, adults-only base in Bang Tao, with the beach, rooftop pool, breakfast and wellness facilities close at hand.</p>
 
-        <div class="stayStats">
-          <div><strong>36</strong><span>m² room</span></div>
-          <div><strong>4</strong><span>m² balcony</span></div>
-          <div><strong>2</strong><span>single beds</span></div>
-          <div><strong>24/7</strong><span>WiFi</span></div>
-        </div>
+    <div class="stayRefDivider"><span>▣</span><strong>WHAT THE STAY INCLUDES</strong></div>
 
-        <div class="stayAmenities">
-          <div><span>01</span><b>Private bathroom</b></div>
-          <div><span>02</span><b>Kitchenette & fridge</b></div>
-          <div><span>03</span><b>Coffee & tea maker</b></div>
-          <div><span>04</span><b>Rain shower & bathrobes</b></div>
-          <div><span>05</span><b>Air conditioning</b></div>
-          <div><span>06</span><b>50” TV</b></div>
-        </div>
-
-        <div class="stayCallout">
-          <span>SHARING</span>
-          <strong>Your own bed. Your own balcony space. Your own bathroom.</strong>
-          <p>Prefer your own room? Ask Mark about private-room availability and the upgrade price.</p>
-        </div>
-      </article>
-
-      <aside class="stayHotel">
-        <div class="stayLabel">The hotel</div>
-        <h3>Built for the gaps<br><em>between tennis.</em></h3>
-        <p class="stayCopy">Everything you need is close: breakfast, rooftop pool, recovery and somewhere comfortable to come back to after exploring Phuket. Bang Tao Beach is around five minutes away, according to the hotel.</p>
-
-        <div class="stayFacilities">
-          <div class="stayPhotoTile" data-gallery="pool" tabindex="0" role="button" aria-label="View rooftop pool photos"><span>POOL</span><strong>Rooftop</strong><p>Sun, swims & sunset drinks.</p></div>
-          <div class="stayPhotoTile" data-gallery="wellness" tabindex="0" role="button" aria-label="View wellness photos"><span>WELLNESS</span><strong>Reset</strong><p>Sauna, steam, ice room & spa.</p></div>
-          <div class="stayPhotoTile" data-gallery="fitness" tabindex="0" role="button" aria-label="View gym and yoga photos"><span>FITNESS</span><strong>Move</strong><p>Gym, yoga studio & classes.</p></div>
-          <div class="stayPhotoTile" data-gallery="dining" tabindex="0" role="button" aria-label="View restaurant photos"><span>DINING</span><strong>7th Floor</strong><p>Restaurant & bar.</p></div>
-        </div>
-
-        <div class="stayDistance">
-          <span>THE LOCATION</span>
-          <strong>Bang Tao Beach · ~5 min</strong>
-        </div>
-      </aside>
+    <div class="stayIncludeGrid">
+      <button type="button" data-gallery="room"><span>01</span>Deluxe room · 36 m²</button>
+      <button type="button" data-gallery="room"><span>02</span>Private 4 m² balcony</button>
+      <button type="button" data-gallery="room"><span>03</span>Shared twin configuration</button>
+      <button type="button" data-gallery="wellness"><span>04</span>Pool & wellness facilities</button>
+      <button type="button" data-gallery="fitness"><span>05</span>Gym, yoga & movement</button>
+      <button type="button" data-gallery="dining"><span>06</span>7th Floor restaurant & bar</button>
     </div>
+
+    <div class="stayRefNote">Around five minutes from Bang Tao Beach · adults only</div>
   </div>
 </section>
 
@@ -495,7 +507,7 @@ map.whenReady(()=>[0,250,700,1400].forEach(d=>setTimeout(resetMap,d)));
 window.addEventListener("resize",resetMap,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(resetMap,300),{passive:true});
 
-const stayTiles=[...document.querySelectorAll(".stayPhotoTile")];
+const stayTiles=[...document.querySelectorAll(".stayPhotoTile, [data-gallery]")];
 const stayLightbox=document.getElementById("stayLightbox");
 const stayGallery=document.getElementById("stayLightboxGallery");
 const stayTitle=document.getElementById("stayLightboxTitle");
