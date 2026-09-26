@@ -321,11 +321,11 @@ html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:op
 .dayPhotoButton{display:block;width:100%;height:100%;min-height:300px;padding:0;border:0;background:var(--ink);cursor:pointer;position:relative;overflow:hidden;text-align:left}.dayPhotoButton .dayPhoto{height:100%}.dayPhotoMore{position:absolute;right:16px;top:16px;z-index:3;padding:8px 11px;border-radius:999px;background:rgba(5,20,16,.72);color:#fff;font:800 9px/1 "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}.dayPhotoButton:hover .dayPhoto{transform:scale(1.04)}@media(max-width:700px){.dayPhotoButton{min-height:230px}.dayPhotoMore{right:12px;top:12px;font-size:8px;padding:7px 9px}}
 
 /* Keep anchored sections clear of the sticky navigation. */
-html{scroll-padding-top:56px}
-#top,#stay,#week,#experience,#map,#enquire{scroll-margin-top:56px}
+html{scroll-padding-top:50px}
+#top,#stay,#week,#experience,#map,#enquire{scroll-margin-top:50px}
 @media(max-width:700px){
-  html{scroll-padding-top:52px}
-  #top,#stay,#week,#experience,#map,#enquire{scroll-margin-top:52px}
+  html{scroll-padding-top:50px}
+  #top,#stay,#week,#experience,#map,#enquire{scroll-margin-top:50px}
 }
 
 </style>
@@ -418,7 +418,7 @@ html{scroll-padding-top:56px}
       <div><span>STAY</span><strong>8 nights<br>at Sole Mio</strong></div>
     </div>
     <p class="retreatIntro">Spend a week in Phuket blending professional tennis, wellness and the best of the island. Mornings are built around structured coaching, while afternoons and evenings leave space to recover, explore, eat well and enjoy the trip.</p>
-    <div class="retreatHighlights">
+    <div class="retreatHighlights" id="experience">
       <div><span>✓</span>5 mornings of professional tennis coaching</div>
       <div><span>✓</span>8 nights at Sole Mio Hotel & Wellness</div>
       <div><span>✓</span>Private island-hopping day</div>
@@ -732,17 +732,8 @@ const observer=new IntersectionObserver(entries=>{
  if(visible)setActive(visible.target.id,false);
 },{rootMargin:"-10% 0px -75% 0px",threshold:0});
 sectionTargets.forEach(s=>observer.observe(s));
-sectionLinks.forEach(a=>a.addEventListener("click",e=>{
- if(!a.dataset.section)return;
- e.preventDefault();
- const target=document.getElementById(a.dataset.section);
- if(target){
-   const nav=document.querySelector(".sectionNav");
-   const offset=(nav?.getBoundingClientRect().height||52)+2;
-   const top=target.getBoundingClientRect().top+window.scrollY-offset;
-   window.scrollTo({top,behavior:"smooth"});
- }
- setActive(a.dataset.section,true);
+sectionLinks.forEach(a=>a.addEventListener("click",()=>{
+ if(a.dataset.section)setActive(a.dataset.section,false);
 }));
 setActive("top",false);
 </script>
