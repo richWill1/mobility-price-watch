@@ -11,6 +11,42 @@
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
+
+/* Editorial retreat top — inspired by the supplied mobile reference */
+.retreatTop{background:#fffdfa;color:var(--ink)}
+.retreatTopImage{width:100%;height:clamp(430px,58vw,720px);overflow:hidden;background:#dfe9e4}
+.retreatTopImage img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 55%}
+.retreatTopContent{padding-top:28px;padding-bottom:58px;text-align:center}
+.retreatBadge{display:inline-flex;align-items:center;justify-content:center;padding:10px 22px;border:1px solid #e8cf65;background:#fff9d9;border-radius:999px;color:#6c5a24;font-size:10px;font-weight:800;letter-spacing:.13em}
+.retreatKicker{display:flex;align-items:center;justify-content:center;gap:14px;margin:27px 0 12px;color:#9a7652;font-size:10px;letter-spacing:.24em;font-weight:800}
+.retreatKicker span{width:34px;height:1px;background:#cbb79e}
+.retreatTop h1{font:500 clamp(48px,7vw,88px)/.98 "Playfair Display",serif;letter-spacing:-.035em;margin:0 auto 34px;max-width:850px}
+.retreatFacts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 auto 38px;max-width:1050px}
+.retreatFacts div{min-height:126px;padding:18px 12px 16px;border:1px solid #e8e2da;border-radius:20px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(13,42,39,.035)}
+.retreatFacts span{font-size:9px;letter-spacing:.16em;color:#777c78;font-weight:800;margin-bottom:8px}
+.retreatFacts strong{font-size:15px;line-height:1.25;font-weight:600}
+.retreatIntro{max-width:900px;margin:0 auto;color:#555e5a;font-size:18px;line-height:1.72;text-align:left}
+.retreatHighlights{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px auto 0;max-width:900px;text-align:left}
+.retreatHighlights div{display:flex;align-items:center;gap:12px;padding:15px 18px;border:1px solid #e8e2da;border-radius:18px;background:#fff;font-size:14px}
+.retreatHighlights span{width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:50%;background:#f4efe6;color:#9a7652;font-weight:800}
+.retreatTopCta{margin-top:30px}
+@media(max-width:700px){
+ .retreatTopImage{height:500px}
+ .retreatTopImage img{object-position:center center}
+ .retreatTopContent{padding:22px 16px 42px}
+ .retreatBadge{font-size:9px;padding:9px 16px;letter-spacing:.11em}
+ .retreatKicker{margin:24px 0 12px;font-size:9px;letter-spacing:.21em;gap:10px}
+ .retreatKicker span{width:28px}
+ .retreatTop h1{font-size:48px;line-height:1.02;margin-bottom:28px;max-width:620px}
+ .retreatFacts{grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:28px}
+ .retreatFacts div{min-height:122px;padding:12px 5px;border-radius:17px}
+ .retreatFacts span{font-size:8px;letter-spacing:.11em;margin-bottom:7px}
+ .retreatFacts strong{font-size:11px;line-height:1.25}
+ .retreatIntro{font-size:16px;line-height:1.72;text-align:left}
+ .retreatHighlights{grid-template-columns:1fr;gap:8px;margin-top:22px}
+ .retreatHighlights div{font-size:13px;padding:13px 14px}
+ .retreatTopCta .btn{width:100%}
+}
 .detailHero{background-image:linear-gradient(180deg,rgba(5,20,16,.12),rgba(5,20,16,.84)),url("https://static.tildacdn.com/tild3032-6339-4537-a632-633135393932/_-____.jpg")}
 .detailHero h1{max-width:760px}.brandLink{text-decoration:none}
 .galleryGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:34px}.galleryGrid img{width:100%;height:100%;display:block;object-fit:cover;border-radius:20px}.galleryMain{min-height:560px}.gallerySide{display:grid;gap:14px}.gallerySide img{min-height:270px}
@@ -199,21 +235,28 @@
 
 </head>
 <body>
-<header class="hero detailHero">
-  <div class="shell">
-    <nav class="nav">
-      <a class="brand" href="../../">Rally Travel Retreats<span>Travel retreats</span></a>
-      <div class="navlinks"><a href="#experience">The experience</a><a href="#week">The week</a><a href="#map">Map</a><a href="#enquire">Enquire</a></div>
-    </nav>
-    <div class="heroInner">
-      <div class="eyebrow">Phuket · Thailand · Tennis</div>
-      <h1>Phuket<br>Tennis Retreat</h1>
-      <p class="heroLead">World-class tennis, total wellness and unforgettable experiences — centred around Bang Tao for one brilliantly easy week in the sun.</p>
-      <div class="metaRow">
-        <span class="chip">13–21 February 2027</span><span class="chip">8 nights</span><span class="chip">Private group</span><span class="chip">Shared room</span>
-      </div>
-      <div class="ctaRow"><a class="btn btnPrimary" href="#enquire">Enquire about this retreat</a><a class="btn" style="border-color:#ffffff55;color:#fff" href="../../">Back to Rally Travel Retreats</a></div>
+<header class="retreatTop">
+  <div class="retreatTopImage">
+    <img src="https://kahliphuket.com/assets/academy/kahli-tennis-club-membership.3b071d4f.webp" alt="KĀHLĪ tennis courts in Phuket">
+  </div>
+  <div class="retreatTopContent shell">
+    <div class="retreatBadge">LIMITED PRIVATE GROUP · 24 PLACES MAX</div>
+    <div class="retreatKicker"><span></span> YOUR NEXT TENNIS ESCAPE <span></span></div>
+    <h1>Phuket Tennis Retreat</h1>
+    <div class="retreatFacts">
+      <div><span>LOCATION</span><strong>Bang Tao,<br>Phuket</strong></div>
+      <div><span>DATES</span><strong>13–21 Feb,<br>2027</strong></div>
+      <div><span>GROUP</span><strong>Up to 24<br>guests</strong></div>
+      <div><span>STAY</span><strong>8 nights<br>at Sole Mio</strong></div>
     </div>
+    <p class="retreatIntro">Spend a week in Phuket blending professional tennis, wellness and the best of the island. Mornings are built around structured coaching, while afternoons and evenings leave space to recover, explore, eat well and enjoy the trip.</p>
+    <div class="retreatHighlights">
+      <div><span>✓</span>5 mornings of professional tennis coaching</div>
+      <div><span>✓</span>8 nights at Sole Mio Hotel & Wellness</div>
+      <div><span>✓</span>Private island-hopping day</div>
+      <div><span>✓</span>Beaches, culture & hosted dinners</div>
+    </div>
+    <div class="retreatTopCta"><a class="btn btnPrimary" href="#enquire">Enquire about this retreat</a></div>
   </div>
 </header>
 
