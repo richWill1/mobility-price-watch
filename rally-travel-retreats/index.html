@@ -85,27 +85,29 @@
 .rallyJourneyHead h2{font:500 clamp(50px,6vw,78px)/.88 "Playfair Display",serif;letter-spacing:-.045em;margin:12px 0 0}
 .rallyJourneyHead h2 em{font-style:normal;color:#77817d}
 .rallyJourneyHead>p{font-size:15px;line-height:1.65;color:var(--muted);margin:0;max-width:410px}
-.rallyMapWrap{position:relative;background:#eee8dc;border:1px solid #d9d1c4;border-radius:28px;overflow:hidden}
-.rallyMap{position:relative;height:500px;overflow:hidden}
-.rallyWorld{position:absolute;inset:34px 20px 36px;display:flex;align-items:center;justify-content:center}
-.rallyWorld img{width:100%;height:auto;display:block;opacity:.38;filter:sepia(.18) saturate(.25);mix-blend-mode:multiply}
-.rallyMapGrid{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 49.9%,rgba(126,117,103,.07) 50%,transparent 50.1%),linear-gradient(0deg,transparent 49.9%,rgba(126,117,103,.07) 50%,transparent 50.1%);opacity:.35}
-.rallyMarker{position:absolute;left:78.5%;top:57%;width:50px;height:50px;border:0;border-radius:50%;background:#d9e52c;box-shadow:0 9px 22px rgba(13,42,39,.2),inset -5px -6px 9px rgba(0,0,0,.12);cursor:pointer;z-index:5;transform:translate(-50%,-50%);transition:transform .2s ease,box-shadow .2s ease}
-.rallyMarker:before,.rallyMarker:after{content:"";position:absolute;inset:7px;border:2px solid rgba(255,255,255,.92);border-radius:50%;transform:rotate(28deg)}
-.rallyMarker:after{transform:rotate(208deg);opacity:.72}
-.rallyMarker:hover,.rallyMarker:focus-visible,.rallyMarker.is-selected{transform:translate(-50%,-50%) scale(1.1);box-shadow:0 12px 28px rgba(13,42,39,.27),inset -5px -6px 9px rgba(0,0,0,.12);outline:none}
-.rallyMarkerRing{position:absolute;left:78.5%;top:57%;width:76px;height:76px;border:1px solid rgba(184,111,77,.42);border-radius:50%;transform:translate(-50%,-50%);animation:rallyMarkerPulse 2.4s ease-out infinite;pointer-events:none;z-index:4}
-@keyframes rallyMarkerPulse{0%{opacity:.65;transform:translate(-50%,-50%) scale(.55)}80%,100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
-.rallyMarkerLabel{position:absolute;left:78.5%;top:47%;transform:translate(-50%,-100%);z-index:4;text-align:center;pointer-events:none}
-.rallyMarkerLabel small{display:block;color:#b86f4d;font-size:7px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
-.rallyMarkerLabel strong{display:block;font:500 25px/.9 "Playfair Display",serif;color:var(--ink)}
-.rallyMapHint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#8c877e;z-index:2}
-.rallyMapHint span{display:inline-block;margin-right:7px;font-size:13px;color:var(--ink)}
-.rallyRoute{position:absolute;left:22%;top:28%;width:56%;height:29%;pointer-events:none;opacity:0;transition:opacity .25s ease}
-.rallyMap.has-selection .rallyRoute{opacity:1}
+.rallyMapWrap{position:relative;background:#eae4d8;border:1px solid #d9d1c4;border-radius:28px;overflow:hidden;min-height:570px}
+.rallyMap{position:relative;height:570px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rallyAtlas{position:relative;width:min(560px,82vw);aspect-ratio:1;border-radius:50%;overflow:hidden;background:#dcd5c8;box-shadow:inset -35px -22px 60px rgba(13,42,39,.16),inset 24px 12px 42px rgba(255,255,255,.34),0 25px 55px rgba(13,42,39,.13);border:1px solid rgba(255,255,255,.55)}
+.rallyAtlas:after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.2),transparent 28%),radial-gradient(circle at 70% 70%,rgba(13,42,39,.12),transparent 48%);pointer-events:none;z-index:3}
+.rallyAtlasMap{position:absolute;inset:-1% -11%;width:122%;height:102%;object-fit:cover;opacity:.5;filter:sepia(.2) saturate(.2) contrast(.92);mix-blend-mode:multiply;transform:scale(1.02)}
+.rallyAtlasLines{position:absolute;inset:-10%;border-radius:50%;z-index:2;pointer-events:none;background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 39px,rgba(13,42,39,.055) 40px 41px),linear-gradient(90deg,transparent 49.7%,rgba(13,42,39,.09) 50%,transparent 50.3%);transform:scaleX(.72)}
+.rallyAtlasLines:before,.rallyAtlasLines:after{content:"";position:absolute;inset:8% 20%;border:1px solid rgba(13,42,39,.08);border-radius:50%}
+.rallyAtlasLines:after{inset:20% 8%}
+.rallyRoute{position:absolute;inset:0;z-index:4;pointer-events:none}
 .rallyRoute svg{width:100%;height:100%;overflow:visible}
-.rallyRoute path{fill:none;stroke:#b86f4d;stroke-width:1.8;stroke-dasharray:4 7;stroke-linecap:round}
-.rallyPopup{position:absolute;right:26px;top:26px;width:min(350px,38%);background:rgba(255,253,249,.98);border:1px solid #d9d1c4;border-radius:20px;box-shadow:0 20px 55px rgba(13,42,39,.14);z-index:8;overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+.rallyRoute path{fill:none;stroke:#b86f4d;stroke-width:2;stroke-linecap:round;stroke-dasharray:5 8;filter:drop-shadow(0 1px 1px rgba(255,255,255,.5));opacity:.95}
+.rallyMarker{position:absolute;left:76%;top:56%;width:54px;height:54px;border:0;border-radius:50%;background:#d9e52c;box-shadow:0 9px 25px rgba(13,42,39,.28),inset -6px -7px 11px rgba(0,0,0,.12);cursor:pointer;z-index:6;transform:translate(-50%,-50%);transition:transform .22s ease,box-shadow .22s ease}
+.rallyMarker:before,.rallyMarker:after{content:"";position:absolute;inset:8px;border:2px solid rgba(255,255,255,.94);border-radius:50%;transform:rotate(28deg)}
+.rallyMarker:after{transform:rotate(208deg);opacity:.7}
+.rallyMarker:hover,.rallyMarker:focus-visible,.rallyMarker.is-selected{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 14px 32px rgba(13,42,39,.3),inset -6px -7px 11px rgba(0,0,0,.12);outline:none}
+.rallyMarkerRing{position:absolute;left:76%;top:56%;width:84px;height:84px;border:1px solid rgba(184,111,77,.45);border-radius:50%;transform:translate(-50%,-50%);animation:rallyMarkerPulse 2.5s ease-out infinite;pointer-events:none;z-index:5}
+@keyframes rallyMarkerPulse{0%{opacity:.7;transform:translate(-50%,-50%) scale(.5)}80%,100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
+.rallyMarkerLabel{position:absolute;left:76%;top:45%;transform:translate(-50%,-100%);z-index:5;text-align:center;pointer-events:none}
+.rallyMarkerLabel small{display:block;color:#b86f4d;font-size:7px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
+.rallyMarkerLabel strong{display:block;font:500 26px/.9 "Playfair Display",serif;color:var(--ink)}
+.rallyMapHint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#8c877e;z-index:7;white-space:nowrap}
+.rallyMapHint span{display:inline-block;margin-right:7px;font-size:13px;color:var(--ink)}
+.rallyPopup{position:absolute;right:28px;top:28px;width:min(350px,38%);background:rgba(255,253,249,.98);border:1px solid #d9d1c4;border-radius:20px;box-shadow:0 20px 55px rgba(13,42,39,.16);z-index:10;overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
 .rallyPopup.is-open{opacity:1;transform:none;pointer-events:auto}
 .rallyPopupImage{height:145px;background-image:url("https://a.cdn-hotels.com/gdcs/production105/d1236/490b0575-83e1-45dd-bdc6-27c5b2c0c952.jpg");background-size:cover;background-position:center}
 .rallyPopupBody{padding:19px 21px 21px}
@@ -125,18 +127,18 @@
  .rallyJourneyHead{display:block;margin-bottom:23px}
  .rallyJourneyHead h2{font-size:45px;line-height:.91;margin-top:9px}
  .rallyJourneyHead>p{font-size:13px;line-height:1.55;margin-top:15px}
- .rallyMapWrap{border-radius:20px}
- .rallyMap{height:365px}
- .rallyWorld{inset:42px -18px 40px}
- .rallyWorld img{width:116%;max-width:none;opacity:.34}
- .rallyMarker{left:78%;top:57%;width:44px;height:44px}
+ .rallyMapWrap{border-radius:20px;min-height:430px}
+ .rallyMap{height:430px}
+ .rallyAtlas{width:345px}
+ .rallyAtlasLines{transform:scaleX(.72)}
+ .rallyMarker{left:76%;top:56%;width:45px;height:45px}
  .rallyMarker:before,.rallyMarker:after{inset:6px}
- .rallyMarkerRing{left:78%;top:57%;width:68px;height:68px}
- .rallyMarkerLabel{left:78%;top:47%;transform:translate(-50%,-100%)}
+ .rallyMarkerRing{left:76%;top:56%;width:69px;height:69px}
+ .rallyMarkerLabel{left:76%;top:45%}
  .rallyMarkerLabel strong{font-size:22px}
- .rallyMapHint{font-size:6px;bottom:10px}
+ .rallyMapHint{font-size:6px;bottom:11px}
  .rallyMapHint span{font-size:11px}
- .rallyRoute{left:14%;top:25%;width:66%;height:33%}
+ .rallyRoute path{stroke-width:1.5}
  .rallyPopup{left:12px;right:12px;top:auto;bottom:12px;width:auto;border-radius:17px}
  .rallyPopupImage{height:118px}
  .rallyPopupBody{padding:16px 17px 18px}
@@ -167,21 +169,19 @@
       <p>The game is the starting point. The destination is part of the experience.</p>
     </div>
     <div class="rallyMapWrap">
-      <div class="rallyMap" aria-label="Rally destinations map">
-  <div class="rallyWorld">
-    <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/BlankMap_World_simple.svg" alt="" aria-hidden="true">
+      <div class="rallyMap" aria-label="Rally destinations globe">
+  <div class="rallyAtlas">
+    <img class="rallyAtlasMap" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/BlankMap_World_simple.svg" alt="" aria-hidden="true">
+    <div class="rallyAtlasLines" aria-hidden="true"></div>
+    <div class="rallyRoute" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M22,40 C37,21 55,25 67,45 C72,53 76,56 76,56"/>
+      </svg>
+    </div>
+    <span class="rallyMarkerRing" aria-hidden="true"></span>
+    <button class="rallyMarker" type="button" aria-label="Open Phuket Tennis Retreat"><span aria-hidden="true"></span></button>
+    <div class="rallyMarkerLabel"><small>Rally 01</small><strong>Phuket</strong></div>
   </div>
-  <div class="rallyMapGrid"></div>
-  <div class="rallyRoute" aria-hidden="true">
-    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-      <path d="M0,8 C28,-3 48,25 69,48 C82,62 91,68 100,72"/>
-    </svg>
-  </div>
-  <span class="rallyMarkerRing" aria-hidden="true"></span>
-  <button class="rallyMarker" type="button" aria-label="Open Phuket Tennis Retreat">
-    <span aria-hidden="true"></span>
-  </button>
-  <div class="rallyMarkerLabel"><small>Rally 01</small><strong>Phuket</strong></div>
   <div class="rallyMapHint"><span>⌖</span> Tap a destination</div>
   <aside class="rallyPopup" aria-hidden="true">
     <button class="rallyPopupClose" type="button" aria-label="Close destination">×</button>
