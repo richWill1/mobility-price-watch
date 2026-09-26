@@ -242,10 +242,10 @@ body{overflow-x:hidden!important}
   .gallerySlide{width:100%!important;flex-basis:100%!important}
 }
 
-/* High-resolution Phuket retreat collage */
+/* High-resolution Phuket retreat collage — direct Unsplash originals */
 .cardImagePhuket{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#fff;padding:0}
 .phuketPhoto{display:block;min-width:0;min-height:0;background-position:center;background-size:cover;background-repeat:no-repeat}
-.phuketPhoto1{background-image:url("https://i.ex-cdn.com/vntravellive.com/files/news/2024/12/06/club-med-phuket-trai-nghiem-nghi-duong-tat-ca-trong-mot-giua-thien-duong-nhiet-doi-124712.jpg")}
-.phuketPhoto2{background-image:url("https://www.thephuketnews.com/photo/listing/2025/1765346521_3-org.jpg")}
-.phuketPhoto3{background-image:url("https://images.trvl-media.com/lodging/110000000/109810000/109801300/109801236/f7487196.jpg")}
-.phuketPhoto4{background-image:url("https://staging.destinasian.com/wp-content/uploads/InterContinental-Phuket-Resort-Aerial-View.jpg")}
+.phuketPhoto1{background-image:url("https://images.unsplash.com/photo-1729615220971-4d524fa93cb8?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
+.phuketPhoto2{background-image:url("https://images.unsplash.com/photo-1785301330695-ca1f860d202a?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
+.phuketPhoto3{background-image:url("https://images.unsplash.com/photo-1764339441207-c55b7ae4a15e?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
+.phuketPhoto4{background-image:url("https://images.unsplash.com/photo-1729708475316-88ec2dc0083e?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
