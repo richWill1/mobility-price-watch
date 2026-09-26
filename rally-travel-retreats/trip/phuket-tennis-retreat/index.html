@@ -206,15 +206,6 @@ const places=[
 const categoryNames={stay:"Stay",tennis:"Tennis",beaches:"Beaches",culture:"Food & culture",experiences:"Experiences"};
 const mapEl=document.getElementById("phuketMap");
 const mapBoxEl=mapEl.closest(".mapBox");
-
-function sizeMap(){
-  const w=mapBoxEl.clientWidth;
-  const h=mapBoxEl.clientHeight;
-  mapEl.style.width=w+"px";
-  mapEl.style.height=h+"px";
-  map.invalidateSize({pan:false});
-}
-
 const map=L.map(mapEl,{scrollWheelZoom:false,worldCopyJump:true,zoomControl:false});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics, and the GIS User Community"});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
@@ -291,18 +282,15 @@ document.getElementById("toggle").onclick=()=>{
   else{map.removeLayer(street);satellite.addTo(map);document.getElementById("toggle").textContent="Street map"}
   sat=!sat;
 };
+function hardResetMap(){
+  map.invalidateSize({pan:false,animate:false});
+}
 map.whenReady(()=>{
-  const refresh=()=>{
-    sizeMap();
-    map.setView([7.94,98.30],11.1,{animate:false});
-  };
-  requestAnimationFrame(()=>requestAnimationFrame(refresh));
-  [250,750,1500].forEach(delay=>setTimeout(refresh,delay));
-  window.addEventListener("resize",refresh,{passive:true});
-  if(window.ResizeObserver){
-    new ResizeObserver(refresh).observe(mapBoxEl);
-  }
+  requestAnimationFrame(()=>requestAnimationFrame(hardResetMap));
+  [250,700,1400].forEach(delay=>setTimeout(hardResetMap,delay));
 });
+window.addEventListener("resize",hardResetMap,{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(hardResetMap,300),{passive:true});
 </script>
 </body>
 </html>
