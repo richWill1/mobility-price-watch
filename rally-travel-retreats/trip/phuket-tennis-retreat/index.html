@@ -47,20 +47,13 @@
 .facility span{display:block;color:var(--muted);font-size:10px;line-height:1.45}
 .hotelSource{font-size:10px;color:var(--muted);margin-top:12px}
 .hotelSource a{color:inherit}
-.day{grid-template-columns:220px 1fr}
-.dayMedia{display:flex;flex-direction:column;background:var(--ink)}
-.dayMedia .dayDate{flex:0 0 auto}
-.dayPhoto{display:block;width:100%;height:190px;object-fit:cover}
-@media(max-width:900px){
- .day{grid-template-columns:1fr}
- .dayMedia{display:grid;grid-template-columns:112px 1fr}
- .dayMedia .dayDate{min-height:150px}
- .dayPhoto{height:150px}
-}
+.day{grid-template-columns:1fr}
+.dayMedia{display:block;background:var(--ink)}
+.dayMedia .dayDate{min-height:92px}
+.dayPhoto{display:block;width:100%;height:220px;object-fit:cover}
 @media(max-width:700px){
- .dayMedia{grid-template-columns:112px 1fr}
- .dayMedia .dayDate{min-height:130px}
- .dayPhoto{height:130px}
+ .dayMedia .dayDate{min-height:70px}
+ .dayPhoto{height:180px}
 }
 
 @media(max-width:900px){
