@@ -11,237 +11,99 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* Rally Travel Retreats — destination-led editorial homepage */
 .homePage{--ink:#0d2a27;--paper:#fbfaf6;--cream:#f1ece2;--muted:#68736f;--line:#ddd6ca;--accent:#b86f4d;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif}
-.homePage *{box-sizing:border-box}
-.homePage .shell{width:min(1180px,calc(100% - 48px));margin:0 auto}
-
-/* Header */
+.homePage *{box-sizing:border-box}.homePage .shell{width:min(1180px,calc(100% - 48px));margin:0 auto}
 .homeHeader{position:sticky;top:0;z-index:1000;background:rgba(251,250,246,.96);border-bottom:1px solid var(--line)}
 .homeNav{height:68px;display:flex;align-items:center;justify-content:space-between}
 .homeBrand{display:inline-flex;flex-direction:column;text-decoration:none;color:var(--ink);font:600 21px/1 "Playfair Display",serif;letter-spacing:.18em}
 .homeBrand span{font:800 7px/1.2 "DM Sans",sans-serif;letter-spacing:.24em;margin-top:6px;text-align:center}
-.homeNav nav{display:flex;gap:28px}
-.homeNav nav a{color:var(--ink);text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.homeNav nav{display:flex;gap:28px}.homeNav nav a{color:var(--ink);text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 
-/* Hero */
 .homeHero{position:relative;min-height:640px;display:flex;align-items:flex-end;overflow:hidden;background:#16322e}
-.homeHeroImage{position:absolute;inset:0;background:
-linear-gradient(180deg,rgba(5,20,16,.08) 15%,rgba(5,20,16,.12) 38%,rgba(5,20,16,.76) 100%),
-url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp") center/cover}
+.homeHeroImage{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,20,16,.08) 15%,rgba(5,20,16,.12) 38%,rgba(5,20,16,.76) 100%),url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp") center/cover}
 .homeHeroInner{position:relative;z-index:1;width:min(1180px,calc(100% - 48px));margin:0 auto;padding:0 0 58px;color:#fff}
 .homeHeroKicker{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:13px}
 .homeHero h1{font:500 clamp(54px,7vw,92px)/.88 "Playfair Display",serif;letter-spacing:-.045em;max-width:850px;margin:0 0 20px}
-.homeHero h1 em{font-style:normal;color:#d9dedb}
-.homeHeroCopy{display:flex;align-items:end;justify-content:space-between;gap:35px}
-.homeHeroCopy p{max-width:520px;color:#e2e7e4;font-size:14px;line-height:1.6;margin:0}
+.homeHero h1 em{font-style:normal;color:#d9dedb}.homeHeroCopy{display:flex;align-items:end;justify-content:space-between;gap:35px}
+.homeHeroCopy p{max-width:560px;color:#e2e7e4;font-size:16px;line-height:1.6;margin:0}
 .homeButton{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:47px;padding:0 20px;border-radius:999px;text-decoration:none;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
-.homeButtonLight{background:#fff;color:var(--ink)}
-.homeButtonDark{background:var(--ink);color:#fff}
+.homeButtonLight{background:#fff;color:var(--ink)}.homeButtonDark{background:var(--ink);color:#fff}
 
-/* Featured adventures */
 .homeFeatured{background:var(--paper);padding:72px 0 78px}
 .homeSectionHead{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:27px}
 .homeKicker{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
 .homeSectionHead h2{font:500 clamp(40px,5vw,62px)/.94 "Playfair Display",serif;letter-spacing:-.04em;margin:9px 0 0}
-.homeSectionHead p{max-width:370px;color:var(--muted);font-size:13px;line-height:1.55;margin:0}
-
-/* Tiles */
+.homeSectionHead p{max-width:390px;color:var(--muted);font-size:14px;line-height:1.6;margin:0}
 .adventureRail{display:flex;gap:16px;overflow-x:auto;padding:0 0 8px;scroll-snap-type:x mandatory;scrollbar-width:none}
-.adventureRail::-webkit-scrollbar{display:none}
-.adventureTile{flex:0 0 min(520px,calc(100vw - 48px));scroll-snap-align:start;text-decoration:none;color:inherit}
+.adventureRail::-webkit-scrollbar{display:none}.adventureTile{flex:0 0 min(520px,calc(100vw - 48px));scroll-snap-align:start;text-decoration:none;color:inherit}
 .adventureImage{height:390px;position:relative;overflow:hidden;border-radius:22px;background-position:center;background-size:cover}
 .adventureImage:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,20,16,.03) 42%,rgba(5,20,16,.62) 100%)}
 .adventureImagePhuket{background-image:url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp")}
 .adventureImageComing{background-image:url("https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1600&q=88")}
 .adventureBadge{position:absolute;z-index:1;left:17px;top:17px;padding:8px 11px;background:rgba(251,250,246,.94);border-radius:999px;font-size:7px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-.adventureOverlay{position:absolute;z-index:1;left:20px;right:20px;bottom:19px;color:#fff}
-.adventureOverlay small{font-size:8px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
-.adventureOverlay h3{font:500 43px/.9 "Playfair Display",serif;letter-spacing:-.04em;margin:8px 0 0}
-.adventureOverlay h3 em{font-style:normal;color:#dce1de}
+.adventureOverlay{position:absolute;z-index:1;left:20px;right:20px;bottom:19px;color:#fff}.adventureOverlay small{font-size:8px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.adventureOverlay h3{font:500 43px/.9 "Playfair Display",serif;letter-spacing:-.04em;margin:8px 0 0}.adventureOverlay h3 em{font-style:normal;color:#dce1de}
 .adventureInfo{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 2px 0}
-.adventureInfoMeta{display:flex;gap:20px}
-.adventureInfoMeta div{display:flex;flex-direction:column}
+.adventureInfoMeta{display:flex;gap:20px}.adventureInfoMeta div{display:flex;flex-direction:column}
 .adventureInfoMeta small{color:#9a7652;font-size:7px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
-.adventureInfoMeta strong{font-size:10px}
-.adventureExplore{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.adventureTileComing .adventureInfo{opacity:.7}
-.adventureTileComing{cursor:default}
+.adventureInfoMeta strong{font-size:11px}.adventureExplore{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
 
-/* Rally statement */
-.homeStatement{background:var(--cream);padding:82px 0}
-.homeStatementInner{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
-.homeStatement h2{font:500 clamp(46px,5.5vw,72px)/.9 "Playfair Display",serif;letter-spacing:-.045em;margin:10px 0 0}
-.homeStatement h2 em{font-style:normal;color:#77817d}
-.homeStatementCopy{border-left:1px solid #cfc5b6;padding-left:42px}
-.homeStatementCopy p{font:500 clamp(24px,3vw,36px)/1.15 "Playfair Display",serif;margin:0;max-width:650px}
-.homeStatementCopy small{display:block;color:var(--muted);font-size:11px;line-height:1.6;margin-top:20px;max-width:500px}
+.homeStatement{background:var(--cream);padding:82px 0}.homeStatementInner{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.homeStatement h2{font:500 clamp(46px,5.5vw,72px)/.9 "Playfair Display",serif;letter-spacing:-.045em;margin:10px 0 0}.homeStatement h2 em{font-style:normal;color:#77817d}
+.homeStatementCopy{border-left:1px solid #cfc5b6;padding-left:42px}.homeStatementCopy p{font:500 clamp(24px,3vw,36px)/1.15 "Playfair Display",serif;margin:0;max-width:650px}
+.homeStatementCopy small{display:block;color:var(--muted);font-size:14px;line-height:1.65;margin-top:20px;max-width:560px}
+.homeContact{background:var(--paper);padding:28px 0 68px}.homeContactCard{display:flex;align-items:center;justify-content:space-between;gap:30px;background:var(--ink);color:#fff;border-radius:22px;padding:34px 38px}
+.homeContactCard h2{font:500 39px/1 "Playfair Display",serif;margin:9px 0 7px}.homeContactCard p{color:#cbd4d0;font-size:14px;margin:0}.homeContactCard .homeButton{background:#fff;color:var(--ink)}
+.homeFooter{background:var(--ink);color:#fff;padding:38px 0}.homeFooterGrid{display:flex;align-items:end;justify-content:space-between;gap:30px}.homeFooter .homeBrand{color:#fff}.homeFooter p{color:#bfc9c5;font-size:10px;line-height:1.7;margin:0}
 
-/* Contact */
-.homeContact{background:var(--paper);padding:28px 0 68px}
-.homeContactCard{display:flex;align-items:center;justify-content:space-between;gap:30px;background:var(--ink);color:#fff;border-radius:22px;padding:34px 38px}
-.homeContactCard h2{font:500 39px/1 "Playfair Display",serif;margin:9px 0 7px}
-.homeContactCard p{color:#cbd4d0;font-size:12px;margin:0}
-.homeContactCard .homeButton{background:#fff;color:var(--ink)}
-
-/* Footer */
-.homeFooter{background:var(--ink);color:#fff;padding:38px 0}
-.homeFooterGrid{display:flex;align-items:end;justify-content:space-between;gap:30px}
-.homeFooter .homeBrand{color:#fff}
-.homeFooter p{color:#bfc9c5;font-size:10px;line-height:1.7;margin:0}
-
-/* Mobile */
 @media(max-width:700px){
-  .homePage .shell{width:calc(100% - 32px)}
-  .homeNav{height:60px}
-  .homeBrand{font-size:17px}
-  .homeBrand span{font-size:6px;margin-top:5px}
-  .homeNav nav{gap:17px}
-  .homeNav nav a{font-size:8px;letter-spacing:.08em}
-  .homeNav nav a:nth-child(2){display:none}
-
-  .homeHero{min-height:620px}
-  .homeHeroImage{background-position:56% center}
-  .homeHeroInner{width:calc(100% - 32px);padding-bottom:31px}
-  .homeHeroKicker{font-size:8px;margin-bottom:10px}
-  .homeHero h1{font-size:48px;line-height:.9;margin-bottom:15px}
-  .homeHeroCopy{display:block}
-  .homeHeroCopy p{font-size:12px;line-height:1.5;max-width:430px}
-  .homeHeroCopy .homeButton{margin-top:19px}
-
-  .homeFeatured{padding:46px 0 53px}
-  .homeSectionHead{display:block;margin-bottom:20px}
-  .homeSectionHead h2{font-size:40px;margin-top:7px}
-  .homeSectionHead p{font-size:11px;line-height:1.5;margin-top:9px;max-width:430px}
-  .adventureRail{gap:12px;margin-right:-16px;padding-right:16px}
-  .adventureTile{flex-basis:calc(100vw - 48px)}
-  .adventureImage{height:340px;border-radius:19px}
-  .adventureBadge{left:13px;top:13px;padding:7px 9px;font-size:6.5px}
-  .adventureOverlay{left:17px;right:17px;bottom:17px}
-  .adventureOverlay small{font-size:7px}
-  .adventureOverlay h3{font-size:39px}
-  .adventureInfo{padding-top:13px}
-  .adventureInfoMeta{gap:14px}
-  .adventureInfoMeta small{font-size:6px}
-  .adventureInfoMeta strong{font-size:8.5px}
-  .adventureExplore{font-size:8px}
-
-  .homeStatement{padding:58px 0}
-  .homeStatementInner{grid-template-columns:1fr;gap:25px}
-  .homeStatement h2{font-size:45px}
-  .homeStatementCopy{border-left:0;border-top:1px solid #cfc5b6;padding:24px 0 0}
-  .homeStatementCopy p{font-size:27px;line-height:1.08}
-  .homeStatementCopy small{font-size:10px;margin-top:16px}
-
-  .homeContact{padding:0 0 48px}
-  .homeContactCard{display:block;border-radius:19px;padding:25px 20px}
-  .homeContactCard h2{font-size:33px}
-  .homeContactCard p{font-size:11px;line-height:1.5;margin-bottom:18px}
-  .homeContactCard .homeButton{width:100%}
-
-  .homeFooter{padding:29px 0}
-  .homeFooterGrid{display:block}
-  .homeFooterGrid>div{margin-top:19px}
-  .homeFooter p{font-size:9px}
+ .homePage .shell{width:calc(100% - 32px)}.homeNav{height:60px}.homeBrand{font-size:17px}.homeBrand span{font-size:6px;margin-top:5px}
+ .homeNav nav{gap:17px}.homeNav nav a{font-size:8px;letter-spacing:.08em}.homeNav nav a:nth-child(2){display:none}
+ .homeHero{min-height:620px}.homeHeroImage{background-position:56% center}.homeHeroInner{width:calc(100% - 32px);padding-bottom:31px}
+ .homeHeroKicker{font-size:8px;margin-bottom:10px}.homeHero h1{font-size:48px;line-height:.9;margin-bottom:15px}.homeHeroCopy{display:block}
+ .homeHeroCopy p{font-size:14px;line-height:1.6;max-width:430px}.homeHeroCopy .homeButton{margin-top:19px}
+ .homeFeatured{padding:46px 0 53px}.homeSectionHead{display:block;margin-bottom:20px}.homeSectionHead h2{font-size:40px;margin-top:7px}
+ .homeSectionHead p{font-size:14px;line-height:1.6;margin-top:11px;max-width:430px}
+ .adventureRail{gap:12px;margin-right:-16px;padding-right:16px}.adventureTile{flex-basis:calc(100vw - 48px)}
+ .adventureImage{height:340px;border-radius:19px}.adventureBadge{left:13px;top:13px;padding:7px 9px;font-size:6.5px}
+ .adventureOverlay{left:17px;right:17px;bottom:17px}.adventureOverlay small{font-size:7px}.adventureOverlay h3{font-size:39px}
+ .adventureInfo{padding-top:15px}.adventureInfoMeta{gap:14px}.adventureInfoMeta small{font-size:6px}.adventureInfoMeta strong{font-size:9px}.adventureExplore{font-size:8px}
+ .homeStatement{padding:58px 0}.homeStatementInner{grid-template-columns:1fr;gap:25px}.homeStatement h2{font-size:45px}
+ .homeStatementCopy{border-left:0;border-top:1px solid #cfc5b6;padding:24px 0 0}.homeStatementCopy p{font-size:28px;line-height:1.08}
+ .homeStatementCopy small{font-size:14px;line-height:1.6;margin-top:16px}
+ .homeContact{padding:0 0 48px}.homeContactCard{display:block;border-radius:19px;padding:25px 20px}.homeContactCard h2{font-size:33px}
+ .homeContactCard p{font-size:14px;line-height:1.6;margin-bottom:18px}.homeContactCard .homeButton{width:100%}
+ .homeFooter{padding:29px 0}.homeFooterGrid{display:block}.homeFooterGrid>div{margin-top:19px}.homeFooter p{font-size:9px}
 }
 </style>
 </head>
 <body class="homePage">
-<header class="homeHeader">
-  <div class="homeNav shell">
-    <a class="homeBrand" href="./" aria-label="Rally Travel Retreats home">RALLY<span>TRAVEL RETREATS</span></a>
-    <nav aria-label="Main navigation">
-      <a href="#retreats">Retreats</a>
-      <a href="#statement">The Rally way</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
-
+<header class="homeHeader"><div class="homeNav shell">
+<a class="homeBrand" href="./" aria-label="Rally Travel Retreats home">RALLY<span>TRAVEL RETREATS</span></a>
+<nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
+</div></header>
 <main>
-<section class="homeHero">
-  <div class="homeHeroImage" aria-hidden="true"></div>
-  <div class="homeHeroInner">
-    <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
-    <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
-    <div class="homeHeroCopy">
-      <p>Small-group escapes built around brilliant tennis, beautiful places and the people you meet along the way.</p>
-      <a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a>
-    </div>
-  </div>
-</section>
+<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="homeHeroInner">
+<div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
+<h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
+<div class="homeHeroCopy"><p>Small-group tennis retreats in beautiful places — built around great coaching, good food and time to enjoy where you've landed.</p><a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a></div>
+</div></section>
 
-<section id="retreats" class="homeFeatured">
-  <div class="shell">
-    <div class="homeSectionHead">
-      <div><div class="homeKicker">Featured adventures</div><h2>Skill-based group journeys.</h2></div>
-      <p>Curated retreats where the sport gets you there — and the destination gives you a reason to stay.</p>
-    </div>
+<section id="retreats" class="homeFeatured"><div class="shell">
+<div class="homeSectionHead"><div><div class="homeKicker">Featured retreats</div><h2>Come for the tennis.<br>Stay for everything else.</h2></div>
+<p>Carefully chosen destinations, brilliant coaching and a week with people who came for the same reason.</p></div>
+<div class="adventureRail" aria-label="Rally retreats">
+<a class="adventureTile" href="trip/phuket-tennis-retreat/" aria-label="Explore Phuket Tennis Retreat">
+<div class="adventureImage adventureImagePhuket"><span class="adventureBadge">13–21 Feb 2027 · 8 nights</span><div class="adventureOverlay"><small>Phuket · Thailand</small><h3>Phuket<br><em>Tennis Retreat</em></h3></div></div>
+<div class="adventureInfo"><div class="adventureInfoMeta"><div><small>From</small><strong>$2,995</strong></div><div><small>Group</small><strong>Up to 24 guests</strong></div><div><small>Stay</small><strong>8 nights</strong></div></div><span class="adventureExplore">Explore retreat →</span></div>
+</a>
+<div class="adventureTile adventureTileComing" aria-label="More Rally retreats coming soon"><div class="adventureImage adventureImageComing"><span class="adventureBadge">Coming soon</span><div class="adventureOverlay"><small>Rally Travel Retreats</small><h3>More<br><em>destinations</em></h3></div></div><div class="adventureInfo"><div class="adventureInfoMeta"><div><small>Next up</small><strong>New retreats</strong></div></div><span class="adventureExplore">More to come</span></div></div>
+</div></div></section>
 
-    <div class="adventureRail" aria-label="Rally retreats">
-      <a class="adventureTile" href="trip/phuket-tennis-retreat/" aria-label="Explore Phuket Tennis Retreat">
-        <div class="adventureImage adventureImagePhuket">
-          <span class="adventureBadge">13–21 Feb 2027 · 8 nights</span>
-          <div class="adventureOverlay">
-            <small>Phuket · Thailand</small>
-            <h3>Phuket<br><em>Tennis Retreat</em></h3>
-          </div>
-        </div>
-        <div class="adventureInfo">
-          <div class="adventureInfoMeta">
-            <div><small>From</small><strong>$2,995</strong></div>
-            <div><small>Group</small><strong>Up to 24</strong></div>
-            <div><small>Stay</small><strong>Sole Mio</strong></div>
-          </div>
-          <span class="adventureExplore">Explore →</span>
-        </div>
-      </a>
+<section id="statement" class="homeStatement"><div class="shell homeStatementInner"><div><div class="homeKicker">The Rally way</div><h2>Play.<br><em>Recover. Explore.</em></h2></div>
+<div class="homeStatementCopy"><p>Tennis is the reason you come. The destination is why you stay.</p><small>Mornings on court. Afternoons by the pool or out exploring. Long lunches, good dinners and the occasional plan that turns into the best part of the trip.</small></div></div></section>
 
-      <div class="adventureTile adventureTileComing" aria-label="More Rally retreats coming soon">
-        <div class="adventureImage adventureImageComing">
-          <span class="adventureBadge">Coming soon</span>
-          <div class="adventureOverlay">
-            <small>Rally Travel Retreats</small>
-            <h3>More<br><em>destinations</em></h3>
-          </div>
-        </div>
-        <div class="adventureInfo">
-          <div class="adventureInfoMeta"><div><small>Next up</small><strong>New retreats</strong></div></div>
-          <span class="adventureExplore">Watch this space</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="statement" class="homeStatement">
-  <div class="shell homeStatementInner">
-    <div>
-      <div class="homeKicker">The Rally way</div>
-      <h2>Play.<br><em>Recover. Explore.</em></h2>
-    </div>
-    <div class="homeStatementCopy">
-      <p>Tennis is the reason you come. The destination is why you stay.</p>
-      <small>Expert coaching. Space to recover. Great food, local experiences and the freedom to enjoy a place properly — with a small group of people who came for the same reason.</small>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="homeContact">
-  <div class="shell">
-    <div class="homeContactCard">
-      <div><div class="homeKicker">Plan your next Rally</div><h2>Have a destination in mind?</h2><p>Tell us where you want to play. We'll take it from there.</p></div>
-      <a class="homeButton" href="mailto:mark@rallytravelretreats.com?subject=Rally%20Travel%20Retreats%20Enquiry">Contact Rally <span>→</span></a>
-    </div>
-  </div>
-</section>
+<section id="contact" class="homeContact"><div class="shell"><div class="homeContactCard"><div><div class="homeKicker">Plan your next Rally</div><h2>Have a destination in mind?</h2><p>Tell us where you want to play. We'll take it from there.</p></div><a class="homeButton" href="mailto:mark@rallytravelretreats.com?subject=Rally%20Travel%20Retreats%20Enquiry">Contact Rally <span>→</span></a></div></div></section>
 </main>
-
-<footer class="homeFooter">
-  <div class="shell homeFooterGrid">
-    <a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a>
-    <div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div>
-  </div>
-</footer>
-</body>
-</html>
+<footer class="homeFooter"><div class="shell homeFooterGrid"><a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a><div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
+</body></html>
