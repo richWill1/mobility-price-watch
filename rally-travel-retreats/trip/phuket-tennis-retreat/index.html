@@ -184,8 +184,10 @@
 .sectionNavInner::-webkit-scrollbar{display:none}
 .sectionNav a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:58px;padding:0 15px;border:0;background:none;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;position:relative}
 .sectionNav a:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .18s ease}
-.sectionNav a.active{color:var(--ink)}
-.sectionNav a.active:after{transform:scaleX(1)}
+.sectionNav a.active{color:var(--ink);background:rgba(31,111,91,.09);border-radius:999px;font-weight:900}
+.sectionNav a.active:before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#39a873;box-shadow:0 0 0 3px rgba(57,168,115,.13);animation:navLivePulse 1.8s ease-out infinite}
+.sectionNav a.active:after{left:15px;right:15px;bottom:3px;height:2px;transform:scaleX(1);background:#39a873;border-radius:999px}
+@keyframes navLivePulse{0%,100%{box-shadow:0 0 0 3px rgba(57,168,115,.13)}50%{box-shadow:0 0 0 6px rgba(57,168,115,0)}}
 .sectionNav .navIcon{font-size:16px;line-height:1}
 @media(max-width:700px){
  .sectionNavInner{padding:0 10px;gap:2px}
