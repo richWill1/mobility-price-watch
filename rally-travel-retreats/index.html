@@ -78,14 +78,14 @@
 
 
 <style>
-/* Motion-driven tennis ball field */
-.heroBalls{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-.heroBall{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#d9e52c;box-shadow:inset calc(var(--s)*-.14) calc(var(--s)*-.14) calc(var(--s)*.25) rgba(0,0,0,.13),0 calc(var(--s)*.22) calc(var(--s)*.45) rgba(0,0,0,.2);will-change:transform}
-.heroBall:before,.heroBall:after{content:"";position:absolute;inset:7%;border:2px solid rgba(255,255,255,.9);border-radius:48% 52% 46% 54%;transform:rotate(28deg)}
+/* Single interactive tennis ball */
+.heroBalls{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.heroBall{position:absolute;left:72%;top:31%;width:clamp(34px,4vw,52px);aspect-ratio:1;border-radius:50%;background:#d9e52c;box-shadow:inset -8px -8px 14px rgba(0,0,0,.13),0 14px 28px rgba(0,0,0,.24);pointer-events:auto;cursor:pointer;touch-action:none;will-change:transform}
+.heroBall:before,.heroBall:after{content:"";position:absolute;inset:7%;border:2px solid rgba(255,255,255,.92);border-radius:48% 52% 46% 54%;transform:rotate(28deg)}
 .heroBall:after{transform:rotate(208deg);opacity:.7}
-.heroMotionButton{display:none;position:absolute;z-index:5;right:16px;top:16px;border:0;border-radius:999px;background:rgba(251,250,246,.9);color:var(--ink);padding:9px 12px;font:800 8px "DM Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase}
-@media(max-width:700px){.heroBall{opacity:.9}.heroMotionButton{display:block}.homeHero{touch-action:pan-y}}
-@media(prefers-reduced-motion:reduce){.heroBall{display:none}}
+.heroBall.bouncing{cursor:default}
+@media(max-width:700px){.heroBall{left:76%;top:29%;width:42px}}
+@media(prefers-reduced-motion:reduce){.heroBall{transition:none}}
 </style>
 </style>
 </head>
@@ -95,7 +95,7 @@
 <nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
 </div></header>
 <main>
-<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="heroBalls" aria-hidden="true"><span class="heroBall" style="--x:8%;--y:16%;--s:26px"></span><span class="heroBall" style="--x:18%;--y:27%;--s:42px"></span><span class="heroBall" style="--x:31%;--y:14%;--s:20px"></span><span class="heroBall" style="--x:45%;--y:24%;--s:31px"></span><span class="heroBall" style="--x:59%;--y:13%;--s:24px"></span><span class="heroBall" style="--x:74%;--y:19%;--s:38px"></span><span class="heroBall" style="--x:89%;--y:12%;--s:23px"></span><span class="heroBall" style="--x:5%;--y:43%;--s:35px"></span><span class="heroBall" style="--x:22%;--y:48%;--s:22px"></span><span class="heroBall" style="--x:38%;--y:40%;--s:44px"></span><span class="heroBall" style="--x:54%;--y:52%;--s:27px"></span><span class="heroBall" style="--x:68%;--y:42%;--s:20px"></span><span class="heroBall" style="--x:82%;--y:51%;--s:33px"></span><span class="heroBall" style="--x:94%;--y:43%;--s:25px"></span><span class="heroBall" style="--x:10%;--y:72%;--s:21px"></span><span class="heroBall" style="--x:27%;--y:66%;--s:34px"></span><span class="heroBall" style="--x:43%;--y:78%;--s:24px"></span><span class="heroBall" style="--x:58%;--y:68%;--s:40px"></span><span class="heroBall" style="--x:76%;--y:76%;--s:25px"></span><span class="heroBall" style="--x:91%;--y:68%;--s:35px"></span></div><button class="heroMotionButton" type="button">Enable motion</button><div class="homeHeroInner">
+<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="heroBalls" aria-hidden="false"><span class="heroBall" aria-label="Tennis ball — tap to bounce" role="button" tabindex="0"></span></div><div class="homeHeroInner">
 <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
 <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
 <div class="homeHeroCopy"><p>Small-group tennis retreats in beautiful places — built around great coaching, good food and time to enjoy where you've landed.</p><a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a></div>
@@ -127,14 +127,27 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)cancelAnima
 })();
 </script>
 <script>
-(()=>{const hero=document.querySelector(".homeHero"),field=document.querySelector(".heroBalls"),button=document.querySelector(".heroMotionButton");if(!hero||!field)return;
-const balls=[...field.querySelectorAll(".heroBall")],motion={x:0,y:0,tx:0,ty:0};
-function setMotion(gx,gy){motion.tx=Math.max(-1,Math.min(1,gx));motion.ty=Math.max(-1,Math.min(1,gy))}
-function render(){motion.x+=(motion.tx-motion.x)*.07;motion.y+=(motion.ty-motion.y)*.07;balls.forEach((b,i)=>{const depth=(i%6+1)/6,drift=10+depth*30,rot=motion.x*(5+depth*8);b.style.transform=`translate3d(${motion.x*drift}px,${motion.y*drift}px,0) rotate(${rot+i*17}deg)`});requestAnimationFrame(render)}
-render();
-window.addEventListener("deviceorientation",e=>{if(e.gamma==null||e.beta==null)return;setMotion(e.gamma/35,(e.beta-45)/35)},{passive:true});
-hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect();setMotion((e.clientX-r.left)/r.width*2-1,(e.clientY-r.top)/r.height*2-1)},{passive:true});
-if(button){button.addEventListener("click",async()=>{try{if(typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission==="function"){const p=await DeviceOrientationEvent.requestPermission();if(p!=="granted")return} button.textContent="Motion on";window.addEventListener("deviceorientation",()=>{}, {passive:true})}catch(e){button.textContent="Motion unavailable"}})}
+(()=>{const ball=document.querySelector(".heroBall");if(!ball)return;
+let active=false,raf=0,x=0,y=0,vx=0,vy=0,rotation=0;
+function bounce(){
+ if(active)return; active=true;
+ const r=ball.getBoundingClientRect(),hr=document.querySelector(".homeHero").getBoundingClientRect();
+ x=r.left-hr.left; y=r.top-hr.top; vx=(Math.random()-.5)*7; vy=-13; rotation=(Math.random()-.5)*18;
+ const gravity=.62,friction=.985;
+ function frame(){
+   vy+=gravity;x+=vx;y+=vy;vx*=friction;rotation+=vx*1.8;
+   const maxX=hr.width-r.width,maxY=hr.height-r.height;
+   if(x<0){x=0;vx=Math.abs(vx)*.72}
+   if(x>maxX){x=maxX;vx=-Math.abs(vx)*.72}
+   if(y<0){y=0;vy=Math.abs(vy)*.72}
+   if(y>=maxY){y=maxY;vy=-Math.abs(vy)*.58;vx*=.92}
+   ball.style.transform=`translate3d(${x-r.left+hr.left}px,${y-r.top+hr.top}px,0) rotate(${rotation}deg)`;
+   if(Math.abs(vy)<1.2&&y>=maxY-1){active=false;ball.style.transform="";return}
+   raf=requestAnimationFrame(frame);
+ }
+ raf=requestAnimationFrame(frame);
+}
+ball.addEventListener("pointerdown",e=>{e.preventDefault();bounce()},{passive:false});
 })();
 </script>
 </body></html>
