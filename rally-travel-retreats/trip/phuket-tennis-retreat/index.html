@@ -17,6 +17,66 @@
 .includeList{display:grid;gap:10px;margin-top:17px}.include{display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5}.include span:first-child{color:var(--accent);font-weight:900}
 .stickyBar{position:sticky;bottom:14px;z-index:20;background:rgba(255,253,248,.93);backdrop-filter:blur(15px);border:1px solid var(--line);box-shadow:0 15px 40px rgba(13,42,39,.14);border-radius:999px;padding:8px 9px 8px 17px;display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:30px}.stickyBar strong{font-size:13px}.stickyBar span{color:var(--muted);font-size:10px;margin-left:7px}
 @media(max-width:700px){.galleryGrid{grid-template-columns:1fr}.galleryMain{min-height:360px}.gallerySide{grid-template-columns:1fr 1fr}.gallerySide img{min-height:170px}}
+
+/* Hotel / stay section */
+.hotelSection{background:#f3eee5}
+.hotelSection .sectionTop{margin-bottom:0}
+.hotelShell{display:grid;gap:30px}
+.hotelGallery{display:grid;grid-template-columns:1.35fr .65fr;grid-template-rows:1fr 1fr;gap:12px;margin-top:34px;min-height:590px}
+.hotelPhoto{display:block;width:100%;height:100%;min-height:0;object-fit:cover;border-radius:22px;background:#ddd}
+.hotelPhotoMain{grid-row:1 / span 2;min-height:590px}
+.hotelPhotoTop,.hotelPhotoBottom{min-height:289px}
+.hotelDetails{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.hotelCard{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:28px}
+.hotelCard h3{font:500 34px/1.05 "Playfair Display",serif;margin:7px 0 12px}
+.hotelCard p{color:var(--muted);font-size:14px;line-height:1.7;margin:0}
+.hotelEyebrow{font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:var(--accent)}
+.roomMeta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:24px}
+.roomMeta div{padding:16px 14px 16px 0;margin-right:14px;border-right:1px solid var(--line)}
+.roomMeta div:last-child{border-right:0;margin-right:0}
+.roomMeta strong{display:block;font:500 22px/1 "Playfair Display",serif}
+.roomMeta span{display:block;color:var(--muted);font-size:9px;line-height:1.35;text-transform:uppercase;letter-spacing:.11em;margin-top:6px}
+.roomFeatures{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.roomFeatures span{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:#faf7f1;color:var(--muted);font-size:10px}
+.sharedNote{margin-top:18px;padding:16px 18px;border-radius:16px;background:#f1e5dc;border:1px solid #e1d0c4}
+.sharedNote strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.sharedNote p{font-size:12px;line-height:1.55}
+.facilityGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.facility{padding:17px;border:1px solid var(--line);border-radius:16px;background:#faf7f1}
+.facility b{display:block;font-size:12px;margin-bottom:5px}
+.facility span{display:block;color:var(--muted);font-size:10px;line-height:1.45}
+.hotelSource{font-size:10px;color:var(--muted);margin-top:12px}
+.hotelSource a{color:inherit}
+@media(max-width:900px){
+ .hotelGallery{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;min-height:500px}
+ .hotelPhotoMain{grid-column:1 / span 2;grid-row:1;min-height:300px}
+ .hotelPhotoTop,.hotelPhotoBottom{min-height:180px}
+ .hotelDetails{grid-template-columns:1fr}
+ .facilityGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+ .hotelGallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-top:22px;min-height:0;padding-bottom:4px;scrollbar-width:none}
+ .hotelGallery::-webkit-scrollbar{display:none}
+ .hotelPhoto{flex:0 0 84vw;width:84vw;height:300px;min-height:300px;scroll-snap-align:start;border-radius:18px}
+ .hotelPhotoMain,.hotelPhotoTop,.hotelPhotoBottom{min-height:300px}
+ .hotelDetails{gap:10px}
+ .hotelCard{padding:21px;border-radius:18px}
+ .hotelCard h3{font-size:29px}
+ .hotelCard p{font-size:13px;line-height:1.6}
+ .roomMeta{grid-template-columns:1fr 1fr}
+ .roomMeta div:nth-child(2){border-right:0}
+ .roomMeta div{padding:13px 12px 13px 0;margin-right:12px}
+ .roomMeta strong{font-size:19px}
+ .roomMeta span{font-size:8px}
+ .facilityGrid{grid-template-columns:1fr 1fr;gap:8px}
+ .facility{padding:14px}
+ .facility b{font-size:11px}
+ .facility span{font-size:9px}
+}
+@media(max-width:390px){
+ .hotelPhoto{flex-basis:88vw;width:88vw;height:270px;min-height:270px}
+ .hotelPhotoMain,.hotelPhotoTop,.hotelPhotoBottom{min-height:270px}
+}
 </style>
 <style>
 /* Sticky section navigation */
@@ -73,7 +133,7 @@
       <div class="sectionKicker">The experience</div>
       <h2>A tennis week with enough space to feel like a holiday.</h2>
       <p class="lede">Five mornings of professional coaching at KĀHLĪ Tennis Academy sit at the centre of the retreat. Around that, you've got recovery time at Sole Mio, beaches, food, culture and a private island-hopping day.</p>
-      <div id="stay" class="detailGrid">
+      <div class="detailGrid">
         <article class="infoCard"><h3>Play</h3><p>5 mornings of professional coaching, up to 2 hours on court per day, physical conditioning and former ATP-ranked coaches.</p></article>
         <article class="infoCard"><h3>Stay</h3><p>8 nights in a Deluxe Room at Sole Mio Hotel & Wellness, with breakfast included and access to fitness, sauna, steam room and wellness facilities.</p></article>
         <article class="infoCard"><h3>Explore</h3><p>Phuket Old Town, beaches, local markets, cultural visits, hosted dinners and a private island-hopping boat day.</p></article>
@@ -94,6 +154,59 @@
       <a class="btn btnDark" style="width:100%;margin-top:24px" href="#enquire">Enquire now</a>
       <p style="font-size:10px;color:var(--muted);line-height:1.6;margin:16px 0 0">Twin and double room pricing available upon request. Reservations are confirmed upon payment. Final payment due 1 December 2026. Spots are limited.</p>
     </aside>
+  </div>
+</section>
+
+
+<section id="stay" class="hotelSection">
+  <div class="shell hotelShell">
+    <div class="sectionTop">
+      <div>
+        <div class="sectionKicker">Your home in Phuket</div>
+        <h2>Sole Mio Boutique Hotel & Wellness.</h2>
+      </div>
+      <p class="lede">A stylish adults-only base in Bang Tao, with the beach nearby, a rooftop pool, wellness facilities and an easy place to reset between tennis sessions.</p>
+    </div>
+
+    <div class="hotelGallery" aria-label="Sole Mio Hotel photography">
+      <img class="hotelPhoto hotelPhotoMain" src="https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202311241805054211-285101ad-52a2-47dc-be27-9655d66f773e.jpg" alt="Sole Mio rooftop swimming pool">
+      <img class="hotelPhoto hotelPhotoTop" src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260452402562.jpg" alt="Sole Mio Deluxe Room">
+      <img class="hotelPhoto hotelPhotoBottom" src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260859125684.jpg" alt="Sole Mio Wellness Deluxe Room">
+    </div>
+
+    <div class="hotelDetails">
+      <article class="hotelCard">
+        <div class="hotelEyebrow">The room</div>
+        <h3>Shared Deluxe Room.</h3>
+        <p>Your retreat includes a Deluxe Room at Sole Mio. The room is 36 m² with a 4 m² private balcony and can be configured with either a king bed or two single beds. For the shared option, we'll use the twin configuration where available, so each guest has their own bed.</p>
+        <div class="roomMeta">
+          <div><strong>36 m²</strong><span>Room size</span></div>
+          <div><strong>4 m²</strong><span>Private balcony</span></div>
+          <div><strong>2</strong><span>Single beds</span></div>
+          <div><strong>WiFi</strong><span>Included</span></div>
+        </div>
+        <div class="roomFeatures">
+          <span>Private bathroom</span><span>Air conditioning</span><span>Kitchenette</span><span>Coffee & tea maker</span><span>50” TV</span><span>Fridge / freezer</span><span>Rain shower</span><span>Bathrobes</span>
+        </div>
+        <div class="sharedNote">
+          <strong>Sharing made easy.</strong>
+          <p>You’ll have your own bed and your own space within the room, plus a private bathroom and balcony. If you’d prefer your own room, ask Mark about private-room availability and the upgrade price.</p>
+        </div>
+      </article>
+
+      <article class="hotelCard">
+        <div class="hotelEyebrow">The hotel</div>
+        <h3>Built for the gaps between tennis.</h3>
+        <p>Sole Mio puts the retreat in one place: breakfast, pool time, recovery and somewhere comfortable to come back to after a day out exploring Phuket. The hotel is around five minutes from Bang Tao Beach according to the hotel itself.</p>
+        <div class="facilityGrid">
+          <div class="facility"><b>Rooftop pool</b><span>Sun, swims and sunset drinks.</span></div>
+          <div class="facility"><b>Wellness</b><span>Sauna, steam, ice room and spa.</span></div>
+          <div class="facility"><b>Fitness</b><span>Gym, yoga studio and classes.</span></div>
+          <div class="facility"><b>Dining</b><span>7th Floor restaurant & bar.</span></div>
+        </div>
+        <p class="hotelSource">Hotel details verified against Sole Mio’s official room and facilities information.</p>
+      </article>
+    </div>
   </div>
 </section>
 
