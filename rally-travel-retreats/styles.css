@@ -242,10 +242,10 @@ body{overflow-x:hidden!important}
   .gallerySlide{width:100%!important;flex-basis:100%!important}
 }
 
-/* High-resolution Phuket retreat collage — direct Unsplash originals */
+/* Selected itinerary photography — sourced from the venues/experience listings */
 .cardImagePhuket{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#fff;padding:0}
 .phuketPhoto{display:block;min-width:0;min-height:0;background-position:center;background-size:cover;background-repeat:no-repeat}
-.phuketPhoto1{background-image:url("https://images.unsplash.com/photo-1729615220971-4d524fa93cb8?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
-.phuketPhoto2{background-image:url("https://images.unsplash.com/photo-1785301330695-ca1f860d202a?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
-.phuketPhoto3{background-image:url("https://images.unsplash.com/photo-1764339441207-c55b7ae4a15e?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
-.phuketPhoto4{background-image:url("https://images.unsplash.com/photo-1729708475316-88ec2dc0083e?auto=format&fit=crop&fm=jpg&q=90&w=2400")}
+.phuketPhoto1{background-image:url("https://kahliphuket.com/assets/academy/academy-facility-wide.a059dd47.webp")}
+.phuketPhoto2{background-image:url("https://www.aman.com/sites/default/files/styles/hero_image/public/2024-11/Amanpuri%20Aerial.jpg")}
+.phuketPhoto3{background-image:url("https://picasso.rosewoodhotelgroup.com/transform/7d664b1a-1146-4d60-8344-da8585483d2f/RWPKT_3-0_Brand-com_Assets_Facilities_FB_Restaurant_TaKhai_148")}
+.phuketPhoto4{background-image:url("https://www.pelago.com/img/products/TH-Thailand/phuket-luxury-long-tail-boat-islands-hopping-experience-thailand/f6ddbc38-561c-4a03-af7a-06c5ab61415f_phuket-luxury-long-tail-boat-islands-hopping-experience-thailand-xlarge.jpg")}
