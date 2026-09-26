@@ -102,7 +102,7 @@
 <section id="map">
   <div class="shell">
     <div class="sectionTop"><div><div class="sectionKicker">Explore Phuket</div><h2>The retreat on the map.</h2></div><p class="lede">Satellite view is on by default. Tap a location for context.</p></div>
-    <div class="mapWrap"><div class="mapBox"><div id="map"></div><button class="mapToggle" id="toggle">Street map</button></div></div>
+    <div class="mapWrap"><div class="mapBox"><div id="phuketMap"></div><button class="mapToggle" id="toggle">Street map</button></div></div>
   </div>
 </section>
 
@@ -126,7 +126,7 @@
 const places=[
 ["Sole Mio",[7.9923,98.2937],"Hotel & wellness"],["KĀHLĪ Tennis Academy",[7.9807,98.3027],"Tennis"],["Phuket Old Town",[7.88478,98.38922],"Old Town"],["Sunday Walking Street",[7.8845,98.389],"Night market"],["Paradise Beach",[7.89103,98.26539],"Beach"],["Elephant Beach",[7.8759,98.2787],"Beach"],["Ta Khai · Rosewood Phuket",[7.8745,98.2745],"Dinner"],["Old Phuket Farm",[8.0105,98.3455],"Culture & food"],["Mantra Forest Spa",[8.295,98.407],"Wellness"],["Wat Chalong",[7.84625,98.3371],"Temple"],["Phuket Mountain Elephant Care",[7.86439,98.32042],"Sanctuary"],["Freedom Beach",[7.877,98.278],"Optional beach"],["Amanpuri Phuket",[7.9685,98.2777],"Sunset & dinner"],["Patong",[7.8966,98.2961],"Night out"],["Royal Phuket Marina",[7.9825,98.3784],"Boat departure"],["Private Island-Hopping Charter",[8.06,98.53],"Indicative charter area"],["Phuket International Airport",[8.1132,98.3169],"Arrival / departure"]
 ];
-const map=L.map("map",{scrollWheelZoom:false,worldCopyJump:true});
+const map=L.map("phuketMap",{scrollWheelZoom:false,worldCopyJump:true});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics, and the GIS User Community"});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
 satellite.addTo(map);L.control.zoom({position:"bottomright"}).addTo(map);
