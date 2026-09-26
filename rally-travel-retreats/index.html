@@ -85,24 +85,24 @@
 .rallyJourneyHead h2{font:500 clamp(50px,6vw,78px)/.88 "Playfair Display",serif;letter-spacing:-.045em;margin:12px 0 0}
 .rallyJourneyHead h2 em{font-style:normal;color:#77817d}
 .rallyJourneyHead>p{font-size:15px;line-height:1.65;color:var(--muted);margin:0;max-width:410px}
-.rallyMapWrap{position:relative;background:#eae4d8;border:1px solid #d9d1c4;border-radius:28px;overflow:hidden;min-height:610px}
-.rallyMap{position:relative;height:610px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rallyMapWrap{position:relative;background:#f1dfc9;border:1px solid #d7b99e;border-radius:28px;overflow:hidden;min-height:610px}
+.rallyMap{position:relative;height:610px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 42%,#f5c98f 0%,#efad72 42%,#e99663 100%)}
 .rallyGlobe{position:relative;width:min(570px,84vw);aspect-ratio:1;z-index:2}
 .rallyGlobe svg{width:100%;height:100%;display:block;overflow:visible;cursor:grab}
 .rallyGlobe svg:active{cursor:grabbing}
-.rallyGlobeSphere{fill:#dcd5c8;stroke:rgba(255,255,255,.7);stroke-width:1.5}
-.rallyGlobeGraticule{fill:none;stroke:rgba(13,42,39,.09);stroke-width:.55}
-.rallyGlobeLand{fill:#bdb7ab;stroke:rgba(255,255,255,.18);stroke-width:.35}
-.rallyGlobeLandAlt{fill:#c9c2b5}
-.rallyGlobeRoute{fill:none;stroke:#b86f4d;stroke-width:2;stroke-linecap:round;stroke-dasharray:4 7;opacity:.9}
-.rallyGlobeMarker{fill:#d9e52c;stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 5px 7px rgba(13,42,39,.2));cursor:pointer}
-.rallyGlobeMarkerRing{fill:none;stroke:#b86f4d;stroke-width:1;opacity:.6}
-.rallyGlobeLabel{font:800 8px "DM Sans",sans-serif;letter-spacing:1.5px;fill:#b86f4d;text-transform:uppercase;pointer-events:none}
-.rallyGlobeLabelMain{font:500 25px "Playfair Display",serif;letter-spacing:-.5px;fill:#0d2a27;pointer-events:none}
+.rallyGlobeSphere{fill:#087f82;stroke:#fff2d7;stroke-width:2}
+.rallyGlobeGraticule{fill:none;stroke:rgba(255,238,204,.28);stroke-width:.7}
+.rallyGlobeLand{fill:#f08b68;stroke:rgba(255,235,205,.5);stroke-width:.5}
+.rallyGlobeLandAlt{fill:#f6b05f}
+.rallyGlobeRoute{fill:none;stroke:#ffd447;stroke-width:3;stroke-linecap:round;stroke-dasharray:5 7;opacity:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.16))}
+.rallyGlobeMarker{fill:#e7f52a;stroke:#fff;stroke-width:3;filter:drop-shadow(0 5px 8px rgba(0,0,0,.28));cursor:pointer}
+.rallyGlobeMarkerRing{fill:none;stroke:#ffd447;stroke-width:2;opacity:.85}
+.rallyGlobeLabel{font:800 8px "DM Sans",sans-serif;letter-spacing:1.5px;fill:#fff2d7;text-transform:uppercase;pointer-events:none}
+.rallyGlobeLabelMain{font:500 25px "Playfair Display",serif;letter-spacing:-.5px;fill:#fff9ed;pointer-events:none}
 .rallyGlobeHint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#8c877e;z-index:4;white-space:nowrap}
-.rallyGlobeHint span{font-size:13px;color:var(--ink);margin-right:7px}
+.rallyGlobeHint span{font-size:13px;color:#e35d45;margin-right:7px}
 .rallyGlobeTopLabel{position:absolute;top:24px;left:28px;font-size:7px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#8c877e;z-index:4}
-.rallyGlobeTopLabel strong{color:#b86f4d}
+.rallyGlobeTopLabel strong{color:#e35d45}
 .rallyPopup{position:absolute;right:28px;top:28px;width:min(350px,38%);background:rgba(255,253,249,.98);border:1px solid #d9d1c4;border-radius:20px;box-shadow:0 20px 55px rgba(13,42,39,.16);z-index:10;overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
 .rallyPopup.is-open{opacity:1;transform:none;pointer-events:auto}
 .rallyPopupImage{height:145px;background-image:url("https://a.cdn-hotels.com/gdcs/production105/d1236/490b0575-83e1-45dd-bdc6-27c5b2c0c952.jpg");background-size:cover;background-position:center}
