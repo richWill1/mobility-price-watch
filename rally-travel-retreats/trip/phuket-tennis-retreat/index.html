@@ -245,6 +245,36 @@ h1,h2,h3,h4,.sectionTop h2,.stayRefHead h2,.stayLightboxPanel h3{font-family:var
  .stayIncludeGrid button{font-size:10px}
 }
 
+/* Phuket weather card — editorial travel reference */
+.weatherSection{padding:clamp(52px,7vw,88px) 0;background:#fffdfa}
+.weatherCard{max-width:920px;margin:0 auto;padding:clamp(28px,4vw,42px);border:1px solid #d9ddd7;border-radius:30px;background:linear-gradient(135deg,#fffdf7 0%,#f4f3e9 55%,#e2ece5 100%);box-shadow:0 18px 45px rgba(13,42,39,.07)}
+.weatherKicker{font-size:10px;line-height:1;letter-spacing:.2em;font-weight:900;color:#356b5a;text-transform:uppercase}
+.weatherCard h2{font:500 clamp(34px,5vw,52px)/1 "Playfair Display",serif;margin:12px 0 25px;letter-spacing:-.025em}
+.weatherStats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #dfe2de;border-radius:24px;overflow:hidden;background:rgba(255,255,255,.68)}
+.weatherStat{min-height:128px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:1px solid #dfe2de}
+.weatherStat:last-child{border-right:0}
+.weatherIcon{height:34px;margin-bottom:8px;color:#356b5a;font-size:29px;line-height:1}
+.weatherStat span{font-size:9px;letter-spacing:.1em;color:#727671;font-weight:900;text-transform:uppercase}
+.weatherStat strong{font:600 19px/1.15 "DM Sans",sans-serif;margin-top:7px;color:#222824}
+.weatherMore{margin-top:20px}
+.weatherMore summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 21px;border:1px solid #dfe2de;border-radius:19px;background:rgba(255,255,255,.68);font-size:14px;font-weight:700}
+.weatherMore summary::-webkit-details-marker{display:none}
+.weatherMore summary:after{content:"⌄";font-size:24px;line-height:1;color:#356b5a;transition:transform .2s ease}
+.weatherMore[open] summary:after{transform:rotate(180deg)}
+.weatherMore p{margin:12px 5px 0;color:var(--muted);font-size:12px;line-height:1.6}
+.weatherSource{margin:12px 5px 0;font-size:9px;color:#8a8d89;line-height:1.45}
+@media(max-width:700px){
+ .weatherSection{padding:48px 0}
+ .weatherCard{margin:0 16px;padding:27px 16px 18px;border-radius:26px}
+ .weatherCard h2{font-size:34px;margin:11px 0 20px}
+ .weatherStats{border-radius:20px}
+ .weatherStat{min-height:112px;padding:14px 5px}
+ .weatherIcon{font-size:25px;height:30px}
+ .weatherStat span{font-size:7px;letter-spacing:.07em}
+ .weatherStat strong{font-size:16px}
+ .weatherMore summary{padding:16px 17px;font-size:13px}
+}
+
 /* Clear final conversion block */
 .finalCta{padding:64px 0 76px;background:#f3eee5}
 .finalCtaCard{max-width:760px;margin:auto;padding:46px clamp(24px,6vw,64px);background:var(--ink);color:#fff;border-radius:28px;text-align:center;box-shadow:0 22px 60px rgba(13,42,39,.16)}
@@ -465,6 +495,25 @@ html{scroll-padding-top:56px}
         <div class="mapListHead"><span>THE WEEK</span><small>Tap a place</small></div>
         <div id="mapCards"></div>
       </aside>
+    </div>
+  </div>
+</section>
+
+<section class="weatherSection">
+  <div class="shell">
+    <div class="weatherCard">
+      <div class="weatherKicker">PHUKET · FEBRUARY</div>
+      <h2>Dry season is here.</h2>
+      <div class="weatherStats">
+        <div class="weatherStat"><div class="weatherIcon">☼</div><span>Daytime high</span><strong>86°F</strong></div>
+        <div class="weatherStat"><div class="weatherIcon">≈</div><span>Sea temperature</span><strong>82°F</strong></div>
+        <div class="weatherStat"><div class="weatherIcon">☀</div><span>Sunshine</span><strong>~9 hours</strong></div>
+      </div>
+      <details class="weatherMore">
+        <summary>More about the season</summary>
+        <p>February is typically one of Phuket's driest months, with warm days, warm sea temperatures and plenty of sunshine — a good fit for mornings on court and afternoons by the water.</p>
+        <div class="weatherSource">Typical February climate averages; actual conditions vary.</div>
+      </details>
     </div>
   </div>
 </section>
