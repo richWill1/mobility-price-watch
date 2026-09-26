@@ -472,6 +472,7 @@ map.whenReady(()=>[0,250,700,1400].forEach(d=>setTimeout(resetMap,d)));
 window.addEventListener("resize",resetMap,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(resetMap,300),{passive:true});
 
+const stayTiles=[...document.querySelectorAll(".stayPhotoTile")];
 const stayLightbox=document.getElementById("stayLightbox");
 const stayGallery=document.getElementById("stayLightboxGallery");
 const stayTitle=document.getElementById("stayLightboxTitle");
