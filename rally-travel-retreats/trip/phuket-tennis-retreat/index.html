@@ -187,14 +187,16 @@ L.control.zoom({position:"bottomright"}).addTo(map);
 
 const markerByName={};
 const markerIcon=(active=false)=>L.divIcon({
- className:"rallyMapPinWrap",
- html:'<div class="rallyMapPin'+(active?' active':'')+'"></div>',
- iconSize:[18,18],iconAnchor:[9,9]
+  className:"",
+  html:'<span style="display:block;width:18px;height:18px;border-radius:50%;background:'+(active?'#0d2a27':'#c8a56a')+';border:3px solid #fffdf8;box-shadow:0 3px 12px rgba(0,0,0,.45);"></span>',
+  iconSize:[18,18],
+  iconAnchor:[9,9],
+  popupAnchor:[0,-10]
 });
 places.forEach(p=>{
- const marker=L.marker(p.coords,{icon:markerIcon()}).bindPopup("<strong>"+p.name+"</strong><br><span>"+p.label+"</span>");
- markerByName[p.name]=marker;
- marker.addTo(map);
+  const marker=L.marker(p.coords,{icon:markerIcon(),zIndexOffset:1000}).bindPopup("<strong>"+p.name+"</strong><br><span>"+p.label+"</span>");
+  markerByName[p.name]=marker;
+  marker.addTo(map);
 });
 map.setView([7.94,98.30],11.1);
 
