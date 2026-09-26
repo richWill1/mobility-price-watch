@@ -15,7 +15,12 @@ body{--ink:#0d2a27}
 .homeHero{background-image:linear-gradient(180deg,rgba(5,20,16,.18),rgba(5,20,16,.83)),url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=88")}
 .logoLock{font:500 25px/1 "Playfair Display",serif;letter-spacing:.28em}
 .logoLock span{font:700 8px/1.2 Inter,sans-serif;letter-spacing:.32em;display:block;text-align:center;margin-top:7px}
-.cardImagePhuket{background-image:url("https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1800&q=86")}
+.cardImagePhuket{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#fff;padding:0}
+.phuketPhoto{display:block;min-width:0;min-height:0;background-position:center;background-size:cover}
+.phuketPhoto1{background-image:url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp")}
+.phuketPhoto2{background-image:url("https://i.ex-cdn.com/vntravellive.com/files/news/2024/12/06/club-med-phuket-trai-nghiem-nghi-duong-tat-ca-trong-mot-giua-thien-duong-trop...")}
+.phuketPhoto3{background-image:url("https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=1200&q=86")}
+.phuketPhoto4{background-image:url("https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=86")}
 .storyImage{min-height:520px;border-radius:26px;background:url("https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1800&q=86") center/cover}
 .splitStory{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .ticker{display:inline-flex;border:1px solid var(--sand);padding:9px 13px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:.16em;font-weight:800}
@@ -59,7 +64,7 @@ body{--ink:#0d2a27}
     </div>
 
     <article class="retreatCard">
-      <div class="cardImage cardImagePhuket"></div>
+      <div class="cardImage cardImagePhuket" aria-label="Phuket retreat highlights"><span class="phuketPhoto phuketPhoto1"></span><span class="phuketPhoto phuketPhoto2"></span><span class="phuketPhoto phuketPhoto3"></span><span class="phuketPhoto phuketPhoto4"></span></div>
       <div class="cardBody">
         <div>
           <div class="cardTag">Featured · Tennis</div>
