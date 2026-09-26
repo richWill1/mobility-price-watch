@@ -313,10 +313,10 @@
         <p class="stayCopy">Everything you need is close: breakfast, rooftop pool, recovery and somewhere comfortable to come back to after exploring Phuket. Bang Tao Beach is around five minutes away, according to the hotel.</p>
 
         <div class="stayFacilities">
-          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>POOL</span><strong>Rooftop</strong><p>Sun, swims & sunset drinks.</p></div>
-          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>WELLNESS</span><strong>Reset</strong><p>Sauna, steam, ice room & spa.</p></div>
-          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>FITNESS</span><strong>Move</strong><p>Gym, yoga studio & classes.</p></div>
-          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>DINING</span><strong>7th Floor</strong><p>Restaurant & bar.</p></div>
+          <div class="stayPhotoTile" data-gallery="pool" tabindex="0" role="button" aria-label="View rooftop pool photos"><span>POOL</span><strong>Rooftop</strong><p>Sun, swims & sunset drinks.</p></div>
+          <div class="stayPhotoTile" data-gallery="wellness" tabindex="0" role="button" aria-label="View wellness photos"><span>WELLNESS</span><strong>Reset</strong><p>Sauna, steam, ice room & spa.</p></div>
+          <div class="stayPhotoTile" data-gallery="fitness" tabindex="0" role="button" aria-label="View gym and yoga photos"><span>FITNESS</span><strong>Move</strong><p>Gym, yoga studio & classes.</p></div>
+          <div class="stayPhotoTile" data-gallery="dining" tabindex="0" role="button" aria-label="View restaurant photos"><span>DINING</span><strong>7th Floor</strong><p>Restaurant & bar.</p></div>
         </div>
 
         <div class="stayDistance">
@@ -334,11 +334,7 @@
     <button class="stayLightboxClose" type="button" aria-label="Close photos" data-close-stay>×</button>
     <div class="stayLightboxKicker">SOLE MIO · HOTEL PHOTOS</div>
     <h3 id="stayLightboxTitle">Sole Mio</h3>
-    <div class="stayLightboxGallery">
-      <img src="https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202311241805054211-285101ad-52a2-47dc-be27-9655d66f773e.jpg" alt="Sole Mio rooftop pool">
-      <img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260452402562.jpg" alt="Sole Mio Deluxe Room">
-      <img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260859125684.jpg" alt="Sole Mio Wellness Deluxe Room">
-    </div>
+    <div class="stayLightboxGallery" id="stayLightboxGallery"></div>
     <p class="stayLightboxHint">Tap outside or the × to close.</p>
   </div>
 </div>
@@ -475,12 +471,52 @@ window.addEventListener("resize",resetMap,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(resetMap,300),{passive:true});
 
 const stayLightbox=document.getElementById("stayLightbox");
-const stayTiles=[...document.querySelectorAll(".stayPhotoTile")];
-const openStayLightbox=()=>{stayLightbox.classList.add("is-open");stayLightbox.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";};
+const stayGallery=document.getElementById("stayLightboxGallery");
+const stayTitle=document.getElementById("stayLightboxTitle");
+const stayGalleries={
+  pool:{
+    title:"Rooftop pool",
+    images:[
+      ["https://kahliphuket.com/assets/stay/Sole-Mio-Highlight-1.fb7ccb8f.webp","Sole Mio rooftop pool and hotel"],
+      ["https://www.phuketall.com/job_images/039848/ca8772b78e325d8bb4df5659921bbdac.jpg","Sole Mio rooftop pool"],
+      ["https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/67/dd/28/caption.jpg?h=900&s=1&w=1200","Sole Mio pool deck"]
+    ]
+  },
+  wellness:{
+    title:"Wellness & recovery",
+    images:[
+      ["https://images.trvl-media.com/lodging/97000000/96910000/96903000/96902954/12d262fa.jpg?impolicy=resizecrop&ra=fill&rh=575&rw=575","Sole Mio sauna"],
+      ["https://images.trvl-media.com/lodging/97000000/96910000/96903000/96902954/47b8c80c.jpg?impolicy=resizecrop&ra=fill&rh=575&rw=575","Sole Mio spa lounge and sauna entrance"]
+    ]
+  },
+  fitness:{
+    title:"Gym & movement",
+    images:[
+      ["https://cdn.fazwaz.com/nw/rUYWtDJffXG5LNX_CV1tOG2y6BA/0x0/enriched-project-feature/16400/01-gym-sole-mio-boutique-hotel-wellness.jpg","Sole Mio fitness centre"],
+      ["https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260859125684.jpg","Sole Mio wellness room"]
+    ]
+  },
+  dining:{
+    title:"7th Floor",
+    images:[
+      ["https://www.wheretoeat-phuket.com/images_profile/250218131046-84-7floor-gallery-3.jpg","Sole Mio 7th Floor Restaurant & Bar"],
+      ["https://ak-d.tripcdn.com/images/1mi4b224x97a17q8t4BA6.jpg?proc=source%2Ftrip","Sole Mio rooftop bar"]
+    ]
+  }
+};
+const openStayLightbox=key=>{
+  const gallery=stayGalleries[key]||stayGalleries.pool;
+  stayTitle.textContent=gallery.title;
+  stayGallery.innerHTML=gallery.images.map(([src,alt])=>`<img src="${src}" alt="${alt}" loading="eager">`).join("");
+  stayLightbox.classList.add("is-open");
+  stayLightbox.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+};
 const closeStayLightbox=()=>{stayLightbox.classList.remove("is-open");stayLightbox.setAttribute("aria-hidden","true");document.body.style.overflow="";};
 stayTiles.forEach(tile=>{
-  tile.addEventListener("click",openStayLightbox);
-  tile.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openStayLightbox();}});
+  const open=()=>openStayLightbox(tile.dataset.gallery);
+  tile.addEventListener("click",open);
+  tile.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
 });
 stayLightbox.querySelectorAll("[data-close-stay]").forEach(el=>el.addEventListener("click",closeStayLightbox));
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&stayLightbox.classList.contains("is-open"))closeStayLightbox();});
