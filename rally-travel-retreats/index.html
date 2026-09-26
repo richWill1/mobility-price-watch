@@ -76,18 +76,17 @@
  .homeFooter{padding:29px 0}.homeFooterGrid{display:block}.homeFooterGrid>div{margin-top:19px}.homeFooter p{font-size:9px}
 }
 
-/* Interactive tennis balls */
-.heroBalls{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-.heroBall{position:absolute;width:clamp(28px,3.2vw,46px);aspect-ratio:1;border-radius:50%;background:#d8e72e;box-shadow:inset -7px -7px 12px rgba(0,0,0,.12),0 12px 24px rgba(0,0,0,.18);will-change:transform}
-.heroBall:before,.heroBall:after{content:"";position:absolute;inset:7%;border:2px solid rgba(255,255,255,.92);border-radius:48% 52% 46% 54%;transform:rotate(27deg)}
-.heroBall:after{transform:rotate(207deg);opacity:.72}
-.heroBall1{left:12%;top:18%}.heroBall2{left:76%;top:24%;width:clamp(22px,2.6vw,38px)}.heroBall3{left:67%;top:67%;width:clamp(25px,2.8vw,40px)}.heroBall4{left:25%;top:73%;width:clamp(20px,2.4vw,34px)}
-.homeHeroInner{z-index:2}
-@media(max-width:700px){
- .heroBall1{left:8%;top:16%}.heroBall2{left:83%;top:29%}.heroBall3{left:72%;top:69%}.heroBall4{left:16%;top:76%}
- .heroBall{opacity:.88}
-}
 
+<style>
+/* Motion-driven tennis ball field */
+.heroBalls{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.heroBall{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#d9e52c;box-shadow:inset calc(var(--s)*-.14) calc(var(--s)*-.14) calc(var(--s)*.25) rgba(0,0,0,.13),0 calc(var(--s)*.22) calc(var(--s)*.45) rgba(0,0,0,.2);will-change:transform}
+.heroBall:before,.heroBall:after{content:"";position:absolute;inset:7%;border:2px solid rgba(255,255,255,.9);border-radius:48% 52% 46% 54%;transform:rotate(28deg)}
+.heroBall:after{transform:rotate(208deg);opacity:.7}
+.heroMotionButton{display:none;position:absolute;z-index:5;right:16px;top:16px;border:0;border-radius:999px;background:rgba(251,250,246,.9);color:var(--ink);padding:9px 12px;font:800 8px "DM Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:700px){.heroBall{opacity:.9}.heroMotionButton{display:block}.homeHero{touch-action:pan-y}}
+@media(prefers-reduced-motion:reduce){.heroBall{display:none}}
+</style>
 </style>
 </head>
 <body class="homePage">
@@ -96,7 +95,7 @@
 <nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
 </div></header>
 <main>
-<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="heroBalls" aria-hidden="true"><span class="heroBall heroBall1"></span><span class="heroBall heroBall2"></span><span class="heroBall heroBall3"></span><span class="heroBall heroBall4"></span></div><div class="homeHeroInner">
+<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="heroBalls" aria-hidden="true"><span class="heroBall" style="--x:8%;--y:16%;--s:26px"></span><span class="heroBall" style="--x:18%;--y:27%;--s:42px"></span><span class="heroBall" style="--x:31%;--y:14%;--s:20px"></span><span class="heroBall" style="--x:45%;--y:24%;--s:31px"></span><span class="heroBall" style="--x:59%;--y:13%;--s:24px"></span><span class="heroBall" style="--x:74%;--y:19%;--s:38px"></span><span class="heroBall" style="--x:89%;--y:12%;--s:23px"></span><span class="heroBall" style="--x:5%;--y:43%;--s:35px"></span><span class="heroBall" style="--x:22%;--y:48%;--s:22px"></span><span class="heroBall" style="--x:38%;--y:40%;--s:44px"></span><span class="heroBall" style="--x:54%;--y:52%;--s:27px"></span><span class="heroBall" style="--x:68%;--y:42%;--s:20px"></span><span class="heroBall" style="--x:82%;--y:51%;--s:33px"></span><span class="heroBall" style="--x:94%;--y:43%;--s:25px"></span><span class="heroBall" style="--x:10%;--y:72%;--s:21px"></span><span class="heroBall" style="--x:27%;--y:66%;--s:34px"></span><span class="heroBall" style="--x:43%;--y:78%;--s:24px"></span><span class="heroBall" style="--x:58%;--y:68%;--s:40px"></span><span class="heroBall" style="--x:76%;--y:76%;--s:25px"></span><span class="heroBall" style="--x:91%;--y:68%;--s:35px"></span></div><button class="heroMotionButton" type="button">Enable motion</button><div class="homeHeroInner">
 <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
 <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
 <div class="homeHeroCopy"><p>Small-group tennis retreats in beautiful places — built around great coaching, good food and time to enjoy where you've landed.</p><a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a></div>
@@ -125,6 +124,17 @@ const s=bs.map((el,i)=>({el,x:0,y:0,p:i*1.7,sp:.00055+i*.00008,d:8+i*3}));let q=
 const move=(x,y)=>{const r=h.getBoundingClientRect();q.x=x-r.left;q.y=y-r.top;q.on=true};h.addEventListener("pointermove",e=>move(e.clientX,e.clientY),{passive:true});h.addEventListener("pointerleave",()=>q.on=false);
 function f(t){const hr=h.getBoundingClientRect();s.forEach((b,i)=>{let x=Math.sin(t*b.sp+b.p)*b.d,y=Math.cos(t*b.sp*.83+b.p)*b.d*.7;if(q.on){const r=b.el.getBoundingClientRect(),cx=r.left+r.width/2-hr.left,cy=r.top+r.height/2-hr.top,dx=cx-q.x,dy=cy-q.y,dist=Math.hypot(dx,dy),rad=125;if(dist<rad){const force=(1-dist/rad)*22;x+=dx/(dist||1)*force;y+=dy/(dist||1)*force}}b.x+=(x-b.x)*.08;b.y+=(y-b.y)*.08;b.el.style.transform=`translate3d(${b.x.toFixed(1)}px,${b.y.toFixed(1)}px,0) rotate(${(t*.035+i*90)%360}deg)`});raf=requestAnimationFrame(f)}raf=requestAnimationFrame(f);
 document.addEventListener("visibilitychange",()=>{if(document.hidden)cancelAnimationFrame(raf);else raf=requestAnimationFrame(f)});
+})();
+</script>
+<script>
+(()=>{const hero=document.querySelector(".homeHero"),field=document.querySelector(".heroBalls"),button=document.querySelector(".heroMotionButton");if(!hero||!field)return;
+const balls=[...field.querySelectorAll(".heroBall")],motion={x:0,y:0,tx:0,ty:0};
+function setMotion(gx,gy){motion.tx=Math.max(-1,Math.min(1,gx));motion.ty=Math.max(-1,Math.min(1,gy))}
+function render(){motion.x+=(motion.tx-motion.x)*.07;motion.y+=(motion.ty-motion.y)*.07;balls.forEach((b,i)=>{const depth=(i%6+1)/6,drift=10+depth*30,rot=motion.x*(5+depth*8);b.style.transform=`translate3d(${motion.x*drift}px,${motion.y*drift}px,0) rotate(${rot+i*17}deg)`});requestAnimationFrame(render)}
+render();
+window.addEventListener("deviceorientation",e=>{if(e.gamma==null||e.beta==null)return;setMotion(e.gamma/35,(e.beta-45)/35)},{passive:true});
+hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect();setMotion((e.clientX-r.left)/r.width*2-1,(e.clientY-r.top)/r.height*2-1)},{passive:true});
+if(button){button.addEventListener("click",async()=>{try{if(typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission==="function"){const p=await DeviceOrientationEvent.requestPermission();if(p!=="granted")return} button.textContent="Motion on";window.addEventListener("deviceorientation",()=>{}, {passive:true})}catch(e){button.textContent="Motion unavailable"}})}
 })();
 </script>
 </body></html>
