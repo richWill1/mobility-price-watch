@@ -97,22 +97,6 @@
   </div>
 </section>
 
-<section id="gallery" style="padding-top:20px">
-  <div class="shell">
-    <div class="sectionKicker">Phuket in a nutshell</div>
-    <div class="gallerySlider" aria-label="Phuket retreat gallery">
-      <div class="galleryTrack" id="galleryTrack">
-        <div class="gallerySlide isActive"><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1800&q=88" alt="Tropical resort pool in Phuket"><div class="galleryCaption"><strong>Slow mornings</strong><span>Pool, sunshine & time to switch off.</span></div></div>
-        <div class="gallerySlide"><img src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=1800&q=88" alt="Tropical coastline in Thailand"><div class="galleryCaption"><strong>Island days</strong><span>Warm water, beaches & time on the boat.</span></div></div>
-        <div class="gallerySlide"><img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1800&q=88" alt="Tropical temple scenery in Thailand"><div class="galleryCaption"><strong>Explore Phuket</strong><span>Culture, colour, food & places worth discovering.</span></div></div>
-      </div>
-      <button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Previous image">‹</button>
-      <button class="galleryArrow galleryNext" id="galleryNext" aria-label="Next image">›</button>
-      <div class="galleryDots" id="galleryDots" aria-label="Gallery slides"></div>
-    </div>
-  </div>
-</section>
-
 <section id="week">
   <div class="shell">
     <div class="sectionTop">
@@ -352,37 +336,5 @@ map.whenReady(()=>{
 window.addEventListener("resize",hardResetMap,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(hardResetMap,300),{passive:true});
 </script>
-<script>
-(function(){
- const track=document.getElementById("galleryTrack");
- const slides=[...document.querySelectorAll(".gallerySlide")];
- const dots=document.getElementById("galleryDots");
- const prev=document.getElementById("galleryPrev");
- const next=document.getElementById("galleryNext");
- if(!track||!slides.length)return;
- let index=0,timer;
- dots.innerHTML=slides.map((_,i)=>'<button class="galleryDot'+(i===0?' active':'')+'" aria-label="Go to image '+(i+1)+'"></button>').join("");
- const dotEls=[...dots.children];
- function goTo(i,auto){
-   index=(i+slides.length)%slides.length;
-   track.style.transform="translate3d("+(-index*100)+"%,0,0)";
-   slides.forEach((s,n)=>s.classList.toggle("isActive",n===index));
-   dotEls.forEach((d,n)=>d.classList.toggle("active",n===index));
-   if(auto)restart();
- }
- function restart(){clearInterval(timer);timer=setInterval(()=>goTo(index+1,false),5500)}
- prev.onclick=()=>goTo(index-1,true);
- next.onclick=()=>goTo(index+1,true);
- dotEls.forEach((d,i)=>d.onclick=()=>goTo(i,true));
- let startX=0,startY=0;
- track.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;clearInterval(timer)},{passive:true});
- track.addEventListener("touchend",e=>{
-   const dx=e.changedTouches[0].clientX-startX;
-   const dy=e.changedTouches[0].clientY-startY;
-   if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)) goTo(index+(dx<0?1:-1),false);
-   restart();
- },{passive:true});
- restart();
-})();
-</script></body>
+</body>
 </html>
