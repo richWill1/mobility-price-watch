@@ -132,7 +132,7 @@
       <div class="mapVisual">
         <div class="mapToolbar">
           <div class="mapLegend"><span class="legendDot"></span>Rally Travel Retreats locations</div>
-          <button class="mapToggle" id="toggle" type="button">Street map</button>
+          
         </div>
         <div id="phuketMap"></div>
       </div>
@@ -220,13 +220,6 @@ function renderCards(){
 }
 renderCards();
 
-let sat=true;
-const toggle=document.getElementById("toggle");
-toggle.addEventListener("click",()=>{
- if(sat){map.removeLayer(satellite);street.addTo(map);toggle.textContent="Satellite"}
- else{map.removeLayer(street);satellite.addTo(map);toggle.textContent="Street map"}
- sat=!sat;
-});
 
 function resetMap(){map.invalidateSize({pan:false,animate:false});}
 map.whenReady(()=>[0,250,700,1400].forEach(d=>setTimeout(resetMap,d)));
