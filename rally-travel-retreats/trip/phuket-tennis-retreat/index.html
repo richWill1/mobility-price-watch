@@ -204,7 +204,18 @@ const places=[
   {name:"Royal Phuket Marina",coords:[7.9825,98.3784],category:"experiences",label:"Boat departure",description:"Saturday's island-hopping departure.",icon:"◇"}
 ];
 const categoryNames={stay:"Stay",tennis:"Tennis",beaches:"Beaches",culture:"Food & culture",experiences:"Experiences"};
-const map=L.map("phuketMap",{scrollWheelZoom:false,worldCopyJump:true,zoomControl:false});
+const mapEl=document.getElementById("phuketMap");
+const mapBoxEl=mapEl.closest(".mapBox");
+
+function sizeMap(){
+  const w=mapBoxEl.clientWidth;
+  const h=mapBoxEl.clientHeight;
+  mapEl.style.width=w+"px";
+  mapEl.style.height=h+"px";
+  map.invalidateSize({pan:false});
+}
+
+const map=L.map(mapEl,{scrollWheelZoom:false,worldCopyJump:true,zoomControl:false});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics, and the GIS User Community"});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
 satellite.addTo(map);
@@ -281,9 +292,15 @@ document.getElementById("toggle").onclick=()=>{
   sat=!sat;
 };
 map.whenReady(()=>{
-  [100,350,800].forEach(delay=>setTimeout(()=>map.invalidateSize(true),delay));
+  const refresh=()=>{
+    sizeMap();
+    map.setView([7.94,98.30],11.1,{animate:false});
+  };
+  requestAnimationFrame(()=>requestAnimationFrame(refresh));
+  [250,750,1500].forEach(delay=>setTimeout(refresh,delay));
+  window.addEventListener("resize",refresh,{passive:true});
   if(window.ResizeObserver){
-    new ResizeObserver(()=>map.invalidateSize(true)).observe(document.getElementById("phuketMap"));
+    new ResizeObserver(refresh).observe(mapBoxEl);
   }
 });
 </script>
