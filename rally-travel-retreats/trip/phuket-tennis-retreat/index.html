@@ -143,7 +143,7 @@
       <div class="mapVisual">
         <div class="mapToolbar">
           <div class="mapLegend"><span class="legendDot"></span>Rally locations</div>
-          <button class="mapToggle" id="toggle">Satellite</button>
+          
         </div>
         <div id="phuketMap"></div>
       </div>
@@ -185,7 +185,7 @@ const places=[
 const map=L.map("phuketMap",{zoomControl:false,scrollWheelZoom:false,attributionControl:true});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics"});
-street.addTo(map);
+satellite.addTo(map);
 L.control.zoom({position:"bottomright"}).addTo(map);
 const bounds=L.latLngBounds(places.map(p=>p.coords));
 map.fitBounds(bounds,{padding:[45,45],maxZoom:11});
@@ -215,11 +215,7 @@ function select(name,fly){
  if(card) card.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 render();
-document.getElementById("toggle").onclick=()=>{
- const btn=document.getElementById("toggle");
- if(map.hasLayer(street)){map.removeLayer(street);satellite.addTo(map);btn.textContent="Street map"}
- else{map.removeLayer(satellite);street.addTo(map);btn.textContent="Satellite"}
-};
+
 window.addEventListener("resize",()=>map.invalidateSize(),{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(()=>map.invalidateSize(),300),{passive:true});
 </script>
