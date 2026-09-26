@@ -236,6 +236,19 @@ h1,h2,h3,h4,.sectionTop h2,.stayRefHead h2,.stayLightboxPanel h3{font-family:var
  .sectionKicker{font-size:9px;letter-spacing:.2em}
  .stayIncludeGrid button{font-size:10px}
 }
+
+/* Clear final conversion block */
+.finalCta{padding:64px 0 76px;background:#f3eee5}
+.finalCtaCard{max-width:760px;margin:auto;padding:46px clamp(24px,6vw,64px);background:var(--ink);color:#fff;border-radius:28px;text-align:center;box-shadow:0 22px 60px rgba(13,42,39,.16)}
+.finalCtaCard .sectionKicker{color:#c98a67}
+.finalCtaCard h2{font-family:var(--display);font-size:clamp(40px,6vw,64px);line-height:.98;color:#fff;margin:10px 0 8px}
+.finalCtaDates{margin:0;color:#d8dedb;font-size:14px;letter-spacing:.06em}
+.finalCtaPrice{font-family:var(--display);font-size:clamp(38px,5vw,56px);line-height:1;margin:24px 0 10px;color:#fff}
+.finalCtaPrice span{font-family:var(--body);font-size:12px;letter-spacing:.08em;color:#cfd7d3}
+.finalCtaCopy{max-width:520px;margin:0 auto 25px;color:#cbd4d0;font-size:14px;line-height:1.55}
+.finalCtaButton{display:flex;align-items:center;justify-content:center;gap:12px;min-height:56px;border-radius:16px;background:#fff;color:var(--ink);text-decoration:none;font-family:var(--body);font-size:11px;font-weight:900;letter-spacing:.12em}
+.finalCtaButton span{font-size:18px}
+@media(max-width:700px){.finalCta{padding:42px 0 54px}.finalCtaCard{padding:36px 20px;border-radius:24px}.finalCtaCard h2{font-size:40px}.finalCtaPrice{font-size:42px;margin-top:20px}.finalCtaCopy{font-size:13px}}
 </style>
 <style>
 /* Reference-style compact stay section */
@@ -434,15 +447,16 @@ h1,h2,h3,h4,.sectionTop h2,.stayRefHead h2,.stayLightboxPanel h3{font-family:var
   </div>
 </section>
 
-<section id="enquire">
+<section id="enquire" class="finalCta">
   <div class="shell">
-    <div class="infoCard" style="padding:40px">
+    <div class="finalCtaCard">
       <div class="sectionKicker">Ready to rally?</div>
-      <h2 style="max-width:850px">Phuket · 13–21 February 2027 · $2,995 per person.</h2>
-      <p class="lede">Email Mark for room options, availability and the next steps.</p>
-      <div class="ctaRow"><a class="btn btnDark" href="mailto:mark@rallytravelretreats.com?subject=Phuket%20Tennis%20Retreat%20Enquiry">Email Mark</a><a class="btn btnGhost" href="tel:+12147995662">Call 214-799-5662</a></div>
+      <h2>Phuket Tennis Retreat</h2>
+      <p class="finalCtaDates">13–21 February 2027</p>
+      <div class="finalCtaPrice">$2,995 <span>per person</span></div>
+      <p class="finalCtaCopy">Want to join the group? Enquire with Mark for room options, availability and the next steps.</p>
+      <a class="finalCtaButton" href="mailto:mark@rallytravelretreats.com?subject=Phuket%20Tennis%20Retreat%20Enquiry">ENQUIRE ABOUT THIS RETREAT <span>→</span></a>
     </div>
-    <div class="stickyBar"><div><strong>$2,995</strong><span>per person · shared room</span></div><a class="btn btnDark" href="mailto:mark@rallytravelretreats.com?subject=Phuket%20Tennis%20Retreat%20Enquiry">Enquire</a></div>
   </div>
 </section>
 </main>
