@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d2a27">
+<script>
+if("scrollRestoration" in history) history.scrollRestoration="manual";
+window.addEventListener("pageshow",()=>{if(!location.hash) window.scrollTo(0,0);});
+</script>
 <title>Phuket Tennis Retreat · Rally Travel Retreats</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -637,6 +641,7 @@ const observer=new IntersectionObserver(entries=>{
 },{rootMargin:"-18% 0px -65% 0px",threshold:[0,.2,.5,1]});
 sectionTargets.forEach(s=>observer.observe(s));
 sectionLinks.forEach(a=>a.addEventListener("click",e=>{
+ if(!a.dataset.section)return;
  e.preventDefault();
  const target=document.getElementById(a.dataset.section);
  if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
