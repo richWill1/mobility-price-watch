@@ -214,3 +214,17 @@
 @media(max-width:390px){
   .gallerySlide{height:270px!important;min-height:270px!important}
 }
+
+/* Final mobile width reset for the experience section */
+@media(max-width:700px){
+  #experience .shell{width:100%!important;max-width:none!important;padding-left:16px!important;padding-right:16px!important}
+  #experience .detailIntro{display:block!important;width:100%!important;max-width:none!important;margin:0!important}
+  #experience .detailIntro>div:first-child{display:block!important;width:100%!important;max-width:none!important;min-width:0!important}
+  #experience .detailGrid{display:grid!important;width:100%!important;max-width:none!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+  #experience .pricePanel{display:block!important;width:100%!important;max-width:none!important;box-sizing:border-box!important}
+  .gallerySlider{width:100%!important}
+  .gallerySlide{height:220px!important;min-height:220px!important}
+}
+@media(max-width:390px){
+  .gallerySlide{height:200px!important;min-height:200px!important}
+}
