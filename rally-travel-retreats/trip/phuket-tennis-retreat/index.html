@@ -214,6 +214,8 @@
 <style>
 /* Sticky section navigation */
 .sectionNav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(13,42,39,.06)}
+.sectionNav{opacity:0;transform:translateY(-12px);pointer-events:none;transition:opacity .28s ease,transform .28s ease}
+.sectionNav.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
 .sectionNavInner{max-width:1240px;margin:auto;padding:0 10px;display:flex;align-items:center;gap:3px;overflow-x:auto;scrollbar-width:none}
 .sectionNavInner::-webkit-scrollbar{display:none}
 .sectionNav a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 11px;border:0;background:none;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;position:relative}
@@ -567,6 +569,13 @@ const itineraryObserver=new IntersectionObserver(entries=>{
   entries.forEach(entry=>entry.target.classList.toggle("is-active",entry.isIntersecting));
 },{root:document.querySelector("#week .days"),threshold:.62});
 itineraryCards.forEach(card=>itineraryObserver.observe(card));
+
+const sectionNav=document.querySelector(".sectionNav");
+const revealSectionNav=()=>{
+  sectionNav.classList.toggle("is-visible",window.scrollY>80);
+};
+window.addEventListener("scroll",revealSectionNav,{passive:true});
+revealSectionNav();
 
 const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
 const sectionTargets=[...new Set(sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean))];
