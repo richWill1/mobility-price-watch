@@ -17,6 +17,24 @@
 .stickyBar{position:sticky;bottom:14px;z-index:20;background:rgba(255,253,248,.93);backdrop-filter:blur(15px);border:1px solid var(--line);box-shadow:0 15px 40px rgba(13,42,39,.14);border-radius:999px;padding:8px 9px 8px 17px;display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:30px}.stickyBar strong{font-size:13px}.stickyBar span{color:var(--muted);font-size:10px;margin-left:7px}
 @media(max-width:700px){.galleryGrid{grid-template-columns:1fr}.galleryMain{min-height:360px}.gallerySide{grid-template-columns:1fr 1fr}.gallerySide img{min-height:170px}}
 </style>
+<style>
+/* Sticky section navigation */
+.sectionNav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(13,42,39,.06)}
+.sectionNavInner{max-width:1240px;margin:auto;padding:0 28px;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none}
+.sectionNavInner::-webkit-scrollbar{display:none}
+.sectionNav a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:58px;padding:0 15px;border:0;background:none;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;position:relative}
+.sectionNav a:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .18s ease}
+.sectionNav a.active{color:var(--ink)}
+.sectionNav a.active:after{transform:scaleX(1)}
+.sectionNav .navIcon{font-size:16px;line-height:1}
+@media(max-width:700px){
+ .sectionNavInner{padding:0 10px;gap:2px}
+ .sectionNav a{min-height:54px;padding:0 13px;font-size:9px;letter-spacing:.055em}
+ .sectionNav a:after{left:12px;right:12px}
+ .sectionNav .navIcon{font-size:15px}
+}
+</style>
+
 </head>
 <body>
 <header class="hero detailHero">
@@ -37,6 +55,16 @@
   </div>
 </header>
 
+<nav class="sectionNav" aria-label="Retreat sections">
+  <div class="sectionNavInner">
+    <a href="#experience" data-section="experience"><span class="navIcon">✦</span>Overview</a>
+    <a href="#gallery" data-section="gallery"><span class="navIcon">◉</span>Experiences</a>
+    <a href="#stay" data-section="stay"><span class="navIcon">▣</span>Stay</a>
+    <a href="#week" data-section="week"><span class="navIcon">▤</span>Itinerary</a>
+    <a href="#included" data-section="included"><span class="navIcon">✓</span>Included</a>
+  </div>
+</nav>
+
 <main>
 <section id="experience">
   <div class="shell detailIntro">
@@ -44,7 +72,7 @@
       <div class="sectionKicker">The experience</div>
       <h2>A tennis week with enough space to feel like a holiday.</h2>
       <p class="lede">Five mornings of professional coaching at KĀHLĪ Tennis Academy sit at the centre of the retreat. Around that, you've got recovery time at Sole Mio, beaches, food, culture and a private island-hopping day.</p>
-      <div class="detailGrid">
+      <div id="stay" class="detailGrid">
         <article class="infoCard"><h3>Play</h3><p>5 mornings of professional coaching, up to 2 hours on court per day, physical conditioning and former ATP-ranked coaches.</p></article>
         <article class="infoCard"><h3>Stay</h3><p>8 nights in a Deluxe Room at Sole Mio Hotel & Wellness, with breakfast included and access to fitness, sauna, steam room and wellness facilities.</p></article>
         <article class="infoCard"><h3>Explore</h3><p>Phuket Old Town, beaches, local markets, cultural visits, hosted dinners and a private island-hopping boat day.</p></article>
@@ -68,7 +96,7 @@
   </div>
 </section>
 
-<section style="padding-top:20px">
+<section id="gallery" style="padding-top:20px">
   <div class="shell">
     <div class="sectionKicker">Phuket in a nutshell</div>
     <div class="galleryGrid">
@@ -123,6 +151,29 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+
+<script>
+const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
+const sectionTargets=sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean);
+const setActive=(id)=>{
+ sectionLinks.forEach(a=>a.classList.toggle("active",a.dataset.section===id));
+ const active=sectionLinks.find(a=>a.dataset.section===id);
+ if(active) active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+};
+const observer=new IntersectionObserver((entries)=>{
+ const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+ if(visible) setActive(visible.target.id);
+},{rootMargin:"-18% 0px -65% 0px",threshold:[0,.2,.5,1]});
+sectionTargets.forEach(s=>observer.observe(s));
+sectionLinks.forEach(a=>a.addEventListener("click",(e)=>{
+ e.preventDefault();
+ const target=document.getElementById(a.dataset.section);
+ if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
+ setActive(a.dataset.section);
+}));
+setActive("experience");
+</script>
+
 const places=[
 ["Sole Mio",[7.9923,98.2937],"Hotel & wellness"],["KĀHLĪ Tennis Academy",[7.9807,98.3027],"Tennis"],["Phuket Old Town",[7.88478,98.38922],"Old Town"],["Sunday Walking Street",[7.8845,98.389],"Night market"],["Paradise Beach",[7.89103,98.26539],"Beach"],["Elephant Beach",[7.8759,98.2787],"Beach"],["Ta Khai · Rosewood Phuket",[7.8745,98.2745],"Dinner"],["Old Phuket Farm",[8.0105,98.3455],"Culture & food"],["Mantra Forest Spa",[8.295,98.407],"Wellness"],["Wat Chalong",[7.84625,98.3371],"Temple"],["Phuket Mountain Elephant Care",[7.86439,98.32042],"Sanctuary"],["Freedom Beach",[7.877,98.278],"Optional beach"],["Amanpuri Phuket",[7.9685,98.2777],"Sunset & dinner"],["Patong",[7.8966,98.2961],"Night out"],["Royal Phuket Marina",[7.9825,98.3784],"Boat departure"],["Private Island-Hopping Charter",[8.06,98.53],"Indicative charter area"],["Phuket International Airport",[8.1132,98.3169],"Arrival / departure"]
 ];
