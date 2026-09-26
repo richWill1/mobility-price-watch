@@ -201,3 +201,16 @@
   #experience .infoCard h3{font-size:24px}
   #experience .infoCard p{font-size:11px}
 }
+
+/* Restore full-width mobile layout and keep gallery compact */
+@media(max-width:700px){
+  #experience .detailIntro{display:block;width:100%}
+  #experience .detailIntro>div{width:100%;min-width:0}
+  #experience .detailGrid{display:grid;width:100%;grid-template-columns:1fr 1fr;gap:10px}
+  #experience .pricePanel{width:100%;max-width:none;margin-top:12px}
+  .gallerySlider{width:100%;max-width:100%}
+  .gallerySlide{height:300px!important;min-height:300px!important}
+}
+@media(max-width:390px){
+  .gallerySlide{height:270px!important;min-height:270px!important}
+}
