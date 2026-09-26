@@ -151,8 +151,6 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-
-<script>
 const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
 const sectionTargets=sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean);
 const setActive=(id)=>{
@@ -174,6 +172,7 @@ sectionLinks.forEach(a=>a.addEventListener("click",(e)=>{
 setActive("experience");
 </script>
 
+<script>
 const places=[
 ["Sole Mio",[7.9923,98.2937],"Hotel & wellness"],["KĀHLĪ Tennis Academy",[7.9807,98.3027],"Tennis"],["Phuket Old Town",[7.88478,98.38922],"Old Town"],["Sunday Walking Street",[7.8845,98.389],"Night market"],["Paradise Beach",[7.89103,98.26539],"Beach"],["Elephant Beach",[7.8759,98.2787],"Beach"],["Ta Khai · Rosewood Phuket",[7.8745,98.2745],"Dinner"],["Old Phuket Farm",[8.0105,98.3455],"Culture & food"],["Mantra Forest Spa",[8.295,98.407],"Wellness"],["Wat Chalong",[7.84625,98.3371],"Temple"],["Phuket Mountain Elephant Care",[7.86439,98.32042],"Sanctuary"],["Freedom Beach",[7.877,98.278],"Optional beach"],["Amanpuri Phuket",[7.9685,98.2777],"Sunset & dinner"],["Patong",[7.8966,98.2961],"Night out"],["Royal Phuket Marina",[7.9825,98.3784],"Boat departure"],["Private Island-Hopping Charter",[8.06,98.53],"Indicative charter area"],["Phuket International Airport",[8.1132,98.3169],"Arrival / departure"]
 ];
