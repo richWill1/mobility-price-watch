@@ -66,3 +66,30 @@
   .mapBox{height:350px}
   .stickyBar span{display:none}
 }
+
+
+/* Horizontal itinerary cards on mobile */
+@media(max-width:700px){
+  #week .days{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:2px 16px 12px 0;
+    margin-right:-16px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  #week .days::-webkit-scrollbar{display:none}
+  #week .day{
+    flex:0 0 88%;
+    width:88%;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+  }
+  #week .dayDate{flex:0 0 auto}
+}
+@media(max-width:390px){
+  #week .day{flex-basis:91%;width:91%}
+}
