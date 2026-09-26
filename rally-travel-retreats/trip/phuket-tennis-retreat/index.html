@@ -303,6 +303,34 @@ html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:op
   html{scroll-behavior:auto}
   *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
+/* Editorial section separators */
+main>section{position:relative}
+main>section+section:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  width:min(1120px,calc(100% - 56px));
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent 0%,#d8d0c4 18%,#c8b79f 47%,#d8d0c4 82%,transparent 100%);
+}
+main>section+section:after{
+  content:"";
+  position:absolute;
+  top:-4px;
+  left:50%;
+  width:8px;
+  height:8px;
+  transform:translateX(-50%) rotate(45deg);
+  background:var(--paper);
+  border:1px solid #c8b79f;
+}
+@media(max-width:700px){
+  main>section+section:before{width:calc(100% - 40px)}
+  main>section+section:after{width:7px;height:7px;top:-3.5px}
+}
+
 /* Clear final conversion block */
 .finalCta{padding:64px 0 76px;background:#f3eee5}
 .finalCtaCard{max-width:760px;margin:auto;padding:46px clamp(24px,6vw,64px);background:var(--ink);color:#fff;border-radius:28px;text-align:center;box-shadow:0 22px 60px rgba(13,42,39,.16)}
