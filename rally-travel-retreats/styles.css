@@ -242,10 +242,17 @@ body{overflow-x:hidden!important}
   .gallerySlide{width:100%!important;flex-basis:100%!important}
 }
 
-/* Selected itinerary photography — verified direct image sources */
+/* Selected itinerary photography — stable remote sources */
 .cardImagePhuket{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#fff;padding:0}
 .phuketPhoto{display:block;min-width:0;min-height:0;background-position:center;background-size:cover;background-repeat:no-repeat}
-.phuketPhoto1{background-image:url("https://constructivebuild.net/assets/projects/siamsportspro/courts-aerial.jpg")}
-.phuketPhoto2{background-image:url("https://www.gernreisen.de/assets/Reiseziele/Amanpuri-Phuket/Amanpuri-Thailand-Resort-AerialHigh-Res13031.jpg")}
-.phuketPhoto3{background-image:url("https://www.luxe-infinity.com/wp-content/uploads/2025/06/Rosewood-phuket-ta-khai-restaurant-1200x800.jpg")}
-.phuketPhoto4{background-image:url("https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2025/08/07/iwPW/lhvryE7J2d.jpg")}
+.phuketPhoto1{background-image:url("https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1800&q=90")}
+.phuketPhoto2{background-image:url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=90")}
+.phuketPhoto3{background-image:url("https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1800&q=90")}
+.phuketPhoto4{background-image:url("https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1800&q=90")}
+
+/* Map pins — keep explicit so later image/card CSS cannot hide them */
+#phuketMap .rallyMapPinWrap{display:block!important;background:transparent!important;border:0!important;width:18px!important;height:18px!important}
+#phuketMap .rallyMapPin{display:block!important;width:18px!important;height:18px!important;border-radius:50%!important;background:var(--accent)!important;border:3px solid rgba(255,253,248,.98)!important;box-shadow:0 5px 15px rgba(13,42,39,.42)!important;box-sizing:border-box!important}
+#phuketMap .rallyMapPin.active{background:var(--ink)!important;transform:scale(1.35)!important}
+#phuketMap .leaflet-marker-pane{z-index:600!important}
+#phuketMap .leaflet-popup-pane{z-index:700!important}
