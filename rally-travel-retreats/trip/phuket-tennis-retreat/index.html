@@ -47,22 +47,28 @@
 .facility span{display:block;color:var(--muted);font-size:10px;line-height:1.45}
 .hotelSource{font-size:10px;color:var(--muted);margin-top:12px}
 .hotelSource a{color:inherit}
-.day{grid-template-columns:1fr}
-.dayMedia{display:block;background:var(--ink)}
-.dayMedia .dayDate{min-height:92px}
-.dayPhoto{display:block;width:100%;height:220px;object-fit:cover}
+.day{display:grid;grid-template-columns:1fr;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.day.is-active{transform:translateY(-3px);box-shadow:0 18px 45px rgba(13,42,39,.12);border-color:#d4c8b8}
+.dayMedia{position:relative;display:block;overflow:hidden;background:var(--ink)}
+.dayMedia .dayDate{position:absolute;left:18px;bottom:18px;z-index:2;min-height:auto;padding:0;color:#fff;background:linear-gradient(90deg,rgba(5,20,16,.78),rgba(5,20,16,.08));border-radius:12px;padding:12px 18px 12px 14px}
+.dayMedia .dayDate small{display:block;font-size:9px;letter-spacing:.18em}
+.dayMedia .dayDate strong{display:block;font:500 38px/1 "Playfair Display",serif;margin-top:3px}
+.dayPhoto{display:block;width:100%;height:300px;object-fit:cover;transform:scale(1);transition:transform 8s cubic-bezier(.2,.65,.25,1),filter 1s ease;filter:saturate(.94)}
+.day.is-active .dayPhoto{transform:scale(1.065);filter:saturate(1.03)}
+.dayMedia:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,20,16,.02) 30%,rgba(5,20,16,.52) 100%);pointer-events:none}
+.dayBody{padding:24px 28px}
+@media(min-width:901px){
+ .day:hover{transform:translateY(-5px);box-shadow:0 22px 55px rgba(13,42,39,.14);border-color:#d4c8b8}
+ .day:hover .dayPhoto{transform:scale(1.065)}
+}
 @media(max-width:700px){
- .dayMedia .dayDate{min-height:70px}
- .dayPhoto{height:180px}
+ .day{flex-basis:91%;width:91%;scroll-snap-align:start;scroll-snap-stop:always}
+ .dayMedia .dayDate{left:14px;bottom:14px;padding:10px 15px 10px 12px}
+ .dayMedia .dayDate strong{font-size:32px}
+ .dayPhoto{height:230px}
+ .dayBody{padding:18px 17px 20px}
 }
 
-@media(max-width:900px){
- .hotelGallery{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;min-height:500px}
- .hotelPhotoMain{grid-column:1 / span 2;grid-row:1;min-height:300px}
- .hotelPhotoTop,.hotelPhotoBottom{min-height:180px}
- .hotelDetails{grid-template-columns:1fr}
- .facilityGrid{grid-template-columns:1fr 1fr}
-}
 @media(max-width:700px){
  .hotelGallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-top:22px;min-height:0;padding-bottom:4px;scrollbar-width:none}
  .hotelGallery::-webkit-scrollbar{display:none}
@@ -349,6 +355,12 @@ function resetMap(){map.invalidateSize({pan:false,animate:false});}
 map.whenReady(()=>[0,250,700,1400].forEach(d=>setTimeout(resetMap,d)));
 window.addEventListener("resize",resetMap,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(resetMap,300),{passive:true});
+
+const itineraryCards=[...document.querySelectorAll("#week .day")];
+const itineraryObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>entry.target.classList.toggle("is-active",entry.isIntersecting));
+},{root:document.querySelector("#week .days"),threshold:.62});
+itineraryCards.forEach(card=>itineraryObserver.observe(card));
 
 const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
 const sectionTargets=[...new Set(sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean))];
