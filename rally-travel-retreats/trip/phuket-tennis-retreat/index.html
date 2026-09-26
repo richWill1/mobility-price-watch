@@ -92,6 +92,22 @@
  .hotelPhoto{flex-basis:88vw;width:88vw;height:270px;min-height:270px}
  .hotelPhotoMain,.hotelPhotoTop,.hotelPhotoBottom{min-height:270px}
 }
+
+/* Mobile stay cards: give the content room to breathe */
+@media(max-width:700px){
+ .hotelDetails{grid-template-columns:1fr;gap:14px}
+ .hotelCard{padding:22px 20px;border-radius:20px}
+ .hotelCard h3{font-size:31px;line-height:1.02;margin:8px 0 14px;max-width:330px}
+ .hotelCard p{font-size:14px;line-height:1.55}
+ .roomMeta{margin-top:22px}
+ .roomMeta div{min-height:72px;display:flex;flex-direction:column;justify-content:center}
+ .roomFeatures{gap:7px;margin-top:16px}
+ .roomFeatures span{font-size:10px;padding:8px 11px}
+ .sharedNote{margin-top:16px;padding:14px 15px}
+ .facilityGrid{margin-top:16px}
+ .facility{min-height:108px;display:flex;flex-direction:column;justify-content:center}
+ .hotelSource{font-size:9px;line-height:1.45;margin-top:12px}
+}
 </style>
 <style>
 /* Sticky section navigation */
@@ -193,7 +209,7 @@
       <article class="hotelCard">
         <div class="hotelEyebrow">The room</div>
         <h3>Shared Deluxe Room.</h3>
-        <p>Your retreat includes a Deluxe Room at Sole Mio. The room is 36 m² with a 4 m² private balcony and can be configured with either a king bed or two single beds. For the shared option, we'll use the twin configuration where available, so each guest has their own bed.</p>
+        <p>Your retreat includes a 36 m² Deluxe Room at Sole Mio, with a 4 m² private balcony. For sharing, we’ll use the twin configuration where available, giving each guest their own bed.</p>
         <div class="roomMeta">
           <div><strong>36 m²</strong><span>Room size</span></div>
           <div><strong>4 m²</strong><span>Private balcony</span></div>
@@ -212,7 +228,7 @@
       <article class="hotelCard">
         <div class="hotelEyebrow">The hotel</div>
         <h3>Built for the gaps between tennis.</h3>
-        <p>Sole Mio puts the retreat in one place: breakfast, pool time, recovery and somewhere comfortable to come back to after a day out exploring Phuket. The hotel is around five minutes from Bang Tao Beach according to the hotel itself.</p>
+        <p>Sole Mio keeps the essentials close: breakfast, pool time, recovery and a comfortable base between days out exploring Phuket. The hotel is around five minutes from Bang Tao Beach according to the hotel itself.</p>
         <div class="facilityGrid">
           <div class="facility"><b>Rooftop pool</b><span>Sun, swims and sunset drinks.</span></div>
           <div class="facility"><b>Wellness</b><span>Sauna, steam, ice room and spa.</span></div>
