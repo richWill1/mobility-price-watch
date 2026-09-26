@@ -736,7 +736,12 @@ sectionLinks.forEach(a=>a.addEventListener("click",e=>{
  if(!a.dataset.section)return;
  e.preventDefault();
  const target=document.getElementById(a.dataset.section);
- if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+ if(target){
+   const nav=document.querySelector(".sectionNav");
+   const offset=(nav?.getBoundingClientRect().height||52)+2;
+   const top=target.getBoundingClientRect().top+window.scrollY-offset;
+   window.scrollTo({top,behavior:"smooth"});
+ }
  setActive(a.dataset.section,true);
 }));
 setActive("top",false);
