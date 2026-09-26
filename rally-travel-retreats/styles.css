@@ -228,3 +228,16 @@
 @media(max-width:390px){
   .gallerySlide{height:200px!important;min-height:200px!important}
 }
+
+/* Hard reset the mobile page canvas — prevent the document collapsing to content width */
+html,body{width:100%!important;min-width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+body{overflow-x:hidden!important}
+.hero,.sectionNav,main,.footer{width:100%!important;min-width:100%!important;max-width:none!important}
+@media(max-width:700px){
+  .shell{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;padding-left:16px!important;padding-right:16px!important}
+  .heroInner{width:100%!important}
+  .sectionNavInner{width:100%!important;max-width:none!important;margin:0!important}
+  section{width:100%!important}
+  .gallerySlider,.galleryTrack{width:100%!important}
+  .gallerySlide{width:100%!important;flex-basis:100%!important}
+}
