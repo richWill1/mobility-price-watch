@@ -25,115 +25,143 @@ body{--ink:#0d2a27}
 .splitStory{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .ticker{display:inline-flex;border:1px solid var(--sand);padding:9px 13px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:.16em;font-weight:800}
 @media(max-width:900px){.splitStory{grid-template-columns:1fr}.storyImage{min-height:360px}}
-</style>
+
+/* Unified Rally editorial homepage */
+.homePage{background:#f3eee5;color:var(--ink);font-family:"DM Sans",sans-serif}
+.homePage *{box-sizing:border-box}
+.homeHeader{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.homeNav{height:72px;display:flex;align-items:center;justify-content:space-between}
+.homeBrand{display:inline-flex;flex-direction:column;text-decoration:none;color:var(--ink);font:600 21px/1 "Playfair Display",serif;letter-spacing:.18em}
+.homeBrand span{font:800 7px/1.2 "DM Sans",sans-serif;letter-spacing:.24em;margin-top:6px;text-align:center}
+.homeNav nav{display:flex;gap:28px}.homeNav nav a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.homeIntro{padding:clamp(70px,10vw,125px) 0 80px;text-align:center;background:#fffdfa}
+.homeKicker{color:#b86f4d;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.homeIntro h1{font:500 clamp(48px,8vw,92px)/.92 "Playfair Display",serif;letter-spacing:-.04em;max-width:1050px;margin:17px auto 25px}
+.homeIntro h1 em,.homeRetreat h3 em,.homeSectionHead h2 em{font-style:normal;color:#77817d}
+.homeIntro>div>p{max-width:670px;margin:auto;color:var(--muted);font-size:17px;line-height:1.6}
+.homeActions{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:30px}
+.homeButton{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:50px;padding:0 22px;border-radius:15px;text-decoration:none;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.homeButtonDark{background:var(--ink);color:#fff;box-shadow:0 10px 25px rgba(13,42,39,.14)}
+.homeTextLink{color:var(--ink);font-size:11px;font-weight:800;text-decoration:none;letter-spacing:.08em}
+.homeSection{padding:85px 0}.homeSectionHead{display:grid;grid-template-columns:1fr .7fr;gap:50px;align-items:end;margin-bottom:34px}.homeSectionHead h2{font:500 clamp(42px,5.5vw,68px)/.95 "Playfair Display",serif;letter-spacing:-.03em;margin:9px 0 0}.homeSectionHead>p{color:var(--muted);font-size:15px;line-height:1.6;margin:0}
+.homeRetreat{display:grid;grid-template-columns:1.05fr .95fr;background:#fffdfa;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:0 20px 50px rgba(13,42,39,.06)}
+.homeRetreatVisual{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;min-height:590px;background:#eee}.homePhoto{background-position:center;background-size:cover}.homePhotoMain{grid-row:1/3;background-image:url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp")}.homePhotoTwo{background-image:url("https://www.hotelscombined.com.au/kimg/67/9f/b5e0060348085df9.jpg")}.homePhotoThree{background-image:url("https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=1200&q=86")}.homePhotoFour{background-image:url("https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=86")}
+.homeRetreatBody{padding:clamp(30px,4vw,52px);display:flex;flex-direction:column}.homeRetreatBody h3{font:500 clamp(48px,6vw,76px)/.88 "Playfair Display",serif;letter-spacing:-.04em;margin:14px 0 22px}.homeRetreatBody>p{color:var(--muted);font-size:15px;line-height:1.65;max-width:560px}
+.homeMeta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:26px}.homeMeta div{padding:17px 10px 17px 0}.homeMeta div:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}.homeMeta small{display:block;color:#9a7652;font-size:8px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:6px}.homeMeta strong{font-size:12px}
+.homeRetreatBottom{margin-top:auto;padding-top:28px;display:flex;align-items:end;justify-content:space-between;gap:20px}.homeRetreatBottom>div{display:flex;flex-direction:column}.homeRetreatBottom strong{font:500 38px/1 "Playfair Display",serif}.homeRetreatBottom span{font-size:9px;color:var(--muted);letter-spacing:.05em;margin-top:5px}
+.homeApproach{background:#e9e3d8}.homeThree{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.homeThree article{background:#fffdfa;border:1px solid var(--line);border-radius:24px;padding:32px}.homeThree span{font-size:9px;color:#b86f4d;font-weight:800;letter-spacing:.15em}.homeThree h3{font:500 42px/1 "Playfair Display",serif;margin:16px 0}.homeThree p,.homeStoryCopy p{color:var(--muted);font-size:14px;line-height:1.65}
+.homeStory{padding:90px 0;background:#fffdfa}.homeStoryGrid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.homeStoryImage{min-height:560px;border-radius:28px;background:url("https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1800&q=86") center/cover}.homeStoryCopy h2{font:500 clamp(42px,5vw,65px)/.96 "Playfair Display",serif;letter-spacing:-.03em;margin:12px 0 20px}.homePill{display:inline-flex;margin-top:18px;padding:10px 14px;border:1px solid var(--sand);border-radius:999px;font-size:9px;text-transform:uppercase;letter-spacing:.14em;font-weight:800}
+.homeContact{padding:30px 0 80px;background:#fffdfa}.homeContactCard{background:var(--ink);color:#fff;border-radius:28px;padding:42px 48px;display:flex;align-items:center;justify-content:space-between;gap:30px}.homeContactCard h2{font:500 44px/1 "Playfair Display",serif;margin:10px 0}.homeContactCard p{color:#cbd4d0;margin:0}.homeContactCard .homeButton{background:#fff;color:var(--ink)}
+.homeFooter{background:var(--ink);color:#fff;padding:45px 0}.homeFooter .homeBrand{color:#fff}.homeFooterGrid{display:flex;justify-content:space-between;align-items:end;gap:30px}.homeFooter p{color:#bfc9c5;font-size:11px;line-height:1.7}
+@media(max-width:700px){
+ .homeNav{height:60px;padding:0 16px}.homeBrand{font-size:17px}.homeBrand span{font-size:6px}.homeNav nav{gap:14px}.homeNav nav a{font-size:8px}.homeNav nav a:nth-child(2){display:none}
+ .homeIntro{padding:54px 16px 48px}.homeIntro h1{font-size:47px;line-height:.95;margin-top:14px}.homeIntro>div>p{font-size:14px;line-height:1.55}.homeActions{margin-top:23px;gap:18px}.homeButton{min-height:47px;padding:0 17px;font-size:9px}
+ .homeSection{padding:54px 16px}.homeSectionHead{display:block;margin-bottom:24px}.homeSectionHead h2{font-size:42px;margin-top:8px}.homeSectionHead>p{font-size:13px;margin-top:16px}
+ .homeRetreat{grid-template-columns:1fr;border-radius:22px}.homeRetreatVisual{min-height:390px}.homeRetreatBody{padding:25px 21px}.homeRetreatBody h3{font-size:48px}.homeRetreatBody>p{font-size:13px}.homeMeta{margin-top:20px}.homeMeta div{padding:13px 6px 13px 0}.homeMeta div:nth-child(even){padding-left:10px}.homeMeta strong{font-size:10px}.homeRetreatBottom{padding-top:23px;align-items:center}.homeRetreatBottom strong{font-size:30px}.homeRetreatBottom span{font-size:8px}.homeRetreatBottom .homeButton{min-width:125px}
+ .homeThree{grid-template-columns:1fr 1fr;gap:8px}.homeThree article{padding:22px 17px;border-radius:19px}.homeThree article:last-child{grid-column:1/-1}.homeThree h3{font-size:34px;margin:12px 0}.homeThree p{font-size:11px;line-height:1.55}
+ .homeStory{padding:54px 16px}.homeStoryGrid{grid-template-columns:1fr;gap:28px}.homeStoryImage{min-height:330px;border-radius:22px}.homeStoryCopy h2{font-size:42px}.homeStoryCopy p{font-size:13px}
+ .homeContact{padding:0 16px 54px}.homeContactCard{padding:30px 22px;display:block;border-radius:22px}.homeContactCard h2{font-size:38px}.homeContactCard p{font-size:13px;margin:10px 0 20px}.homeContactCard .homeButton{width:100%}
+ .homeFooter{padding:32px 16px}.homeFooterGrid{display:block}.homeFooterGrid>div:last-child{margin-top:24px}
+}</style>
 </head>
-<body>
-<header class="hero homeHero">
-  <div class="shell">
-    <nav class="nav">
-      <div class="logoLock">RALLY<span>TRAVEL RETREATS</span></div>
-      <div class="navlinks">
-        <a href="#retreats">Retreats</a>
-        <a href="#approach">Why Rally Travel Retreats Travel Retreats</a>
-        <a href="#contact">Contact</a>
-      </div>
+<body class="homePage">
+<header class="homeHeader">
+  <div class="homeNav shell">
+    <a class="homeBrand" href="./" aria-label="Rally Travel Retreats home">RALLY<span>TRAVEL RETREATS</span></a>
+    <nav>
+      <a href="#retreats">Retreats</a>
+      <a href="#approach">The Rally way</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <div class="heroInner">
-      <div class="eyebrow">Tennis · Wellness · Adventure · Connection</div>
-      <h1>Travel for the game.<br>Stay for the experience.</h1>
-      <p class="heroLead">Small-group retreats built around brilliant tennis, beautiful places, good food and the people you meet along the way.</p>
-      <div class="ctaRow">
-        <a class="btn btnPrimary" href="#retreats">Explore retreats</a>
-        <a class="btn" style="border-color:#ffffff55;color:#fff" href="#approach">Why Rally Travel Retreats Travel Retreats</a>
-      </div>
-    </div>
   </div>
 </header>
 
 <main>
-
-
-<section id="retreats">
+<section class="homeIntro">
   <div class="shell">
-    <div class="sectionTop">
-      <div>
-        <div class="sectionKicker">Upcoming retreats</div>
-        <h2>Choose your next escape.</h2>
-      </div>
-      <p class="lede">One retreat is live now. More destinations can slot into the same Rally format as they launch.</p>
+    <div class="homeKicker">Tennis · Wellness · Adventure · Connection</div>
+    <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
+    <p>Small-group retreats built around brilliant tennis, beautiful places, good food and the people you meet along the way.</p>
+    <div class="homeActions">
+      <a class="homeButton homeButtonDark" href="#retreats">Explore retreats <span>↓</span></a>
+      <a class="homeTextLink" href="#approach">The Rally way →</a>
+    </div>
+  </div>
+</section>
+
+<section id="retreats" class="homeSection">
+  <div class="shell">
+    <div class="homeSectionHead">
+      <div><div class="homeKicker">Upcoming retreats</div><h2>Choose your next escape.</h2></div>
+      <p>One retreat is live now. More destinations will join the same Rally format as they launch.</p>
     </div>
 
-    <article class="retreatCard">
-      <div class="cardImage cardImagePhuket" aria-label="Phuket retreat highlights"><span class="phuketPhoto phuketPhoto1"></span><span class="phuketPhoto phuketPhoto2"></span><span class="phuketPhoto phuketPhoto3"></span><span class="phuketPhoto phuketPhoto4"></span></div>
-      <div class="cardBody">
-        <div>
-          <div class="cardTag">Featured · Tennis</div>
-          <h3>Phuket<br>Tennis Retreat</h3>
-          <p>Five mornings of professional coaching at KĀHLĪ, an eight-night stay at Sole Mio Hotel & Wellness, recovery time, hosted dinners and a private island-hopping day.</p>
-          <div class="miniMeta">
-            <div><small>When</small><strong>13–21 Feb 2027</strong></div>
-            <div><small>Length</small><strong>8 nights</strong></div>
-            <div><small>Group</small><strong>Private group</strong></div>
-            <div><small>Room</small><strong>Shared room</strong></div>
-          </div>
+    <article class="homeRetreat">
+      <div class="homeRetreatVisual">
+        <div class="homePhoto homePhotoMain"></div>
+        <div class="homePhoto homePhotoTwo"></div>
+        <div class="homePhoto homePhotoThree"></div>
+        <div class="homePhoto homePhotoFour"></div>
+      </div>
+      <div class="homeRetreatBody">
+        <div class="homeKicker">Featured · Tennis</div>
+        <h3>Phuket<br><em>Tennis Retreat</em></h3>
+        <p>Five mornings of professional coaching at KĀHLĪ, eight nights at Sole Mio Hotel & Wellness, recovery time, hosted dinners and a private island-hopping day.</p>
+        <div class="homeMeta">
+          <div><small>When</small><strong>13–21 Feb 2027</strong></div>
+          <div><small>Length</small><strong>8 nights</strong></div>
+          <div><small>Group</small><strong>Up to 24 guests</strong></div>
+          <div><small>Room</small><strong>Shared room</strong></div>
         </div>
-        <div>
-          <div class="price">$2,995</div>
-          <div class="priceSub">Per person · shared room</div>
-          <div class="ctaRow">
-            <a class="btn btnDark" href="trip/phuket-tennis-retreat/">View retreat</a>
-            <a class="btn btnGhost" href="mailto:mark@rallytravelretreats.com?subject=Phuket%20Tennis%20Retreat%20Enquiry">Enquire</a>
-          </div>
+        <div class="homeRetreatBottom">
+          <div><strong>$2,995</strong><span>per person · shared room</span></div>
+          <a class="homeButton homeButtonDark" href="trip/phuket-tennis-retreat/">View retreat <span>→</span></a>
         </div>
       </div>
     </article>
   </div>
 </section>
 
-<section id="approach" class="approach">
+<section id="approach" class="homeSection homeApproach">
   <div class="shell">
-    <div class="sectionTop">
-      <div>
-        <div class="sectionKicker">Why Rally Travel Retreats Travel Retreats</div>
-        <h2>Not a tour.<br>Not a tennis camp.</h2>
-      </div>
-      <p class="lede">Rally sits somewhere in between: a properly hosted trip where the sport gives the week its rhythm, but the destination makes it memorable.</p>
+    <div class="homeSectionHead">
+      <div><div class="homeKicker">The Rally way</div><h2>Not a tour.<br><em>Not a tennis camp.</em></h2></div>
+      <p>The sport gives the week its rhythm. The destination, the people and the space around it make the retreat.</p>
     </div>
-    <div class="three">
-      <article><b>Play</b><h3>Serious about the sport.</h3><p>Coaching, court time and quality instruction are at the heart of every retreat — without turning the whole holiday into training.</p></article>
-      <article><b>Recover</b><h3>Room to breathe.</h3><p>Pool time, wellness, great food and unplanned afternoons give you space to enjoy the destination at your own pace.</p></article>
-      <article><b>Explore</b><h3>Leave the resort.</h3><p>Local food, beaches, culture, boat days and carefully chosen experiences make each week feel like a real trip.</p></article>
+    <div class="homeThree">
+      <article><span>01</span><h3>Play</h3><p>Professional coaching and quality court time at the heart of every retreat — without turning the whole holiday into training.</p></article>
+      <article><span>02</span><h3>Recover</h3><p>Pool time, wellness, great food and unplanned afternoons give you space to enjoy the destination at your own pace.</p></article>
+      <article><span>03</span><h3>Explore</h3><p>Local food, beaches, culture, boat days and carefully chosen experiences make each week feel like a real trip.</p></article>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="shell splitStory">
-    <div class="storyImage"></div>
-    <div>
-      <div class="sectionKicker">Built for connection</div>
+<section class="homeStory">
+  <div class="shell homeStoryGrid">
+    <div class="homeStoryImage"></div>
+    <div class="homeStoryCopy">
+      <div class="homeKicker">Built for connection</div>
       <h2>The best part of a retreat is rarely on the schedule.</h2>
-      <p class="lede">The rally after tennis. The table you end up staying at too long. The recommendation from someone you've just met. Rally creates the structure, then leaves room for those moments to happen.</p>
-      <span class="ticker">Small groups · Great places · Shared experiences</span>
+      <p>The rally after tennis. The table you end up staying at too long. The recommendation from someone you've just met. Rally creates the structure, then leaves room for those moments to happen.</p>
+      <div class="homePill">Small groups · Great places · Shared experiences</div>
     </div>
   </div>
 </section>
 
-<section id="contact" style="padding-top:35px">
+<section id="contact" class="homeContact">
   <div class="shell">
-    <div class="infoCard" style="padding:38px;display:flex;justify-content:space-between;gap:30px;align-items:center">
-      <div><div class="sectionKicker">Plan your next Rally Travel Retreat</div><h3 style="font:500 38px 'Playfair Display',serif;margin:9px 0">Have a destination in mind?</h3><p style="margin:0;color:var(--muted)">Tell us where you want to play. We'll take it from there.</p></div>
-      <a class="btn btnDark" href="mailto:mark@rallytravelretreats.com?subject=Rally%20Travel%20Retreats%20Enquiry">Contact Rally Travel Retreats</a>
+    <div class="homeContactCard">
+      <div><div class="homeKicker">Plan your next Rally</div><h2>Have a destination in mind?</h2><p>Tell us where you want to play. We'll take it from there.</p></div>
+      <a class="homeButton homeButtonDark" href="mailto:mark@rallytravelretreats.com?subject=Rally%20Travel%20Retreats%20Enquiry">Contact Rally <span>→</span></a>
     </div>
   </div>
 </section>
 </main>
 
-<footer class="footer">
-  <div class="shell footerGrid">
-    <div><div class="logoLock">RALLY<span>TRAVEL RETREATS</span></div><p style="margin-top:18px">Tennis · Wellness · Adventure · Connection</p></div>
-    <div id="contact"><p>mark@rallytravelretreats.com<br>214-799-5662</p><p>© 2026 Rally Travel Retreats</p></div>
+<footer class="homeFooter">
+  <div class="shell homeFooterGrid">
+    <a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a>
+    <div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div>
   </div>
 </footer>
-</body>
-</html>
+</body></html>
