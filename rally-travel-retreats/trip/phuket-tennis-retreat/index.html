@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d2a27">
-<title>Phuket Tennis Retreat · Rally Travel Retreats</title>
+<title>Phuket Tennis Retreat · Rally Retreats</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-.detailHero{background-image:linear-gradient(180deg,rgba(5,20,16,.12),rgba(5,20,16,.84)),url("https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=2400&q=88")}
+.detailHero{background-image:linear-gradient(180deg,rgba(5,20,16,.12),rgba(5,20,16,.84)),url("https://static.tildacdn.com/tild3032-6339-4537-a632-633135393932/_-____.jpg")}
 .detailHero h1{max-width:760px}.brandLink{text-decoration:none}
 .galleryGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:34px}.galleryGrid img{width:100%;height:100%;display:block;object-fit:cover;border-radius:20px}.galleryMain{min-height:560px}.gallerySide{display:grid;gap:14px}.gallerySide img{min-height:270px}
 .includeList{display:grid;gap:10px;margin-top:17px}.include{display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5}.include span:first-child{color:var(--accent);font-weight:900}
@@ -41,7 +41,7 @@
 <header class="hero detailHero">
   <div class="shell">
     <nav class="nav">
-      <a class="brand" href="../../">Rally Travel Retreats<span>Travel retreats</span></a>
+      <a class="brand" href="../../">Rally Retreats<span>Travel retreats</span></a>
       <div class="navlinks"><a href="#experience">The experience</a><a href="#week">The week</a><a href="#map">Map</a><a href="#enquire">Enquire</a></div>
     </nav>
     <div class="heroInner">
@@ -51,7 +51,7 @@
       <div class="metaRow">
         <span class="chip">13–21 February 2027</span><span class="chip">8 nights</span><span class="chip">Private group</span><span class="chip">Shared room</span>
       </div>
-      <div class="ctaRow"><a class="btn btnPrimary" href="#enquire">Enquire about this retreat</a><a class="btn" style="border-color:#ffffff55;color:#fff" href="../../">Back to Rally</a></div>
+      <div class="ctaRow"><a class="btn btnPrimary" href="#enquire">Enquire about this retreat</a><a class="btn" style="border-color:#ffffff55;color:#fff" href="../../">Back to Rally Retreats</a></div>
     </div>
   </div>
 </header>
@@ -131,8 +131,8 @@
     <div class="mapExperience">
       <div class="mapVisual">
         <div class="mapToolbar">
-          <div class="mapLegend"><span class="legendDot"></span>Rally locations</div>
-          
+          <div class="mapLegend"><span class="legendDot"></span>Rally Retreats locations</div>
+          <button class="mapToggle" id="toggle" type="button">Street map</button>
         </div>
         <div id="phuketMap"></div>
       </div>
@@ -157,100 +157,29 @@
 </section>
 </main>
 
-<footer class="footer"><div class="shell footerGrid"><div><div class="brand">Rally Travel Retreats<span>Travel retreats</span></div><p>Phuket Tennis Retreat · 13–21 February 2027</p></div><div><p>mark@rallytravelretreats.com<br>214-799-5662</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
+<footer class="footer"><div class="shell footerGrid"><div><div class="brand">Rally Retreats<span>Travel retreats</span></div><p>Phuket Tennis Retreat · 13–21 February 2027</p></div><div><p>mark@rallytravelretreats.com<br>214-799-5662</p><p>© 2026 Rally Retreats</p></div></div></footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const places=[
- {name:"Sole Mio",coords:[7.9923,98.2937],type:"STAY",desc:"Hotel & wellness",icon:"⌂"},
- {name:"KĀHLĪ Tennis Academy",coords:[7.9807,98.3027],type:"TENNIS",desc:"Five mornings on court",icon:"✦"},
- {name:"Phuket Old Town",coords:[7.88478,98.38922],type:"CULTURE",desc:"Old Town + Sunday Walking Street",icon:"◈"},
- {name:"Paradise Beach",coords:[7.89103,98.26539],type:"BEACH",desc:"Monday afternoon",icon:"●"},
- {name:"Ta Khai · Rosewood",coords:[7.8745,98.2745],type:"DINNER",desc:"Monday evening",icon:"◆"},
- {name:"Wat Chalong",coords:[7.84625,98.3371],type:"CULTURE",desc:"Wednesday afternoon",icon:"◇"},
- {name:"Amanpuri",coords:[7.9685,98.2777],type:"EVENING",desc:"Thursday sunset + dinner",icon:"✦"},
- {name:"Royal Phuket Marina",coords:[7.9825,98.3784],type:"BOAT",desc:"Saturday island-hopping",icon:"◇"}
+ {name:"Sole Mio",coords:[7.9923,98.2937],category:"stay",label:"Hotel & wellness",description:"Your base in Bang Tao.",icon:"⌂"},
+ {name:"KĀHLĪ Tennis Academy",coords:[7.9807,98.3027],category:"tennis",label:"Tennis",description:"Five mornings on court.",icon:"✦"},
+ {name:"Phuket Old Town",coords:[7.88478,98.38922],category:"culture",label:"Old Town",description:"Colourful streets, food & Sunday Walking Street.",icon:"◈"},
+ {name:"Paradise Beach",coords:[7.89103,98.26539],category:"beaches",label:"Beach",description:"An afternoon on the coast.",icon:"◒"},
+ {name:"Elephant Beach",coords:[7.8759,98.2787],category:"beaches",label:"Beach",description:"A second stop by the sea.",icon:"◒"},
+ {name:"Ta Khai · Rosewood Phuket",coords:[7.8745,98.2745],category:"culture",label:"Dinner",description:"A special dinner on the southwest coast.",icon:"◆"},
+ {name:"Old Phuket Farm",coords:[8.0105,98.3455],category:"culture",label:"Culture & food",description:"One option for the Tuesday afternoon.",icon:"◇"},
+ {name:"Mantra Forest Spa",coords:[8.295,98.407],category:"experiences",label:"Wellness",description:"The longer Tuesday wellness option.",icon:"✧"},
+ {name:"Wat Chalong",coords:[7.84625,98.3371],category:"culture",label:"Temple",description:"A cultural stop on Wednesday.",icon:"◇"},
+ {name:"Phuket Mountain Elephant Care",coords:[7.86439,98.32042],category:"experiences",label:"Sanctuary",description:"Wednesday afternoon experience.",icon:"✧"},
+ {name:"Freedom Beach",coords:[7.877,98.278],category:"beaches",label:"Optional beach",description:"A recovery-afternoon option.",icon:"◒"},
+ {name:"Amanpuri Phuket",coords:[7.9685,98.2777],category:"experiences",label:"Sunset & dinner",description:"Thursday evening at Amanpuri.",icon:"✦"},
+ {name:"Patong",coords:[7.8966,98.2961],category:"experiences",label:"Night out",description:"Optional Friday night.",icon:"◆"},
+ {name:"Royal Phuket Marina",coords:[7.9825,98.3784],category:"experiences",label:"Boat departure",description:"Saturday's island-hopping departure.",icon:"◇"}
 ];
-const map=L.map("phuketMap",{zoomControl:false,scrollWheelZoom:false,attributionControl:true});
-const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
-const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics"});
-satellite.addTo(map);
-L.control.zoom({position:"bottomright"}).addTo(map);
-const bounds=L.latLngBounds(places.map(p=>p.coords));
-map.fitBounds(bounds,{padding:[45,45],maxZoom:11});
-const markers={};
-function icon(active){return L.divIcon({className:"rallyPinWrap",html:'<span class="rallyPin '+(active?"isActive":"")+'"></span>',iconSize:[24,24],iconAnchor:[12,12]})}
-places.forEach((p,i)=>{
- const m=L.marker(p.coords,{icon:icon(i===0)}).addTo(map);
- m.bindPopup('<b>'+p.name+'</b><br><span>'+p.desc+'</span>',{closeButton:false,offset:[0,-6]});
- markers[p.name]=m;
-});
-const route=L.polyline(places.map(p=>p.coords),{color:"#c56e49",weight:2.5,opacity:.6,dashArray:"5 8",interactive:false}).addTo(map);
-let selected=places[0].name;
-const cards=document.getElementById("mapCards");
-function render(){
- cards.innerHTML=places.map(p=>'<button class="mapPlace '+(p.name===selected?"selected":"")+'" data-name="'+p.name+'"><span class="placeIcon">'+p.icon+'</span><span class="placeCopy"><small>'+p.type+'</small><strong>'+p.name+'</strong><em>'+p.desc+'</em></span><span class="placeArrow">→</span></button>').join("");
- cards.querySelectorAll(".mapPlace").forEach(btn=>btn.onclick=()=>select(btn.dataset.name,true));
-}
-function select(name,fly){
- selected=name;
- places.forEach((p,i)=>markers[p.name].setIcon(icon(p.name===selected)));
- const p=places.find(x=>x.name===name);
- if(!p)return;
- if(fly) map.flyTo(p.coords,13,{duration:.65});
- markers[name].openPopup();
- render();
- const card=cards.querySelector('[data-name="'+CSS.escape(name)+'"]');
- if(card) card.scrollIntoView({behavior:"smooth",block:"nearest"});
-}
-render();
 
-window.addEventListener("resize",()=>map.invalidateSize(),{passive:true});
-window.addEventListener("orientationchange",()=>setTimeout(()=>map.invalidateSize(),300),{passive:true});
-</script>
-<script>
-const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
-const sectionTargets=sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean);
-const setActive=(id)=>{
- sectionLinks.forEach(a=>a.classList.toggle("active",a.dataset.section===id));
- const active=sectionLinks.find(a=>a.dataset.section===id);
- if(active) active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
-};
-const observer=new IntersectionObserver((entries)=>{
- const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
- if(visible) setActive(visible.target.id);
-},{rootMargin:"-18% 0px -65% 0px",threshold:[0,.2,.5,1]});
-sectionTargets.forEach(s=>observer.observe(s));
-sectionLinks.forEach(a=>a.addEventListener("click",(e)=>{
- e.preventDefault();
- const target=document.getElementById(a.dataset.section);
- if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
- setActive(a.dataset.section);
-}));
-setActive("experience");
-</script>
-
-<script>
-const places=[
-  {name:"Sole Mio",coords:[7.9923,98.2937],category:"stay",label:"Hotel & wellness",description:"Your base in Bang Tao.",icon:"⌂"},
-  {name:"KĀHLĪ Tennis Academy",coords:[7.9807,98.3027],category:"tennis",label:"Tennis",description:"Five mornings on court.",icon:"✦"},
-  {name:"Phuket Old Town",coords:[7.88478,98.38922],category:"culture",label:"Old Town",description:"Colourful streets, food & Sunday Walking Street.",icon:"◈"},
-  {name:"Paradise Beach",coords:[7.89103,98.26539],category:"beaches",label:"Beach",description:"An afternoon on the coast.",icon:"◒"},
-  {name:"Elephant Beach",coords:[7.8759,98.2787],category:"beaches",label:"Beach",description:"A second stop by the sea.",icon:"◒"},
-  {name:"Ta Khai · Rosewood Phuket",coords:[7.8745,98.2745],category:"culture",label:"Dinner",description:"A special dinner on the southwest coast.",icon:"◆"},
-  {name:"Old Phuket Farm",coords:[8.0105,98.3455],category:"culture",label:"Culture & food",description:"One option for the Tuesday afternoon.",icon:"◇"},
-  {name:"Mantra Forest Spa",coords:[8.295,98.407],category:"experiences",label:"Wellness",description:"The longer Tuesday wellness option.",icon:"✧"},
-  {name:"Wat Chalong",coords:[7.84625,98.3371],category:"culture",label:"Temple",description:"A cultural stop on Wednesday.",icon:"◇"},
-  {name:"Phuket Mountain Elephant Care",coords:[7.86439,98.32042],category:"experiences",label:"Sanctuary",description:"Wednesday afternoon experience.",icon:"✧"},
-  {name:"Freedom Beach",coords:[7.877,98.278],category:"beaches",label:"Optional beach",description:"A recovery-afternoon option.",icon:"◒"},
-  {name:"Amanpuri Phuket",coords:[7.9685,98.2777],category:"experiences",label:"Sunset & dinner",description:"Thursday evening at Amanpuri.",icon:"✦"},
-  {name:"Patong",coords:[7.8966,98.2961],category:"experiences",label:"Night out",description:"Optional Friday night.",icon:"◆"},
-  {name:"Royal Phuket Marina",coords:[7.9825,98.3784],category:"experiences",label:"Boat departure",description:"Saturday's island-hopping departure.",icon:"◇"}
-];
 const categoryNames={stay:"Stay",tennis:"Tennis",beaches:"Beaches",culture:"Food & culture",experiences:"Experiences"};
-const mapEl=document.getElementById("phuketMap");
-const mapBoxEl=mapEl.closest(".mapBox");
-const map=L.map(mapEl,{scrollWheelZoom:false,worldCopyJump:true,zoomControl:false});
+const map=L.map("phuketMap",{scrollWheelZoom:false,zoomControl:false,worldCopyJump:true});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics, and the GIS User Community"});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
 satellite.addTo(map);
@@ -258,83 +187,71 @@ L.control.zoom({position:"bottomright"}).addTo(map);
 
 const markerByName={};
 const markerIcon=(active=false)=>L.divIcon({
-  className:"rallyMapPinWrap",
-  html:'<div class="rallyMapPin'+(active?' active':'')+'"></div>',
-  iconSize:[18,18],iconAnchor:[9,9]
+ className:"rallyMapPinWrap",
+ html:'<div class="rallyMapPin'+(active?' active':'')+'"></div>',
+ iconSize:[18,18],iconAnchor:[9,9]
 });
-places.forEach((p)=>{
-  const marker=L.marker(p.coords,{icon:markerIcon()})
-    .bindPopup("<strong>"+p.name+"</strong><br><span>"+p.label+"</span>");
-  markerByName[p.name]=marker;
-  marker.addTo(map);
+places.forEach(p=>{
+ const marker=L.marker(p.coords,{icon:markerIcon()}).bindPopup("<strong>"+p.name+"</strong><br><span>"+p.label+"</span>");
+ markerByName[p.name]=marker;
+ marker.addTo(map);
 });
-
 map.setView([7.94,98.30],11.1);
 
 const cards=document.getElementById("mapCards");
-const filters=[...document.querySelectorAll(".mapFilter")];
-let currentFilter="all";
 let selectedName=places[0].name;
 
 function renderCards(){
-  const visible=places.filter(p=>currentFilter==="all"||p.category===currentFilter);
-  cards.innerHTML=visible.map((p,i)=>`
-    <button class="mapCard${p.name===selectedName?' selected':''}" data-place="${p.name}">
-      <span class="mapCardIcon">${p.icon}</span>
-      <span class="mapCardText">
-        <small>${categoryNames[p.category]}</small>
-        <strong>${p.name}</strong>
-        <em>${p.description}</em>
-      </span>
-      <span class="mapCardArrow">↗</span>
-    </button>`).join("");
-  cards.querySelectorAll(".mapCard").forEach(card=>card.addEventListener("click",()=>{
-    const p=places.find(x=>x.name===card.dataset.place);
-    if(!p)return;
-    selectedName=p.name;
-    Object.entries(markerByName).forEach(([name,m])=>m.setIcon(markerIcon(name===selectedName)));
-    map.flyTo(p.coords,13,{duration:.7});
-    markerByName[p.name].openPopup();
-    renderCards();
-    card.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
-  }));
+ cards.innerHTML=places.map(p=>`
+  <button class="mapPlace${p.name===selectedName?' selected':''}" data-place="${p.name}">
+   <span class="placeIcon">${p.icon}</span>
+   <span class="placeCopy"><small>${categoryNames[p.category]}</small><strong>${p.name}</strong><em>${p.description}</em></span>
+   <span class="placeArrow">→</span>
+  </button>`).join("");
+ cards.querySelectorAll(".mapPlace").forEach(card=>card.addEventListener("click",()=>{
+   const p=places.find(x=>x.name===card.dataset.place);
+   if(!p)return;
+   selectedName=p.name;
+   Object.entries(markerByName).forEach(([name,m])=>m.setIcon(markerIcon(name===selectedName)));
+   map.flyTo(p.coords,13,{duration:.65});
+   markerByName[p.name].openPopup();
+   renderCards();
+ }));
 }
-
-filters.forEach(btn=>btn.addEventListener("click",()=>{
-  currentFilter=btn.dataset.filter;
-  filters.forEach(b=>b.classList.toggle("active",b===btn));
-  places.forEach(p=>{
-    const marker=markerByName[p.name];
-    const show=currentFilter==="all"||p.category===currentFilter;
-    if(show&&!map.hasLayer(marker))marker.addTo(map);
-    if(!show&&map.hasLayer(marker))map.removeLayer(marker);
-  });
-  const first=places.find(p=>currentFilter==="all"||p.category===currentFilter);
-  if(first){
-    selectedName=first.name;
-    Object.entries(markerByName).forEach(([name,m])=>m.setIcon(markerIcon(name===selectedName)));
-    map.flyTo(first.coords,currentFilter==="all"?11.1:12,{duration:.55});
-  }
-  renderCards();
-}));
-
 renderCards();
 
 let sat=true;
-document.getElementById("toggle").onclick=()=>{
-  if(sat){map.removeLayer(satellite);street.addTo(map);document.getElementById("toggle").textContent="Satellite"}
-  else{map.removeLayer(street);satellite.addTo(map);document.getElementById("toggle").textContent="Street map"}
-  sat=!sat;
-};
-function hardResetMap(){
-  map.invalidateSize({pan:false,animate:false});
-}
-map.whenReady(()=>{
-  requestAnimationFrame(()=>requestAnimationFrame(hardResetMap));
-  [250,700,1400].forEach(delay=>setTimeout(hardResetMap,delay));
+const toggle=document.getElementById("toggle");
+toggle.addEventListener("click",()=>{
+ if(sat){map.removeLayer(satellite);street.addTo(map);toggle.textContent="Satellite"}
+ else{map.removeLayer(street);satellite.addTo(map);toggle.textContent="Street map"}
+ sat=!sat;
 });
-window.addEventListener("resize",hardResetMap,{passive:true});
-window.addEventListener("orientationchange",()=>setTimeout(hardResetMap,300),{passive:true});
+
+function resetMap(){map.invalidateSize({pan:false,animate:false});}
+map.whenReady(()=>[0,250,700,1400].forEach(d=>setTimeout(resetMap,d)));
+window.addEventListener("resize",resetMap,{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(resetMap,300),{passive:true});
+
+const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
+const sectionTargets=[...new Set(sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean))];
+const setActive=id=>{
+ sectionLinks.forEach(a=>a.classList.toggle("active",a.dataset.section===id));
+ const active=sectionLinks.find(a=>a.dataset.section===id);
+ if(active) active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+};
+const observer=new IntersectionObserver(entries=>{
+ const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+ if(visible)setActive(visible.target.id);
+},{rootMargin:"-18% 0px -65% 0px",threshold:[0,.2,.5,1]});
+sectionTargets.forEach(s=>observer.observe(s));
+sectionLinks.forEach(a=>a.addEventListener("click",e=>{
+ e.preventDefault();
+ const target=document.getElementById(a.dataset.section);
+ if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+ setActive(a.dataset.section);
+}));
+setActive("experience");
 </script>
 </body>
 </html>
