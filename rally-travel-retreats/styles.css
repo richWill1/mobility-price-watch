@@ -95,111 +95,63 @@
 }
 
 
-/* Premium interactive retreat map */
-.mapFilters{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  margin:0 0 14px;
-  padding:2px 0 4px;
-}
-.mapFilters::-webkit-scrollbar{display:none}
-.mapFilter{
-  flex:0 0 auto;
-  border:1px solid var(--line);
-  background:var(--paper);
-  color:var(--muted);
-  border-radius:999px;
-  padding:10px 15px;
-  font:800 10px/1 Inter,sans-serif;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  cursor:pointer;
-}
-.mapFilter.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.mapCards{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  margin-top:14px;
-  padding:2px 2px 10px;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-}
-.mapCards::-webkit-scrollbar{display:none}
-.mapCard{
-  flex:0 0 285px;
-  min-height:108px;
-  scroll-snap-align:start;
-  display:grid;
-  grid-template-columns:36px minmax(0,1fr) 18px;
-  align-items:center;
-  gap:11px;
-  text-align:left;
-  border:1px solid var(--line);
-  background:var(--paper);
-  border-radius:18px;
-  padding:15px;
-  color:var(--ink);
-  cursor:pointer;
-  box-shadow:0 7px 24px rgba(13,42,39,.05);
-}
-.mapCard.selected{border-color:var(--accent);box-shadow:0 10px 28px rgba(197,110,73,.12)}
-.mapCardIcon{
-  width:34px;height:34px;border-radius:50%;
-  background:#f1e5da;color:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;font-weight:800;
-}
-.mapCardText{min-width:0}
-.mapCardText small{
-  display:block;color:var(--accent);font-size:8px;font-weight:800;
-  letter-spacing:.13em;text-transform:uppercase;margin-bottom:4px
-}
-.mapCardText strong{
-  display:block;font:500 20px/1.05 "Playfair Display",serif;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-}
-.mapCardText em{
-  display:block;font-style:normal;color:var(--muted);font-size:10px;
-  line-height:1.4;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-}
-.mapCardArrow{font-size:15px;color:var(--muted)}
-.rallyMapPinWrap{background:transparent;border:0}
-.rallyMapPin{
-  width:18px;height:18px;border-radius:50%;
-  background:var(--accent);border:3px solid rgba(255,255,255,.95);
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
-  transition:transform .2s ease,background .2s ease;
-}
-.rallyMapPin.active{transform:scale(1.45);background:var(--ink)}
-.mapBox .leaflet-popup-content-wrapper{border-radius:14px}
-.mapBox .leaflet-popup-content{font:12px/1.45 Inter,sans-serif;margin:13px 15px}
+/* Rebuilt retreat map */
+.mapSection{background:#efe9de}
+.mapIntroStats{display:flex;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:30px 0 24px}
+.mapIntroStats div{padding:16px 28px 16px 0;margin-right:28px;border-right:1px solid var(--line)}
+.mapIntroStats div:last-child{border-right:0}
+.mapIntroStats strong{display:block;font:500 22px/1 "Playfair Display",serif}
+.mapIntroStats span{display:block;margin-top:5px;color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.mapExperience{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:570px;background:var(--paper);border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(13,42,39,.09)}
+.mapVisual{position:relative;min-width:0;min-height:570px;background:#d8d1c5}
+#phuketMap{position:absolute;inset:0;width:100%;height:100%;background:#d8d1c5}
+.mapToolbar{position:absolute;z-index:600;top:18px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.mapLegend,.mapToggle{pointer-events:auto;background:rgba(255,253,248,.94);backdrop-filter:blur(12px);border:1px solid rgba(221,212,198,.9);box-shadow:0 8px 24px rgba(13,42,39,.12);border-radius:999px;padding:10px 13px;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.mapLegend{display:flex;align-items:center;gap:8px}
+.legendDot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px #f4e3da}
+.mapToggle{cursor:pointer;color:var(--ink)}
+.mapList{display:flex;flex-direction:column;background:var(--paper);border-left:1px solid var(--line);min-width:0}
+.mapListHead{display:flex;justify-content:space-between;align-items:center;padding:20px 22px 15px;border-bottom:1px solid var(--line)}
+.mapListHead span{font-size:9px;font-weight:900;letter-spacing:.18em;color:var(--accent)}
+.mapListHead small{font-size:9px;color:var(--muted)}
+#mapCards{overflow:auto;padding:6px 10px 12px}
+.mapPlace{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 16px;align-items:center;gap:11px;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:15px 11px;color:var(--ink);cursor:pointer}
+.mapPlace:last-child{border-bottom:0}
+.mapPlace:hover,.mapPlace.selected{background:#f7f1e8}
+.placeIcon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f0e3d8;color:var(--accent);font-size:13px;font-weight:900}
+.placeCopy{min-width:0}
+.placeCopy small{display:block;color:var(--accent);font-size:8px;font-weight:900;letter-spacing:.14em;margin-bottom:4px}
+.placeCopy strong{display:block;font:500 18px/1.08 "Playfair Display",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.placeCopy em{display:block;color:var(--muted);font-style:normal;font-size:10px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.placeArrow{color:var(--muted);font-size:14px}
+.rallyPinWrap{background:transparent;border:0}
+.rallyPin{display:block;width:20px;height:20px;border-radius:50%;background:var(--accent);border:4px solid rgba(255,253,248,.98);box-shadow:0 5px 15px rgba(13,42,39,.3);transition:transform .2s ease,background .2s ease}
+.rallyPin.isActive{background:var(--ink);transform:scale(1.35)}
+.mapBox .leaflet-popup-content-wrapper{border-radius:14px;box-shadow:0 12px 35px rgba(13,42,39,.18)}
+.mapBox .leaflet-popup-content{font:12px/1.4 Inter,sans-serif;margin:12px 14px}
+.mapBox .leaflet-popup-content b{font-size:13px}
 .mapBox .leaflet-popup-content span{color:var(--muted)}
+.mapBox .leaflet-control-zoom a{color:var(--ink)}
+@media(max-width:900px){
+ .mapExperience{grid-template-columns:1fr;min-height:0;border-radius:22px}
+ .mapVisual{height:430px;min-height:430px}
+ .mapList{border-left:0;border-top:1px solid var(--line)}
+ #mapCards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:7px 8px 10px;gap:8px}
+ .mapPlace{flex:0 0 78%;scroll-snap-align:start;border:1px solid var(--line);border-radius:15px;background:var(--paper);padding:13px}
+ .mapPlace:last-child{border-bottom:1px solid var(--line)}
+}
 @media(max-width:700px){
-  .mapFilters{margin-bottom:10px}
-  .mapFilter{padding:9px 12px;font-size:9px}
-  .mapCards{margin-top:10px;margin-right:-16px;padding-right:16px}
-  .mapCard{flex-basis:82vw;min-height:104px;border-radius:17px;padding:14px}
-  .mapCardText strong{font-size:19px}
+ .mapIntroStats{margin:22px 0 18px}
+ .mapIntroStats div{padding:12px 16px 12px 0;margin-right:16px}
+ .mapIntroStats strong{font-size:18px}
+ .mapIntroStats span{font-size:8px}
+ .mapExperience{margin:0 -0px}
+ .mapVisual{height:390px;min-height:390px}
+ .mapToolbar{top:12px;left:12px;right:12px}
+ .mapLegend,.mapToggle{padding:9px 11px;font-size:9px}
+ .mapPlace{flex-basis:84vw;min-height:92px}
 }
-
-
-/* Map rendering fix: force Leaflet to fill its card */
-.mapBox #phuketMap{
-  position:absolute;
-  inset:0;
-  display:block;
-  width:100% !important;
-  height:100% !important;
-  min-width:100%;
-  min-height:100%;
-  margin:0 !important;
-  padding:0 !important;
-}
-.mapBox .leaflet-container{
-  width:100%;
-  height:100%;
+@media(max-width:390px){
+ .mapVisual{height:350px;min-height:350px}
+ .mapPlace{flex-basis:88vw}
 }
