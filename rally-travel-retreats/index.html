@@ -77,16 +77,55 @@
 }
 
 
+
 <style>
-/* Single interactive tennis ball */
-.heroBalls{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
-.heroBall{position:absolute;left:72%;top:31%;width:clamp(34px,4vw,52px);aspect-ratio:1;border-radius:50%;background:#d9e52c;box-shadow:inset -8px -8px 14px rgba(0,0,0,.13),0 14px 28px rgba(0,0,0,.24);pointer-events:auto;cursor:pointer;touch-action:none;will-change:transform}
-.heroBall:before,.heroBall:after{content:"";position:absolute;inset:7%;border:2px solid rgba(255,255,255,.92);border-radius:48% 52% 46% 54%;transform:rotate(28deg)}
-.heroBall:after{transform:rotate(208deg);opacity:.7}
-.heroBall.bouncing{cursor:default}
-@media(max-width:700px){.heroBall{left:76%;top:29%;width:42px}}
-@media(prefers-reduced-motion:reduce){.heroBall{transition:none}}
-</style>
+/* Rally world-map journey */
+.rallyJourney{background:var(--paper);padding:88px 0 82px;overflow:hidden}
+.rallyJourneyHead{display:grid;grid-template-columns:1fr .72fr;gap:60px;align-items:end;margin-bottom:38px}
+.rallyJourneyHead h2{font:500 clamp(50px,6vw,78px)/.88 "Playfair Display",serif;letter-spacing:-.045em;margin:12px 0 0}
+.rallyJourneyHead h2 em{font-style:normal;color:#77817d}
+.rallyJourneyHead>p{font-size:15px;line-height:1.65;color:var(--muted);margin:0;max-width:440px}
+.rallyMapWrap{background:#f1ece2;border:1px solid var(--line);border-radius:28px;overflow:hidden}
+.rallyMap{position:relative;padding:26px 28px 14px;min-height:410px;color:#c9c1b4}
+.rallyMapSvg{display:block;width:100%;height:auto;color:#d8d0c4;overflow:visible}
+.mapLand{opacity:.7}
+.rallyRouteBase{fill:none;stroke:#c5b9a7;stroke-width:2;stroke-dasharray:4 9;opacity:.65}
+.rallyRoute{fill:none;stroke:#b86f4d;stroke-width:3;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.1s cubic-bezier(.2,.75,.25,1)}
+.rallyMap.is-active .rallyRoute{stroke-dashoffset:0}
+.mapPin circle:first-child{fill:#0d2a27}.mapPinPhuket circle:first-child{fill:#b86f4d}
+.pinPulse{fill:none!important;stroke:#b86f4d;stroke-width:1;opacity:0;transform-origin:center;transform-box:fill-box}
+.rallyMap.is-active .pinPulse{animation:pinPulse 2.2s ease-out infinite}
+@keyframes pinPulse{0%{opacity:.65;transform:scale(.65)}75%,100%{opacity:0;transform:scale(1.8)}}
+.mapBall{fill:#d9e52c;stroke:#fff;stroke-width:3;filter:drop-shadow(0 5px 7px rgba(13,42,39,.18));transform:translate(190px,125px);transition:transform 1.25s cubic-bezier(.2,.75,.25,1)}
+.mapBall path{fill:none;stroke:#6f7620;stroke-width:2}
+.rallyMap.is-active .mapBall{transform:translate(770px,286px)}
+.mapLabel{position:absolute;font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);display:flex;flex-direction:column;gap:3px}
+.mapLabel span{font-size:7px;color:#9a7652}
+.mapLabelUk{left:18%;top:27%}
+.mapLabelPhuket{right:10%;bottom:28%}
+.mapHint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#8c877e}
+.rallyDestination{display:flex;justify-content:space-between;align-items:center;gap:30px;border-top:1px solid var(--line);padding:25px 28px 27px;background:#fffdfa}
+.rallyDestination h3{font:500 clamp(31px,3vw,43px)/.95 "Playfair Display",serif;margin:7px 0 0}
+.rallyDestination h3 em{font-style:normal;color:#77817d}
+.rallyDestinationMeta{display:flex;align-items:center;gap:20px;font-size:10px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+.rallyDestinationMeta a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:9px;margin-left:5px}
+.rallyDestinationMeta a span{font-size:13px;margin-left:4px}
+@media(max-width:700px){
+ .rallyJourney{padding:55px 0 50px}
+ .rallyJourneyHead{display:block;margin-bottom:23px}
+ .rallyJourneyHead h2{font-size:45px;line-height:.91;margin-top:9px}
+ .rallyJourneyHead>p{font-size:13px;line-height:1.55;margin-top:15px}
+ .rallyMapWrap{border-radius:20px}
+ .rallyMap{padding:15px 10px 11px;min-height:285px}
+ .rallyMapSvg{width:150%;max-width:none;transform:translateX(-10%);margin-bottom:-4px}
+ .mapLabelUk{left:18%;top:23%;font-size:7px}.mapLabelPhuket{right:7%;bottom:24%;font-size:7px}
+ .mapLabel span{font-size:5.5px}
+ .mapHint{font-size:6px;bottom:10px}
+ .rallyDestination{display:block;padding:20px 18px 21px}
+ .rallyDestination h3{font-size:30px}
+ .rallyDestinationMeta{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-top:17px;font-size:9px;white-space:normal}
+ .rallyDestinationMeta a{grid-column:1/-1;margin:4px 0 0;padding-top:13px;border-top:1px solid var(--line)}
+}
 </style>
 </head>
 <body class="homePage">
@@ -95,11 +134,50 @@
 <nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
 </div></header>
 <main>
-<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="heroBalls" aria-hidden="false"><span class="heroBall" aria-label="Tennis ball — tap to bounce" role="button" tabindex="0"></span></div><div class="homeHeroInner">
+<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="homeHeroInner">
 <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
 <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
 <div class="homeHeroCopy"><p>Small-group tennis retreats in beautiful places — built around great coaching, good food and time to enjoy where you've landed.</p><a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a></div>
 </div></section>
+
+<section id="journey" class="rallyJourney">
+  <div class="shell">
+    <div class="rallyJourneyHead">
+      <div>
+        <div class="homeKicker">Rally around the world</div>
+        <h2>Where will you<br><em>rally next?</em></h2>
+      </div>
+      <p>The game is the starting point. The destination is part of the experience.</p>
+    </div>
+    <div class="rallyMapWrap">
+      <div class="rallyMap" aria-label="Rally destinations map">
+        <svg class="rallyMapSvg" viewBox="0 0 1000 480" role="img" aria-label="Stylised world map showing a route from the UK to Phuket">
+          <g class="mapLand" fill="currentColor">
+            <path d="M115 123l28-23 43 4 24 22-11 27-42 9-29-13zM198 178l30-21 44 12 20 35-17 24-42-4-18-21zM273 252l47-16 58 15 35 35-9 53-42 28-54-15-33-40zM408 105l42-25 64 7 34 30-17 29-51 2-44-17zM462 166l49-22 74 9 55 37 10 44-43 22-67-10-42-28zM571 96l33-18 52 11 18 30-22 20-49-5-25-17zM606 183l61-19 70 22 26 42-31 34-61-5-52-28zM707 121l51-21 70 12 28 31-20 32-60 3-51-21zM748 211l47-12 55 24 20 43-35 29-56-9-34-36zM842 150l45-17 49 22 18 38-25 24-47-11-32-28zM862 289l44-12 40 19 5 36-38 24-45-14-19-27z"/>
+          </g>
+          <path class="rallyRouteBase" d="M190 125 C330 80 485 145 650 235 C700 263 735 278 770 286" pathLength="100"/>
+          <path class="rallyRoute" d="M190 125 C330 80 485 145 650 235 C700 263 735 278 770 286" pathLength="100"/>
+          <g class="mapPin mapPinUk"><circle cx="190" cy="125" r="7"/><circle class="pinPulse" cx="190" cy="125" r="13"/></g>
+          <g class="mapPin mapPinPhuket"><circle cx="770" cy="286" r="9"/><circle class="pinPulse" cx="770" cy="286" r="17"/></g>
+          <g class="mapBall"><circle cx="190" cy="125" r="15"/><path d="M182 119c8-7 17-7 24 0M182 131c8 7 17 7 24 0" /></g>
+        </svg>
+        <div class="mapLabel mapLabelUk"><span>START</span> UK</div>
+        <div class="mapLabel mapLabelPhuket"><span>RALLY 01</span> PHUKET</div>
+        <div class="mapHint">Scroll to rally</div>
+      </div>
+      <div class="rallyDestination">
+        <div>
+          <div class="homeKicker">Next stop · Thailand</div>
+          <h3>Phuket <em>Tennis Retreat</em></h3>
+        </div>
+        <div class="rallyDestinationMeta">
+          <span>13–21 Feb 2027</span><span>8 nights</span><span>From $2,995</span>
+          <a href="trip/phuket-tennis-retreat/">Explore retreat <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="retreats" class="homeFeatured"><div class="shell">
 <div class="homeSectionHead"><div><div class="homeKicker">Featured retreats</div><h2>Come for the tennis.<br>Stay for everything else.</h2></div>
@@ -118,36 +196,6 @@
 <section id="contact" class="homeContact"><div class="shell"><div class="homeContactCard"><div><div class="homeKicker">Plan your next Rally</div><h2>Have a destination in mind?</h2><p>Tell us where you want to play. We'll take it from there.</p></div><a class="homeButton" href="mailto:mark@rallytravelretreats.com?subject=Rally%20Travel%20Retreats%20Enquiry">Contact Rally <span>→</span></a></div></div></section>
 </main>
 <footer class="homeFooter"><div class="shell homeFooterGrid"><a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a><div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
-<script>
-(()=>{const h=document.querySelector(".homeHero"),bs=[...document.querySelectorAll(".heroBall")];if(!h||!bs.length||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-const s=bs.map((el,i)=>({el,x:0,y:0,p:i*1.7,sp:.00055+i*.00008,d:8+i*3}));let q={x:0,y:0,on:false},raf;
-const move=(x,y)=>{const r=h.getBoundingClientRect();q.x=x-r.left;q.y=y-r.top;q.on=true};h.addEventListener("pointermove",e=>move(e.clientX,e.clientY),{passive:true});h.addEventListener("pointerleave",()=>q.on=false);
-function f(t){const hr=h.getBoundingClientRect();s.forEach((b,i)=>{let x=Math.sin(t*b.sp+b.p)*b.d,y=Math.cos(t*b.sp*.83+b.p)*b.d*.7;if(q.on){const r=b.el.getBoundingClientRect(),cx=r.left+r.width/2-hr.left,cy=r.top+r.height/2-hr.top,dx=cx-q.x,dy=cy-q.y,dist=Math.hypot(dx,dy),rad=125;if(dist<rad){const force=(1-dist/rad)*22;x+=dx/(dist||1)*force;y+=dy/(dist||1)*force}}b.x+=(x-b.x)*.08;b.y+=(y-b.y)*.08;b.el.style.transform=`translate3d(${b.x.toFixed(1)}px,${b.y.toFixed(1)}px,0) rotate(${(t*.035+i*90)%360}deg)`});raf=requestAnimationFrame(f)}raf=requestAnimationFrame(f);
-document.addEventListener("visibilitychange",()=>{if(document.hidden)cancelAnimationFrame(raf);else raf=requestAnimationFrame(f)});
-})();
-</script>
-<script>
-(()=>{const ball=document.querySelector(".heroBall");if(!ball)return;
-let active=false,raf=0,x=0,y=0,vx=0,vy=0,rotation=0;
-function bounce(){
- if(active)return; active=true;
- const r=ball.getBoundingClientRect(),hr=document.querySelector(".homeHero").getBoundingClientRect();
- x=r.left-hr.left; y=r.top-hr.top; vx=(Math.random()-.5)*7; vy=-13; rotation=(Math.random()-.5)*18;
- const gravity=.62,friction=.985;
- function frame(){
-   vy+=gravity;x+=vx;y+=vy;vx*=friction;rotation+=vx*1.8;
-   const maxX=hr.width-r.width,maxY=hr.height-r.height;
-   if(x<0){x=0;vx=Math.abs(vx)*.72}
-   if(x>maxX){x=maxX;vx=-Math.abs(vx)*.72}
-   if(y<0){y=0;vy=Math.abs(vy)*.72}
-   if(y>=maxY){y=maxY;vy=-Math.abs(vy)*.58;vx*=.92}
-   ball.style.transform=`translate3d(${x-r.left+hr.left}px,${y-r.top+hr.top}px,0) rotate(${rotation}deg)`;
-   if(Math.abs(vy)<1.2&&y>=maxY-1){active=false;return}
-   raf=requestAnimationFrame(frame);
- }
- raf=requestAnimationFrame(frame);
-}
-ball.addEventListener("pointerdown",e=>{e.preventDefault();bounce()},{passive:false});
-})();
-</script>
+
+
 </body></html>
