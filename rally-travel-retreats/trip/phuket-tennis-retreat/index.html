@@ -280,7 +280,12 @@ document.getElementById("toggle").onclick=()=>{
   else{map.removeLayer(street);satellite.addTo(map);document.getElementById("toggle").textContent="Street map"}
   sat=!sat;
 };
-map.whenReady(()=>setTimeout(()=>map.invalidateSize(),100));
+map.whenReady(()=>{
+  [100,350,800].forEach(delay=>setTimeout(()=>map.invalidateSize(true),delay));
+  if(window.ResizeObserver){
+    new ResizeObserver(()=>map.invalidateSize(true)).observe(document.getElementById("phuketMap"));
+  }
+});
 </script>
 </body>
 </html>
