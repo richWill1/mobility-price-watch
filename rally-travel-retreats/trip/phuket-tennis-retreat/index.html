@@ -74,7 +74,7 @@ window.addEventListener("pageshow",()=>{
 .stayHeroPhoto,.staySidePhotos{position:relative;overflow:hidden}
 .stayHeroPhoto{border-radius:28px;min-height:620px}
 .staySidePhotos{display:grid;grid-template-rows:1fr 1fr;gap:12px}
-.stayGallery img{width:100%;height:100%;display:block;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.65,.25,1)}
+.stayGallery img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .7s cubic-bezier(.22,.61,.36,1);backface-visibility:hidden;will-change:transform}
 .stayGallery img:hover{transform:scale(1.035)}
 .stayPhotoCaption{position:absolute;left:24px;right:24px;bottom:24px;padding:18px 20px;border-radius:18px;background:linear-gradient(180deg,rgba(5,20,16,.02),rgba(5,20,16,.72));color:#fff;display:flex;flex-direction:column;gap:5px}
 .stayPhotoCaption span,.stayLabel,.stayDistance>span{font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:var(--accent)}
@@ -167,13 +167,13 @@ window.addEventListener("pageshow",()=>{
 .dayMedia .dayDate{position:absolute;left:18px;bottom:18px;z-index:2;min-height:auto;padding:0;color:#fff;background:linear-gradient(90deg,rgba(5,20,16,.78),rgba(5,20,16,.08));border-radius:12px;padding:12px 18px 12px 14px}
 .dayMedia .dayDate small{display:block;font-size:9px;letter-spacing:.18em}
 .dayMedia .dayDate strong{display:block;font:500 38px/1 "Playfair Display",serif;margin-top:3px}
-.dayPhoto{display:block;width:100%;height:300px;object-fit:cover;transform:scale(1);transition:transform 8s cubic-bezier(.2,.65,.25,1),filter 1s ease;filter:saturate(.94)}
-.day.is-active .dayPhoto{transform:scale(1.065);filter:saturate(1.03)}
+.dayPhoto{display:block;width:100%;height:300px;object-fit:cover;transform:scale(1);transition:transform 1.1s cubic-bezier(.22,.61,.36,1);backface-visibility:hidden;will-change:transform}
+.day.is-active .dayPhoto{transform:scale(1.035)}
 .dayMedia:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,20,16,.02) 30%,rgba(5,20,16,.52) 100%);pointer-events:none}
 .dayBody{padding:24px 28px}
 @media(min-width:901px){
- .day:hover{transform:translateY(-5px);box-shadow:0 22px 55px rgba(13,42,39,.14);border-color:#d4c8b8}
- .day:hover .dayPhoto{transform:scale(1.065)}
+ .day:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(13,42,39,.11);border-color:#d4c8b8}
+ .day:hover .dayPhoto{transform:scale(1.04)}
 }
 @media(max-width:700px){
  .day{flex-basis:91%;width:91%;scroll-snap-align:start;scroll-snap-stop:always}
@@ -275,6 +275,20 @@ h1,h2,h3,h4,.sectionTop h2,.stayRefHead h2,.stayLightboxPanel h3{font-family:var
  .weatherMore summary{padding:16px 17px;font-size:13px}
 }
 
+/* Butter-smooth performance layer */
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.sectionNavInner{overscroll-behavior-x:contain}
+.day,.stayGallery img,.dayPhoto,.retreatTopCta .btn,.finalCtaButton,.mapPlace{backface-visibility:hidden}
+@media(max-width:700px){
+  .day{transition:transform .22s cubic-bezier(.22,.61,.36,1),box-shadow .22s ease,border-color .22s ease}
+  .day.is-active{transform:translateZ(0)}
+  .dayPhoto{transition:transform .7s cubic-bezier(.22,.61,.36,1)}
+  .stayLightboxPanel{will-change:transform}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
 /* Clear final conversion block */
 .finalCta{padding:64px 0 76px;background:#f3eee5}
 .finalCtaCard{max-width:760px;margin:auto;padding:46px clamp(24px,6vw,64px);background:var(--ink);color:#fff;border-radius:28px;text-align:center;box-shadow:0 22px 60px rgba(13,42,39,.16)}
@@ -290,7 +304,7 @@ h1,h2,h3,h4,.sectionTop h2,.stayRefHead h2,.stayLightboxPanel h3{font-family:var
 
 .homeNavLink{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;flex:0 0 auto!important;min-height:40px!important;padding:0 13px!important;margin:0 6px 0 0;border:1px solid var(--line)!important;border-radius:999px!important;background:#f3eee5!important;color:var(--ink)!important;text-decoration:none!important;font:800 9px/1 "DM Sans",sans-serif!important;letter-spacing:.1em!important;white-space:nowrap!important}.homeNavLink span{color:#b86f4d;font-size:10px;line-height:1}.homeNavLink:hover{background:#ece4d7!important;transform:none}.homeNavLink:after{display:none!important}@media(max-width:700px){.homeNavLink{min-height:38px!important;padding:0 11px!important;margin-right:5px;font-size:8px!important;letter-spacing:.08em!important}.homeNavLink span{font-size:9px}}
 
-.dayPhotoButton{display:block;width:100%;height:100%;min-height:300px;padding:0;border:0;background:var(--ink);cursor:pointer;position:relative;overflow:hidden;text-align:left}.dayPhotoButton .dayPhoto{height:100%}.dayPhotoMore{position:absolute;right:16px;top:16px;z-index:3;padding:8px 11px;border-radius:999px;background:rgba(5,20,16,.72);color:#fff;font:800 9px/1 "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}.dayPhotoButton:hover .dayPhoto{transform:scale(1.065)}@media(max-width:700px){.dayPhotoButton{min-height:230px}.dayPhotoMore{right:12px;top:12px;font-size:8px;padding:7px 9px}}
+.dayPhotoButton{display:block;width:100%;height:100%;min-height:300px;padding:0;border:0;background:var(--ink);cursor:pointer;position:relative;overflow:hidden;text-align:left}.dayPhotoButton .dayPhoto{height:100%}.dayPhotoMore{position:absolute;right:16px;top:16px;z-index:3;padding:8px 11px;border-radius:999px;background:rgba(5,20,16,.72);color:#fff;font:800 9px/1 "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}.dayPhotoButton:hover .dayPhoto{transform:scale(1.04)}@media(max-width:700px){.dayPhotoButton{min-height:230px}.dayPhotoMore{right:12px;top:12px;font-size:8px;padding:7px 9px}}
 
 /* Keep anchored sections clear of the sticky navigation. */
 html{scroll-padding-top:56px}
@@ -354,7 +368,7 @@ html{scroll-padding-top:56px}
 .sectionNavInner::-webkit-scrollbar{display:none}
 .sectionNav a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 11px;border:0;background:none;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;position:relative}
 .sectionNav a:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .18s ease}
-.sectionNav a.active{color:var(--ink);background:rgba(31,111,91,.09);border-radius:999px;font-weight:900}
+.sectionNav a.active{color:var(--ink);background:rgba(31,111,91,.09);border-radius:999px;font-weight:900;will-change:auto}
 .sectionNav a.active:before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#39a873;box-shadow:0 0 0 3px rgba(57,168,115,.13);animation:navLivePulse 1.8s ease-out infinite}
 .sectionNav a.active:after{left:15px;right:15px;bottom:3px;height:2px;transform:scaleX(1);background:#39a873;border-radius:999px}
 @keyframes navLivePulse{0%,100%{box-shadow:0 0 0 3px rgba(57,168,115,.13)}50%{box-shadow:0 0 0 6px rgba(57,168,115,0)}}
@@ -557,7 +571,20 @@ const categoryNames={stay:"Stay",tennis:"Tennis",beaches:"Beaches",culture:"Food
 const map=L.map("phuketMap",{scrollWheelZoom:false,zoomControl:false,worldCopyJump:true});
 const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics, and the GIS User Community"});
 const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
-satellite.addTo(map);
+let mapTilesLoaded=false;
+const loadMapTiles=()=>{
+  if(mapTilesLoaded)return;
+  mapTilesLoaded=true;
+  satellite.addTo(map);
+  requestAnimationFrame(()=>map.invalidateSize({pan:false,animate:false}));
+};
+const mapLoadObserver=new IntersectionObserver(entries=>{
+  if(entries.some(entry=>entry.isIntersecting)){
+    loadMapTiles();
+    mapLoadObserver.disconnect();
+  }
+},{rootMargin:"700px 0px"});
+mapLoadObserver.observe(document.getElementById("map"));
 L.control.zoom({position:"bottomright"}).addTo(map);
 
 const markerByName={};
@@ -683,10 +710,12 @@ itineraryCards.forEach(card=>itineraryObserver.observe(card));
 
 const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
 const sectionTargets=[...new Set(sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean))];
-const setActive=id=>{
+const setActive=(id,scrollNav=false)=>{
  sectionLinks.forEach(a=>a.classList.toggle("active",a.dataset.section===id));
- const active=sectionLinks.find(a=>a.dataset.section===id);
- if(active) active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+ if(scrollNav){
+   const active=sectionLinks.find(a=>a.dataset.section===id);
+   if(active) active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+ }
 };
 const observer=new IntersectionObserver(entries=>{
  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
@@ -698,9 +727,9 @@ sectionLinks.forEach(a=>a.addEventListener("click",e=>{
  e.preventDefault();
  const target=document.getElementById(a.dataset.section);
  if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
- setActive(a.dataset.section);
+ setActive(a.dataset.section,true);
 }));
-setActive("top");
+setActive("top",false);
 </script>
 </body>
 </html>
