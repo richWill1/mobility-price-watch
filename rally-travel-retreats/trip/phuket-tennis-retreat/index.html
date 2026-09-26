@@ -54,7 +54,22 @@
 .stayCallout strong{display:block;font:500 20px/1.15 "Playfair Display",serif}
 .stayCallout p{font-size:10px!important;line-height:1.5!important;margin:8px 0 0!important}
 .stayFacilities{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:25px}
-.stayFacilities div{padding:17px;border:1px solid var(--line);border-radius:17px;background:#faf7f1;min-height:125px}
+
+.stayLightbox{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:20px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}
+.stayLightbox.is-open{opacity:1;visibility:visible;pointer-events:auto}
+.stayLightboxBackdrop{position:absolute;inset:0;background:rgba(5,20,16,.72);backdrop-filter:blur(12px)}
+.stayLightboxPanel{position:relative;z-index:1;width:min(920px,100%);max-height:min(88vh,820px);overflow:auto;background:#f7f2e9;border:1px solid rgba(255,255,255,.35);border-radius:26px;padding:24px;box-shadow:0 30px 90px rgba(0,0,0,.3)}
+.stayLightboxClose{position:absolute;right:16px;top:14px;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(255,253,248,.9);font-size:28px;line-height:1;cursor:pointer;z-index:2}
+.stayLightboxKicker{font-size:9px;letter-spacing:.18em;font-weight:900;color:var(--accent);margin-bottom:6px}
+.stayLightboxPanel h3{font:500 clamp(32px,5vw,52px)/1 "Playfair Display",serif;margin:0 50px 18px 0;color:var(--ink)}
+.stayLightboxGallery{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:10px;height:min(62vh,580px)}
+.stayLightboxGallery img{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block}
+.stayLightboxGallery img:first-child{grid-row:1 / span 2}
+.stayLightboxHint{font-size:9px;color:var(--muted);margin:13px 0 0}
+
+.stayFacilities div{padding:17px;border:1px solid var(--line);border-radius:17px;background:#faf7f1;min-height:125px;cursor:pointer;position:relative;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.stayFacilities div:after{content:"↗";position:absolute;right:14px;top:13px;font-size:14px;color:var(--accent);opacity:.7}
+.stayFacilities div:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(13,42,39,.09);border-color:#cdbfae}
 .stayFacilities span{display:block;font-size:8px;letter-spacing:.16em;color:var(--accent);font-weight:900}
 .stayFacilities strong{display:block;font:500 22px/1.05 "Playfair Display",serif;margin:8px 0 5px}
 .stayFacilities p{font-size:10px;line-height:1.45;color:var(--muted);margin:0}
@@ -89,6 +104,13 @@
  .stayCallout strong{font-size:19px}
  .stayFacilities{gap:8px;margin-top:20px}
  .stayFacilities div{min-height:105px;padding:14px}
+ .stayFacilities div:after{right:11px;top:10px}
+ .stayLightbox{padding:10px}
+ .stayLightboxPanel{padding:18px;border-radius:22px;max-height:92vh}
+ .stayLightboxGallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;height:58vh;min-height:280px;scrollbar-width:none}
+ .stayLightboxGallery::-webkit-scrollbar{display:none}
+ .stayLightboxGallery img{flex:0 0 86vw;width:86vw;height:100%;scroll-snap-align:start;border-radius:15px}
+ .stayLightboxGallery img:first-child{grid-row:auto}
  .stayFacilities strong{font-size:20px}
  .stayDistance{display:block}
  .stayDistance strong{display:block;margin-top:7px}
@@ -291,10 +313,10 @@
         <p class="stayCopy">Everything you need is close: breakfast, rooftop pool, recovery and somewhere comfortable to come back to after exploring Phuket. Bang Tao Beach is around five minutes away, according to the hotel.</p>
 
         <div class="stayFacilities">
-          <div><span>POOL</span><strong>Rooftop</strong><p>Sun, swims & sunset drinks.</p></div>
-          <div><span>WELLNESS</span><strong>Reset</strong><p>Sauna, steam, ice room & spa.</p></div>
-          <div><span>FITNESS</span><strong>Move</strong><p>Gym, yoga studio & classes.</p></div>
-          <div><span>DINING</span><strong>7th Floor</strong><p>Restaurant & bar.</p></div>
+          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>POOL</span><strong>Rooftop</strong><p>Sun, swims & sunset drinks.</p></div>
+          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>WELLNESS</span><strong>Reset</strong><p>Sauna, steam, ice room & spa.</p></div>
+          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>FITNESS</span><strong>Move</strong><p>Gym, yoga studio & classes.</p></div>
+          <div class="stayPhotoTile" tabindex="0" role="button" aria-label="View Sole Mio photos"><span>DINING</span><strong>7th Floor</strong><p>Restaurant & bar.</p></div>
         </div>
 
         <div class="stayDistance">
@@ -305,6 +327,21 @@
     </div>
   </div>
 </section>
+
+<div class="stayLightbox" id="stayLightbox" aria-hidden="true">
+  <div class="stayLightboxBackdrop" data-close-stay></div>
+  <div class="stayLightboxPanel" role="dialog" aria-modal="true" aria-labelledby="stayLightboxTitle">
+    <button class="stayLightboxClose" type="button" aria-label="Close photos" data-close-stay>×</button>
+    <div class="stayLightboxKicker">SOLE MIO · HOTEL PHOTOS</div>
+    <h3 id="stayLightboxTitle">Sole Mio</h3>
+    <div class="stayLightboxGallery">
+      <img src="https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202311241805054211-285101ad-52a2-47dc-be27-9655d66f773e.jpg" alt="Sole Mio rooftop pool">
+      <img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260452402562.jpg" alt="Sole Mio Deluxe Room">
+      <img src="https://content.coral.ge/resize/1200x800/media/image/33/57072/638313260859125684.jpg" alt="Sole Mio Wellness Deluxe Room">
+    </div>
+    <p class="stayLightboxHint">Tap outside or the × to close.</p>
+  </div>
+</div>
 
 <section id="week">
   <div class="shell">
@@ -436,6 +473,17 @@ function resetMap(){map.invalidateSize({pan:false,animate:false});}
 map.whenReady(()=>[0,250,700,1400].forEach(d=>setTimeout(resetMap,d)));
 window.addEventListener("resize",resetMap,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(resetMap,300),{passive:true});
+
+const stayLightbox=document.getElementById("stayLightbox");
+const stayTiles=[...document.querySelectorAll(".stayPhotoTile")];
+const openStayLightbox=()=>{stayLightbox.classList.add("is-open");stayLightbox.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";};
+const closeStayLightbox=()=>{stayLightbox.classList.remove("is-open");stayLightbox.setAttribute("aria-hidden","true");document.body.style.overflow="";};
+stayTiles.forEach(tile=>{
+  tile.addEventListener("click",openStayLightbox);
+  tile.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openStayLightbox();}});
+});
+stayLightbox.querySelectorAll("[data-close-stay]").forEach(el=>el.addEventListener("click",closeStayLightbox));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&stayLightbox.classList.contains("is-open"))closeStayLightbox();});
 
 const itineraryCards=[...document.querySelectorAll("#week .day")];
 const itineraryObserver=new IntersectionObserver(entries=>{
