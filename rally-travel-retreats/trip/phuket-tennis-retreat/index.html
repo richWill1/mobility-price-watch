@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 .detailHero{background-image:linear-gradient(180deg,rgba(5,20,16,.12),rgba(5,20,16,.84)),url("https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=2400&q=88")}
 .detailHero h1{max-width:760px}.brandLink{text-decoration:none}
@@ -127,23 +128,29 @@
   </div>
 </section>
 
-<section id="map">
+<section id="map" class="mapSection">
   <div class="shell">
-    <div class="sectionTop"><div><div class="sectionKicker">Explore Phuket</div><h2>The retreat on the map.</h2></div><p class="lede">Follow the week from where you’ll stay to the places you’ll play, eat and explore.</p></div>
-    <div class="mapFilters" role="tablist" aria-label="Map categories">
-      <button class="mapFilter active" data-filter="all">All</button>
-      <button class="mapFilter" data-filter="stay">Stay</button>
-      <button class="mapFilter" data-filter="tennis">Tennis</button>
-      <button class="mapFilter" data-filter="beaches">Beaches</button>
-      <button class="mapFilter" data-filter="culture">Food & culture</button>
-      <button class="mapFilter" data-filter="experiences">Experiences</button>
+    <div class="sectionTop">
+      <div><div class="sectionKicker">Your Phuket</div><h2>Everything is closer than it looks.</h2></div>
+      <p class="lede">Your hotel is the hub. Tennis, beaches, dinners and the week's experiences all sit within an easy drive.</p>
     </div>
-    <div class="mapWrap">
-      <div class="mapBox">
+    <div class="mapIntroStats">
+      <div><strong>Bang Tao</strong><span>Your base</span></div>
+      <div><strong>5</strong><span>Tennis mornings</span></div>
+      <div><strong>8</strong><span>Nights in Phuket</span></div>
+    </div>
+    <div class="mapExperience">
+      <div class="mapVisual">
+        <div class="mapToolbar">
+          <div class="mapLegend"><span class="legendDot"></span>Rally locations</div>
+          <button class="mapToggle" id="toggle">Satellite</button>
+        </div>
         <div id="phuketMap"></div>
-        <button class="mapToggle" id="toggle">Street map</button>
       </div>
-      <div class="mapCards" id="mapCards" aria-label="Retreat locations"></div>
+      <aside class="mapList">
+        <div class="mapListHead"><span>THE WEEK</span><small>Tap a place</small></div>
+        <div id="mapCards"></div>
+      </aside>
     </div>
   </div>
 </section>
@@ -164,6 +171,58 @@
 <footer class="footer"><div class="shell footerGrid"><div><div class="brand">Rally Travel Retreats<span>Travel retreats</span></div><p>Phuket Tennis Retreat · 13–21 February 2027</p></div><div><p>mark@rallytravelretreats.com<br>214-799-5662</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const places=[
+ {name:"Sole Mio",coords:[7.9923,98.2937],type:"STAY",desc:"Hotel & wellness",icon:"⌂"},
+ {name:"KĀHLĪ Tennis Academy",coords:[7.9807,98.3027],type:"TENNIS",desc:"Five mornings on court",icon:"✦"},
+ {name:"Phuket Old Town",coords:[7.88478,98.38922],type:"CULTURE",desc:"Old Town + Sunday Walking Street",icon:"◈"},
+ {name:"Paradise Beach",coords:[7.89103,98.26539],type:"BEACH",desc:"Monday afternoon",icon:"●"},
+ {name:"Ta Khai · Rosewood",coords:[7.8745,98.2745],type:"DINNER",desc:"Monday evening",icon:"◆"},
+ {name:"Wat Chalong",coords:[7.84625,98.3371],type:"CULTURE",desc:"Wednesday afternoon",icon:"◇"},
+ {name:"Amanpuri",coords:[7.9685,98.2777],type:"EVENING",desc:"Thursday sunset + dinner",icon:"✦"},
+ {name:"Royal Phuket Marina",coords:[7.9825,98.3784],type:"BOAT",desc:"Saturday island-hopping",icon:"◇"}
+];
+const map=L.map("phuketMap",{zoomControl:false,scrollWheelZoom:false,attributionControl:true});
+const street=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"});
+const satellite=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri, Maxar, Earthstar Geographics"});
+street.addTo(map);
+L.control.zoom({position:"bottomright"}).addTo(map);
+const bounds=L.latLngBounds(places.map(p=>p.coords));
+map.fitBounds(bounds,{padding:[45,45],maxZoom:11});
+const markers={};
+function icon(active){return L.divIcon({className:"rallyPinWrap",html:'<span class="rallyPin '+(active?"isActive":"")+'"></span>',iconSize:[24,24],iconAnchor:[12,12]})}
+places.forEach((p,i)=>{
+ const m=L.marker(p.coords,{icon:icon(i===0)}).addTo(map);
+ m.bindPopup('<b>'+p.name+'</b><br><span>'+p.desc+'</span>',{closeButton:false,offset:[0,-6]});
+ markers[p.name]=m;
+});
+const route=L.polyline(places.map(p=>p.coords),{color:"#c56e49",weight:2.5,opacity:.6,dashArray:"5 8",interactive:false}).addTo(map);
+let selected=places[0].name;
+const cards=document.getElementById("mapCards");
+function render(){
+ cards.innerHTML=places.map(p=>'<button class="mapPlace '+(p.name===selected?"selected":"")+'" data-name="'+p.name+'"><span class="placeIcon">'+p.icon+'</span><span class="placeCopy"><small>'+p.type+'</small><strong>'+p.name+'</strong><em>'+p.desc+'</em></span><span class="placeArrow">→</span></button>').join("");
+ cards.querySelectorAll(".mapPlace").forEach(btn=>btn.onclick=()=>select(btn.dataset.name,true));
+}
+function select(name,fly){
+ selected=name;
+ places.forEach((p,i)=>markers[p.name].setIcon(icon(p.name===selected)));
+ const p=places.find(x=>x.name===name);
+ if(!p)return;
+ if(fly) map.flyTo(p.coords,13,{duration:.65});
+ markers[name].openPopup();
+ render();
+ const card=cards.querySelector('[data-name="'+CSS.escape(name)+'"]');
+ if(card) card.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+render();
+document.getElementById("toggle").onclick=()=>{
+ const btn=document.getElementById("toggle");
+ if(map.hasLayer(street)){map.removeLayer(street);satellite.addTo(map);btn.textContent="Street map"}
+ else{map.removeLayer(satellite);street.addTo(map);btn.textContent="Satellite"}
+};
+window.addEventListener("resize",()=>map.invalidateSize(),{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(()=>map.invalidateSize(),300),{passive:true});
+</script>
 <script>
 const sectionLinks=[...document.querySelectorAll(".sectionNav a")];
 const sectionTargets=sectionLinks.map(a=>document.getElementById(a.dataset.section)).filter(Boolean);
