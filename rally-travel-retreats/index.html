@@ -11,74 +11,86 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* Rally Travel Retreats — clean editorial homepage */
-.homePage{--home-ink:#0d2a27;--home-paper:#fbfaf6;--home-cream:#f3eee5;--home-muted:#69736f;--home-line:#ddd7cc;background:var(--home-cream);color:var(--home-ink);font-family:"DM Sans",sans-serif}
+/* Rally Travel Retreats — destination-led editorial homepage */
+.homePage{--ink:#0d2a27;--paper:#fbfaf6;--cream:#f1ece2;--muted:#68736f;--line:#ddd6ca;--accent:#b86f4d;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif}
 .homePage *{box-sizing:border-box}
 .homePage .shell{width:min(1180px,calc(100% - 48px));margin:0 auto}
 
-.homeHeader{position:sticky;top:0;z-index:1000;background:rgba(251,250,246,.96);border-bottom:1px solid var(--home-line)}
+/* Header */
+.homeHeader{position:sticky;top:0;z-index:1000;background:rgba(251,250,246,.96);border-bottom:1px solid var(--line)}
 .homeNav{height:68px;display:flex;align-items:center;justify-content:space-between}
-.homeBrand{display:inline-flex;flex-direction:column;text-decoration:none;color:var(--home-ink);font:600 21px/1 "Playfair Display",serif;letter-spacing:.18em}
+.homeBrand{display:inline-flex;flex-direction:column;text-decoration:none;color:var(--ink);font:600 21px/1 "Playfair Display",serif;letter-spacing:.18em}
 .homeBrand span{font:800 7px/1.2 "DM Sans",sans-serif;letter-spacing:.24em;margin-top:6px;text-align:center}
 .homeNav nav{display:flex;gap:28px}
-.homeNav nav a{color:var(--home-ink);text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.homeNav nav a{color:var(--ink);text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 
-.homeHero{background:var(--home-paper);padding:72px 0 66px}
-.homeHeroInner{max-width:920px}
-.homeKicker{color:#b86f4d;font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
-.homeHero h1{font:500 clamp(52px,7vw,84px)/.91 "Playfair Display",serif;letter-spacing:-.045em;margin:14px 0 22px;max-width:850px}
-.homeHero h1 em{font-style:normal;color:#78817e}
-.homeHero p{max-width:620px;color:var(--home-muted);font-size:16px;line-height:1.6;margin:0}
-.homeHeroActions{display:flex;align-items:center;gap:22px;margin-top:27px}
-.homeButton{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;text-decoration:none;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
-.homeButtonDark{background:var(--home-ink);color:#fff}
-.homeTextLink{color:var(--home-ink);font-size:10px;font-weight:800;letter-spacing:.1em;text-decoration:none;text-transform:uppercase}
+/* Hero */
+.homeHero{position:relative;min-height:640px;display:flex;align-items:flex-end;overflow:hidden;background:#16322e}
+.homeHeroImage{position:absolute;inset:0;background:
+linear-gradient(180deg,rgba(5,20,16,.08) 15%,rgba(5,20,16,.12) 38%,rgba(5,20,16,.76) 100%),
+url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp") center/cover}
+.homeHeroInner{position:relative;z-index:1;width:min(1180px,calc(100% - 48px));margin:0 auto;padding:0 0 58px;color:#fff}
+.homeHeroKicker{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:13px}
+.homeHero h1{font:500 clamp(54px,7vw,92px)/.88 "Playfair Display",serif;letter-spacing:-.045em;max-width:850px;margin:0 0 20px}
+.homeHero h1 em{font-style:normal;color:#d9dedb}
+.homeHeroCopy{display:flex;align-items:end;justify-content:space-between;gap:35px}
+.homeHeroCopy p{max-width:520px;color:#e2e7e4;font-size:14px;line-height:1.6;margin:0}
+.homeButton{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:47px;padding:0 20px;border-radius:999px;text-decoration:none;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+.homeButtonLight{background:#fff;color:var(--ink)}
+.homeButtonDark{background:var(--ink);color:#fff}
 
-.homeRetreats{padding:66px 0 74px;background:var(--home-cream)}
-.homeSectionIntro{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:24px}
-.homeSectionIntro h2{font:500 clamp(38px,5vw,58px)/.96 "Playfair Display",serif;letter-spacing:-.035em;margin:8px 0 0}
-.homeSectionIntro p{max-width:330px;color:var(--home-muted);font-size:13px;line-height:1.55;margin:0}
+/* Featured adventures */
+.homeFeatured{background:var(--paper);padding:72px 0 78px}
+.homeSectionHead{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:27px}
+.homeKicker{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+.homeSectionHead h2{font:500 clamp(40px,5vw,62px)/.94 "Playfair Display",serif;letter-spacing:-.04em;margin:9px 0 0}
+.homeSectionHead p{max-width:370px;color:var(--muted);font-size:13px;line-height:1.55;margin:0}
 
-.retreatTile{display:grid;grid-template-columns:1.12fr .88fr;background:var(--home-paper);border:1px solid var(--home-line);border-radius:24px;overflow:hidden}
-.retreatTileImage{min-height:430px;position:relative;background:url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp") center/cover}
-.retreatTileImage:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,20,16,0) 52%,rgba(5,20,16,.35))}
-.retreatBadge{position:absolute;z-index:1;left:18px;top:18px;padding:9px 12px;border-radius:999px;background:rgba(251,250,246,.94);color:var(--home-ink);font-size:8px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-.retreatTileBody{padding:34px 36px;display:flex;flex-direction:column}
-.retreatTileBody h3{font:500 clamp(44px,5.3vw,64px)/.88 "Playfair Display",serif;letter-spacing:-.045em;margin:13px 0 17px}
-.retreatTileBody h3 em{font-style:normal;color:#78817e}
-.retreatTileBody>p{color:var(--home-muted);font-size:13px;line-height:1.6;max-width:520px;margin:0}
-.retreatFacts{display:flex;flex-wrap:wrap;border-top:1px solid var(--home-line);border-bottom:1px solid var(--home-line);margin-top:25px}
-.retreatFact{padding:13px 18px 13px 0;margin-right:18px;border-right:1px solid var(--home-line)}
-.retreatFact:last-child{border-right:0;margin-right:0}
-.retreatFact small{display:block;color:#9a7652;font-size:7px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}
-.retreatFact strong{font-size:10px}
-.retreatTileBottom{margin-top:auto;padding-top:24px;display:flex;align-items:end;justify-content:space-between;gap:18px}
-.retreatPrice strong{font:500 30px/1 "Playfair Display",serif}
-.retreatPrice span{display:block;color:var(--home-muted);font-size:8px;margin-top:5px}
-.retreatArrow{font-size:14px}
+/* Tiles */
+.adventureRail{display:flex;gap:16px;overflow-x:auto;padding:0 0 8px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.adventureRail::-webkit-scrollbar{display:none}
+.adventureTile{flex:0 0 min(520px,calc(100vw - 48px));scroll-snap-align:start;text-decoration:none;color:inherit}
+.adventureImage{height:390px;position:relative;overflow:hidden;border-radius:22px;background-position:center;background-size:cover}
+.adventureImage:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,20,16,.03) 42%,rgba(5,20,16,.62) 100%)}
+.adventureImagePhuket{background-image:url("https://resizer.ladbiblegroup.com/unsafe/rs%3Afit%3A3840%3A0%3A0%3A0/g%3Asm/q%3A70/aHR0cHM6Ly9ldS1pbWFnZXMuY29udGVudHN0YWNrLmNvbS92My9hc3NldHMvYmx0Y2Q3NGFjYzFkMGE5OWYzYS9ibHQwNTE4MjM1NjdiYjU0ZjhmLzY2YTY2M2EwZjA1YzE4NzgxM2M3MjA4OC9tYXlhLWJheS1jbG9zdXJlLXRoYWlsYW5kLXRoZS1iZWFjaC1uZXdzLnBuZw.webp")}
+.adventureImageComing{background-image:url("https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1600&q=88")}
+.adventureBadge{position:absolute;z-index:1;left:17px;top:17px;padding:8px 11px;background:rgba(251,250,246,.94);border-radius:999px;font-size:7px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.adventureOverlay{position:absolute;z-index:1;left:20px;right:20px;bottom:19px;color:#fff}
+.adventureOverlay small{font-size:8px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.adventureOverlay h3{font:500 43px/.9 "Playfair Display",serif;letter-spacing:-.04em;margin:8px 0 0}
+.adventureOverlay h3 em{font-style:normal;color:#dce1de}
+.adventureInfo{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 2px 0}
+.adventureInfoMeta{display:flex;gap:20px}
+.adventureInfoMeta div{display:flex;flex-direction:column}
+.adventureInfoMeta small{color:#9a7652;font-size:7px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.adventureInfoMeta strong{font-size:10px}
+.adventureExplore{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.adventureTileComing .adventureInfo{opacity:.7}
+.adventureTileComing{cursor:default}
 
-.homeWay{background:var(--home-paper);padding:66px 0 72px;border-top:1px solid var(--home-line)}
-.homeWayHead{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:25px}
-.homeWayHead h2{font:500 clamp(38px,5vw,58px)/.96 "Playfair Display",serif;letter-spacing:-.035em;margin:8px 0 0}
-.homeWayHead p{max-width:400px;color:var(--home-muted);font-size:13px;line-height:1.55;margin:0}
-.homeWayGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.homeWayCard{border:1px solid var(--home-line);border-radius:18px;padding:24px;background:#f7f4ed}
-.homeWayCard span{color:#b86f4d;font-size:8px;font-weight:900;letter-spacing:.16em}
-.homeWayCard h3{font:500 34px/1 "Playfair Display",serif;margin:13px 0 9px}
-.homeWayCard p{color:var(--home-muted);font-size:11px;line-height:1.55;margin:0}
+/* Rally statement */
+.homeStatement{background:var(--cream);padding:82px 0}
+.homeStatementInner{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.homeStatement h2{font:500 clamp(46px,5.5vw,72px)/.9 "Playfair Display",serif;letter-spacing:-.045em;margin:10px 0 0}
+.homeStatement h2 em{font-style:normal;color:#77817d}
+.homeStatementCopy{border-left:1px solid #cfc5b6;padding-left:42px}
+.homeStatementCopy p{font:500 clamp(24px,3vw,36px)/1.15 "Playfair Display",serif;margin:0;max-width:650px}
+.homeStatementCopy small{display:block;color:var(--muted);font-size:11px;line-height:1.6;margin-top:20px;max-width:500px}
 
-.homeContact{padding:28px 0 66px;background:var(--home-paper)}
-.homeContactCard{display:flex;align-items:center;justify-content:space-between;gap:30px;background:var(--home-ink);color:#fff;border-radius:22px;padding:32px 36px}
-.homeContactCard h2{font:500 38px/1 "Playfair Display",serif;margin:9px 0 7px}
+/* Contact */
+.homeContact{background:var(--paper);padding:28px 0 68px}
+.homeContactCard{display:flex;align-items:center;justify-content:space-between;gap:30px;background:var(--ink);color:#fff;border-radius:22px;padding:34px 38px}
+.homeContactCard h2{font:500 39px/1 "Playfair Display",serif;margin:9px 0 7px}
 .homeContactCard p{color:#cbd4d0;font-size:12px;margin:0}
-.homeContactCard .homeButton{background:#fff;color:var(--home-ink)}
+.homeContactCard .homeButton{background:#fff;color:var(--ink)}
 
-.homeFooter{background:var(--home-ink);color:#fff;padding:36px 0}
+/* Footer */
+.homeFooter{background:var(--ink);color:#fff;padding:38px 0}
 .homeFooterGrid{display:flex;align-items:end;justify-content:space-between;gap:30px}
 .homeFooter .homeBrand{color:#fff}
 .homeFooter p{color:#bfc9c5;font-size:10px;line-height:1.7;margin:0}
 
-/* Mobile: deliberately compact, card-led and thumb-friendly */
+/* Mobile */
 @media(max-width:700px){
   .homePage .shell{width:calc(100% - 32px)}
   .homeNav{height:60px}
@@ -88,46 +100,43 @@
   .homeNav nav a{font-size:8px;letter-spacing:.08em}
   .homeNav nav a:nth-child(2){display:none}
 
-  .homeHero{padding:42px 0 38px}
-  .homeHero h1{font-size:45px;line-height:.92;margin:12px 0 17px}
-  .homeHero p{font-size:13px;line-height:1.55;max-width:500px}
-  .homeHeroActions{margin-top:21px}
-  .homeHeroActions .homeTextLink{display:none}
-  .homeButton{min-height:44px;padding:0 17px;font-size:8px}
+  .homeHero{min-height:620px}
+  .homeHeroImage{background-position:56% center}
+  .homeHeroInner{width:calc(100% - 32px);padding-bottom:31px}
+  .homeHeroKicker{font-size:8px;margin-bottom:10px}
+  .homeHero h1{font-size:48px;line-height:.9;margin-bottom:15px}
+  .homeHeroCopy{display:block}
+  .homeHeroCopy p{font-size:12px;line-height:1.5;max-width:430px}
+  .homeHeroCopy .homeButton{margin-top:19px}
 
-  .homeRetreats{padding:40px 0 46px}
-  .homeSectionIntro{display:block;margin-bottom:18px}
-  .homeSectionIntro h2{font-size:39px;margin-top:7px}
-  .homeSectionIntro p{font-size:11px;line-height:1.5;margin-top:9px;max-width:420px}
-  .retreatTile{display:block;border-radius:19px}
-  .retreatTileImage{min-height:235px;height:235px}
-  .retreatBadge{left:14px;top:14px;padding:8px 10px;font-size:7px}
-  .retreatTileBody{padding:20px 18px 18px}
-  .retreatTileBody h3{font-size:42px;line-height:.88;margin:10px 0 13px}
-  .retreatTileBody>p{font-size:11.5px;line-height:1.5}
-  .retreatFacts{margin-top:17px}
-  .retreatFact{padding:10px 12px 10px 0;margin-right:12px}
-  .retreatFact small{font-size:6px;margin-bottom:4px}
-  .retreatFact strong{font-size:8.5px}
-  .retreatTileBottom{padding-top:18px}
-  .retreatPrice strong{font-size:27px}
-  .retreatPrice span{font-size:7px}
-  .retreatTileBottom .homeButton{min-width:116px}
+  .homeFeatured{padding:46px 0 53px}
+  .homeSectionHead{display:block;margin-bottom:20px}
+  .homeSectionHead h2{font-size:40px;margin-top:7px}
+  .homeSectionHead p{font-size:11px;line-height:1.5;margin-top:9px;max-width:430px}
+  .adventureRail{gap:12px;margin-right:-16px;padding-right:16px}
+  .adventureTile{flex-basis:calc(100vw - 48px)}
+  .adventureImage{height:340px;border-radius:19px}
+  .adventureBadge{left:13px;top:13px;padding:7px 9px;font-size:6.5px}
+  .adventureOverlay{left:17px;right:17px;bottom:17px}
+  .adventureOverlay small{font-size:7px}
+  .adventureOverlay h3{font-size:39px}
+  .adventureInfo{padding-top:13px}
+  .adventureInfoMeta{gap:14px}
+  .adventureInfoMeta small{font-size:6px}
+  .adventureInfoMeta strong{font-size:8.5px}
+  .adventureExplore{font-size:8px}
 
-  .homeWay{padding:42px 0 46px}
-  .homeWayHead{display:block;margin-bottom:17px}
-  .homeWayHead h2{font-size:39px}
-  .homeWayHead p{font-size:11px;line-height:1.5;margin-top:10px}
-  .homeWayGrid{grid-template-columns:1fr;gap:7px}
-  .homeWayCard{border-radius:15px;padding:16px 15px;display:grid;grid-template-columns:44px 1fr;column-gap:10px;align-items:start}
-  .homeWayCard span{grid-row:1/3;padding-top:4px}
-  .homeWayCard h3{font-size:27px;margin:0 0 5px}
-  .homeWayCard p{font-size:10px;line-height:1.45}
+  .homeStatement{padding:58px 0}
+  .homeStatementInner{grid-template-columns:1fr;gap:25px}
+  .homeStatement h2{font-size:45px}
+  .homeStatementCopy{border-left:0;border-top:1px solid #cfc5b6;padding:24px 0 0}
+  .homeStatementCopy p{font-size:27px;line-height:1.08}
+  .homeStatementCopy small{font-size:10px;margin-top:16px}
 
-  .homeContact{padding:0 0 44px}
-  .homeContactCard{display:block;border-radius:19px;padding:24px 19px}
-  .homeContactCard h2{font-size:32px;margin:8px 0 6px}
-  .homeContactCard p{font-size:11px;line-height:1.5;margin-bottom:17px}
+  .homeContact{padding:0 0 48px}
+  .homeContactCard{display:block;border-radius:19px;padding:25px 20px}
+  .homeContactCard h2{font-size:33px}
+  .homeContactCard p{font-size:11px;line-height:1.5;margin-bottom:18px}
   .homeContactCard .homeButton{width:100%}
 
   .homeFooter{padding:29px 0}
@@ -143,7 +152,7 @@
     <a class="homeBrand" href="./" aria-label="Rally Travel Retreats home">RALLY<span>TRAVEL RETREATS</span></a>
     <nav aria-label="Main navigation">
       <a href="#retreats">Retreats</a>
-      <a href="#way">The Rally way</a>
+      <a href="#statement">The Rally way</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -151,59 +160,69 @@
 
 <main>
 <section class="homeHero">
-  <div class="shell homeHeroInner">
-    <div class="homeKicker">Tennis · Wellness · Adventure · Connection</div>
+  <div class="homeHeroImage" aria-hidden="true"></div>
+  <div class="homeHeroInner">
+    <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
     <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
-    <p>Small-group escapes built around brilliant tennis, beautiful places and the people you meet along the way.</p>
-    <div class="homeHeroActions">
-      <a class="homeButton homeButtonDark" href="#retreats">Explore retreats <span>↓</span></a>
-      <a class="homeTextLink" href="#way">The Rally way →</a>
+    <div class="homeHeroCopy">
+      <p>Small-group escapes built around brilliant tennis, beautiful places and the people you meet along the way.</p>
+      <a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a>
     </div>
   </div>
 </section>
 
-<section id="retreats" class="homeRetreats">
+<section id="retreats" class="homeFeatured">
   <div class="shell">
-    <div class="homeSectionIntro">
-      <div>
-        <div class="homeKicker">Featured retreat</div>
-        <h2>Your next escape.</h2>
-      </div>
-      <p>Curated small-group trips. One live now, with more destinations on the way.</p>
+    <div class="homeSectionHead">
+      <div><div class="homeKicker">Featured adventures</div><h2>Skill-based group journeys.</h2></div>
+      <p>Curated retreats where the sport gets you there — and the destination gives you a reason to stay.</p>
     </div>
 
-    <a class="retreatTile" href="trip/phuket-tennis-retreat/" aria-label="View Phuket Tennis Retreat">
-      <div class="retreatTileImage">
-        <span class="retreatBadge">Phuket · 13–21 Feb 2027</span>
-      </div>
-      <div class="retreatTileBody">
-        <div class="homeKicker">Tennis retreat · 8 nights</div>
-        <h3>Phuket<br><em>Tennis Retreat</em></h3>
-        <p>Five mornings of professional coaching, Sole Mio Hotel & Wellness, recovery time, hosted dinners and a private island-hopping day.</p>
-        <div class="retreatFacts">
-          <div class="retreatFact"><small>Group</small><strong>Up to 24</strong></div>
-          <div class="retreatFact"><small>Stay</small><strong>Sole Mio</strong></div>
-          <div class="retreatFact"><small>From</small><strong>$2,995</strong></div>
+    <div class="adventureRail" aria-label="Rally retreats">
+      <a class="adventureTile" href="trip/phuket-tennis-retreat/" aria-label="Explore Phuket Tennis Retreat">
+        <div class="adventureImage adventureImagePhuket">
+          <span class="adventureBadge">13–21 Feb 2027 · 8 nights</span>
+          <div class="adventureOverlay">
+            <small>Phuket · Thailand</small>
+            <h3>Phuket<br><em>Tennis Retreat</em></h3>
+          </div>
         </div>
-        <div class="retreatTileBottom">
-          <div class="retreatPrice"><strong>$2,995</strong><span>per person · shared room</span></div>
-          <span class="homeButton homeButtonDark">View retreat <span class="retreatArrow">→</span></span>
+        <div class="adventureInfo">
+          <div class="adventureInfoMeta">
+            <div><small>From</small><strong>$2,995</strong></div>
+            <div><small>Group</small><strong>Up to 24</strong></div>
+            <div><small>Stay</small><strong>Sole Mio</strong></div>
+          </div>
+          <span class="adventureExplore">Explore →</span>
+        </div>
+      </a>
+
+      <div class="adventureTile adventureTileComing" aria-label="More Rally retreats coming soon">
+        <div class="adventureImage adventureImageComing">
+          <span class="adventureBadge">Coming soon</span>
+          <div class="adventureOverlay">
+            <small>Rally Travel Retreats</small>
+            <h3>More<br><em>destinations</em></h3>
+          </div>
+        </div>
+        <div class="adventureInfo">
+          <div class="adventureInfoMeta"><div><small>Next up</small><strong>New retreats</strong></div></div>
+          <span class="adventureExplore">Watch this space</span>
         </div>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
-<section id="way" class="homeWay">
-  <div class="shell">
-    <div class="homeWayHead">
-      <div><div class="homeKicker">The Rally way</div><h2>Play. Recover. Explore.</h2></div>
-      <p>The sport gives the week its rhythm. Everything around it makes the retreat.</p>
+<section id="statement" class="homeStatement">
+  <div class="shell homeStatementInner">
+    <div>
+      <div class="homeKicker">The Rally way</div>
+      <h2>Play.<br><em>Recover. Explore.</em></h2>
     </div>
-    <div class="homeWayGrid">
-      <article class="homeWayCard"><span>01</span><h3>Play</h3><p>Expert coaching and quality court time, without turning the holiday into training.</p></article>
-      <article class="homeWayCard"><span>02</span><h3>Recover</h3><p>Wellness, great food and unplanned afternoons to enjoy the destination.</p></article>
-      <article class="homeWayCard"><span>03</span><h3>Explore</h3><p>Local food, beaches, culture and experiences that make each week feel like a real trip.</p></article>
+    <div class="homeStatementCopy">
+      <p>Tennis is the reason you come. The destination is why you stay.</p>
+      <small>Expert coaching. Space to recover. Great food, local experiences and the freedom to enjoy a place properly — with a small group of people who came for the same reason.</small>
     </div>
   </div>
 </section>
