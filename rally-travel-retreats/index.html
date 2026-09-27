@@ -78,23 +78,11 @@
 
 
 
-<style>
-.rallyNavBallWrap{position:relative;display:flex;align-items:center;margin-left:2px}
-.rallyNavBall{width:24px;height:24px;border:0;padding:0;background:transparent;position:relative;display:grid;place-items:center;cursor:pointer}
-.rallyNavBall::before{content:"";width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#f8f7df 0 7%,#d9e31f 8% 78%,#b8c61b 100%);box-shadow:0 3px 7px rgba(13,42,39,.2);transition:transform .18s ease}
-.rallyNavBall::after{content:"";position:absolute;width:8px;height:3px;border:1px solid rgba(255,255,255,.75);border-right:0;border-radius:50%;transform:rotate(-28deg);opacity:.85}
-.rallyNavBall:hover::before,.rallyNavBall:focus-visible::before{transform:translateY(-3px) rotate(18deg)}
-.rallyNavBall.is-rallying::before{animation:rallyBounce .48s cubic-bezier(.2,.8,.3,1)}
-.rallyNavBallHint{position:absolute;right:0;top:34px;white-space:nowrap;background:var(--ink);color:#fff;padding:7px 9px;border-radius:999px;font-size:7px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:0;transform:translateY(-3px);pointer-events:none;transition:.18s ease}
-.rallyNavBallHint.is-visible{opacity:1;transform:none}
-@keyframes rallyBounce{0%{transform:translateY(0) scaleX(1)}38%{transform:translateY(-10px) scaleX(.94) rotate(35deg)}58%{transform:translateY(1px) scaleX(1.08) rotate(70deg)}78%{transform:translateY(-4px) scaleX(.97) rotate(92deg)}100%{transform:translateY(0) scaleX(1) rotate(110deg)}}
-@media(max-width:700px){.rallyNavBall{width:30px;height:30px}.rallyNavBall::before{width:17px;height:17px}.rallyNavBallHint{top:38px}.homeNav nav{gap:13px}}
-@media(prefers-reduced-motion:reduce){.rallyNavBall.is-rallying::before{animation:none}.rallyNavBall::before{transition:none}}
-</style></head>
+</head>
 <body class="homePage">
 <header class="homeHeader"><div class="homeNav shell">
 <a class="homeBrand" href="./" aria-label="Rally Travel Retreats home">RALLY<span>TRAVEL RETREATS</span></a>
-<nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a><div class="rallyNavBallWrap"><button class="rallyNavBall" id="rallyNavBall" type="button" aria-label="Have a rally"><span class="rallyNavBallHint" id="rallyNavBallHint" aria-hidden="true">Have a rally?</span></button></div></nav>
+<nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
 </div></header>
 <main>
 <section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="homeHeroInner">
@@ -122,20 +110,4 @@
 <footer class="homeFooter"><div class="shell homeFooterGrid"><a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a><div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
 
 
-</body></html><script>
-(function(){
- const ball=document.getElementById('rallyNavBall'),hint=document.getElementById('rallyNavBallHint');
- if(!ball||!hint)return;
- let timer;
- function rally(){
-   ball.classList.remove('is-rallying'); void ball.offsetWidth; ball.classList.add('is-rallying');
-   hint.classList.add('is-visible');
-   clearTimeout(timer); timer=setTimeout(()=>hint.classList.remove('is-visible'),1400);
- }
- ball.addEventListener('click',rally);
- ball.addEventListener('mouseenter',()=>hint.classList.add('is-visible'));
- ball.addEventListener('mouseleave',()=>{if(!ball.classList.contains('is-rallying'))hint.classList.remove('is-visible')});
- ball.addEventListener('focus',()=>hint.classList.add('is-visible'));
- ball.addEventListener('blur',()=>{if(!ball.classList.contains('is-rallying'))hint.classList.remove('is-visible')});
-})();
-</script>
+</body></html>
