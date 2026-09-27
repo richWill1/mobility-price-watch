@@ -85,6 +85,77 @@
 }
 </style>
 </style>
+
+<style id="rally-interactive-staging">
+/* Rally interactive staging experiment */
+.interactiveHero{isolation:isolate;perspective:1200px;--mx:0;--my:0;--scroll:0}
+.interactiveHero .homeHeroImage{transform:scale(1.045) translate3d(calc(var(--mx)*-10px),calc(var(--my)*-7px),0);transition:transform .12s linear;will-change:transform}
+.interactiveHero .homeHeroInner{transform:translate3d(calc(var(--mx)*18px),calc(var(--my)*12px),0);transition:transform .12s linear;will-change:transform}
+.heroScene{position:absolute;inset:0;z-index:2;pointer-events:none;transform-style:preserve-3d}
+.heroAtmosphere{position:absolute;z-index:1;pointer-events:none;border-radius:50%;filter:blur(1px);opacity:.22;mix-blend-mode:screen}
+.heroAtmosphereOne{width:42vw;height:42vw;right:-12vw;top:-18vw;background:radial-gradient(circle,rgba(255,255,255,.32),transparent 68%)}
+.heroAtmosphereTwo{width:30vw;height:30vw;left:-12vw;bottom:-14vw;background:radial-gradient(circle,rgba(184,111,77,.28),transparent 70%)}
+.heroGlow{position:absolute;left:50%;top:48%;width:28vw;height:28vw;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.11),transparent 66%);opacity:.7}
+.heroBall{position:absolute;left:58%;top:31%;width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#f6f8ad 0 7%,#d9e52c 28%,#a8b71f 100%);box-shadow:0 20px 45px rgba(0,0,0,.28),inset -10px -10px 18px rgba(0,0,0,.13),inset 7px 7px 12px rgba(255,255,255,.22);transform:translate3d(calc(var(--mx)*42px),calc(var(--my)*30px),0) rotate(calc(var(--mx)*18deg));transition:transform .16s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.heroBall:before,.heroBall:after{content:"";position:absolute;inset:10px;border:3px solid rgba(255,255,255,.82);border-left-color:transparent;border-radius:50%;transform:rotate(34deg)}
+.heroBall:after{transform:rotate(214deg);border-right-color:transparent;border-left-color:rgba(255,255,255,.82)}
+.heroBall span{position:absolute;width:10px;height:10px;left:18px;top:15px;border-radius:50%;background:rgba(255,255,255,.55);filter:blur(2px)}
+.heroOrbit{position:absolute;border:1px solid rgba(255,255,255,.3);border-radius:50%;opacity:.45;transform:translate3d(calc(var(--mx)*-20px),calc(var(--my)*-15px),0) rotateX(62deg) rotateZ(calc(var(--mx)*8deg));transition:transform .2s ease}
+.heroOrbitOne{width:300px;height:110px;left:calc(50% - 150px);top:calc(50% - 55px)}
+.heroOrbitTwo{width:440px;height:160px;left:calc(50% - 220px);top:calc(50% - 80px);opacity:.2}
+.heroCompass{position:absolute;right:8%;top:18%;font-size:8px;font-weight:800;letter-spacing:.22em;color:rgba(255,255,255,.72);transform:translate3d(calc(var(--mx)*-25px),calc(var(--my)*-18px),0) rotate(calc(var(--mx)*-2deg));transition:transform .2s ease}
+.heroScrollHint{position:absolute;z-index:4;right:34px;bottom:28px;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.78);font-size:8px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;transform:translateY(calc(var(--scroll)*-12px));opacity:calc(1 - var(--scroll)*2);transition:opacity .15s linear}
+.heroScrollHint i{display:block;width:34px;height:1px;background:rgba(255,255,255,.7);position:relative}
+.heroScrollHint i:after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid white;border-bottom:1px solid white;transform:rotate(45deg)}
+.interactiveHero .homeHeroInner,.interactiveHero .heroScene{will-change:transform}
+.interactiveHero:after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.055) 50%,transparent 65%);transform:translateX(calc(var(--mx)*-12%));mix-blend-mode:screen}
+@media(max-width:700px){
+ .interactiveHero .homeHeroImage{transform:scale(1.02)}
+ .heroScene{opacity:.72}
+ .heroBall{width:52px;height:52px;left:72%;top:25%;transform:translate3d(0,0,0)}
+ .heroBall:before,.heroBall:after{inset:7px;border-width:2px}
+ .heroOrbitOne{width:220px;height:80px;left:calc(50% - 110px);top:38%}
+ .heroOrbitTwo{width:310px;height:112px;left:calc(50% - 155px);top:36%}
+ .heroCompass{right:18px;top:16%;font-size:6px}
+ .heroScrollHint{right:16px;bottom:20px;font-size:6px}
+}
+@media(prefers-reduced-motion:reduce){
+ .interactiveHero .homeHeroImage,.interactiveHero .homeHeroInner,.heroBall,.heroOrbit,.heroCompass{transition:none!important}
+}
+</style>
+<script>
+(function(){
+  const hero=document.querySelector('[data-interactive-hero]');
+  if(!hero) return;
+  const canMove=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  let tx=0,ty=0,raf=0;
+  function render(){
+    hero.style.setProperty('--mx',tx.toFixed(4));
+    hero.style.setProperty('--my',ty.toFixed(4));
+    raf=0;
+  }
+  if(canMove){
+    hero.addEventListener('pointermove',function(e){
+      const r=hero.getBoundingClientRect();
+      tx=(e.clientX-r.left)/r.width-.5;
+      ty=(e.clientY-r.top)/r.height-.5;
+      if(!raf) raf=requestAnimationFrame(render);
+    });
+    hero.addEventListener('pointerleave',function(){
+      tx=0;ty=0;
+      if(!raf) raf=requestAnimationFrame(render);
+    });
+  }
+  function scroll(){
+    const r=hero.getBoundingClientRect();
+    const progress=Math.max(0,Math.min(1,(-r.top)/(r.height*.65)));
+    hero.style.setProperty('--scroll',progress.toFixed(4));
+  }
+  window.addEventListener('scroll',scroll,{passive:true});
+  scroll();
+})();
+</script>
+
 </head>
 <body class="homePage">
 <header class="homeHeader"><div class="homeNav shell">
@@ -92,7 +163,19 @@
 <nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
 </div></header>
 <main>
-<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="homeHeroInner">
+<section class="homeHero interactiveHero" data-interactive-hero>
+<div class="homeHeroImage" aria-hidden="true"></div>
+<div class="heroAtmosphere heroAtmosphereOne" aria-hidden="true"></div>
+<div class="heroAtmosphere heroAtmosphereTwo" aria-hidden="true"></div>
+<div class="heroScene" aria-hidden="true">
+  <div class="heroGlow"></div>
+  <div class="heroBall" data-depth="1.8"><span></span></div>
+  <div class="heroOrbit heroOrbitOne" data-depth="0.7"></div>
+  <div class="heroOrbit heroOrbitTwo" data-depth="1.2"></div>
+  <div class="heroCompass" data-depth="0.45">RALLY · 2027</div>
+</div>
+<div class="heroScrollHint" aria-hidden="true"><span>Scroll to explore</span><i></i></div>
+<div class="homeHeroInner" data-depth="0.28">
 <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
 <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
 <div class="homeHeroCopy"><p>Small-group tennis retreats in beautiful places — built around great coaching, good food and time to enjoy where you've landed.</p><a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a></div>
