@@ -107,18 +107,7 @@
  background:radial-gradient(circle,rgba(255,255,255,.18),transparent 65%);filter:blur(4px);opacity:.85;
  transition:left .08s linear,top .08s linear
 }
-.heroBall{
- position:absolute;left:calc(50% + var(--mx)*30%);top:calc(50% + var(--my)*28%);
- width:94px;height:94px;border-radius:50%;
- background:radial-gradient(circle at 32% 25%,#f7f9ad 0 7%,#d9e52c 27%,#a8b71f 100%);
- box-shadow:0 28px 60px rgba(0,0,0,.34),inset -12px -12px 22px rgba(0,0,0,.15),inset 8px 8px 14px rgba(255,255,255,.24);
- transform:translate(-50%,-50%) rotate(calc(var(--mx)*35deg)) translateZ(40px);
- transition:left .12s cubic-bezier(.18,.8,.2,1),top .12s cubic-bezier(.18,.8,.2,1),transform .12s ease;
- will-change:left,top,transform
-}
-.heroBall:before,.heroBall:after{content:"";position:absolute;inset:12px;border:3px solid rgba(255,255,255,.86);border-left-color:transparent;border-radius:50%;transform:rotate(34deg)}
-.heroBall:after{transform:rotate(214deg);border-right-color:transparent;border-left-color:rgba(255,255,255,.86)}
-.heroBall span{position:absolute;width:12px;height:12px;left:20px;top:17px;border-radius:50%;background:rgba(255,255,255,.62);filter:blur(2px)}
+
 .heroOrbit{
  position:absolute;border:1px solid rgba(255,255,255,.34);border-radius:50%;opacity:.5;
  transform:translate3d(calc(var(--mx)*-45px),calc(var(--my)*-32px),0) rotateX(62deg) rotateZ(calc(var(--mx)*12deg));
@@ -141,7 +130,7 @@
  .heroScrollHint{right:16px;bottom:20px;font-size:6px}
 }
 @media(prefers-reduced-motion:reduce){
- .interactiveHero .homeHeroImage,.interactiveHero .homeHeroInner,.heroBall,.heroOrbit,.heroCompass{transition:none!important}
+ .interactiveHero .homeHeroImage,.interactiveHero .homeHeroInner,.heroOrbit,.heroCompass{transition:none!important}
 }
 </style>
 <script>
@@ -190,7 +179,6 @@
 <div class="heroAtmosphere heroAtmosphereTwo" aria-hidden="true"></div>
 <div class="heroScene" aria-hidden="true">
   <div class="heroGlow"></div>
-  <div class="heroBall" data-depth="1.8"><span></span></div>
   <div class="heroOrbit heroOrbitOne" data-depth="0.7"></div>
   <div class="heroOrbit heroOrbitTwo" data-depth="1.2"></div>
   <div class="heroCompass" data-depth="0.45">RALLY · 2027</div>
