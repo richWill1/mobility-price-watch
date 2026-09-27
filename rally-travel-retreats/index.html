@@ -78,14 +78,11 @@
 
 
 <style>
-/* Single interactive tennis ball */
-.heroBalls{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
-.heroBall{position:absolute;left:72%;top:31%;width:clamp(34px,4vw,52px);aspect-ratio:1;border-radius:50%;background:#d9e52c;box-shadow:inset -8px -8px 14px rgba(0,0,0,.13),0 14px 28px rgba(0,0,0,.24);pointer-events:auto;cursor:pointer;touch-action:none;will-change:transform}
-.heroBall:before,.heroBall:after{content:"";position:absolute;inset:7%;border:2px solid rgba(255,255,255,.92);border-radius:48% 52% 46% 54%;transform:rotate(28deg)}
-.heroBall:after{transform:rotate(208deg);opacity:.7}
-.heroBall.bouncing{cursor:default}
-@media(max-width:700px){.heroBall{left:76%;top:29%;width:42px}}
-@media(prefers-reduced-motion:reduce){.heroBall{transition:none}}
+/* Static tennis-ball cursor */
+.homePage, .homePage a, .homePage button { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%23d9e52c' stroke='%231b2b24' stroke-width='1.5'/%3E%3Cpath d='M7 8.5c4 2.5 6 5.5 6 9s-2 6.5-6 9M25 5.5c-4 2.5-6 5.5-6 9s2 6.5 6 9' fill='none' stroke='white' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E") 16 16, auto; }
+@media (hover:none), (pointer:coarse) {
+  .homePage, .homePage a, .homePage button { cursor:auto; }
+}
 </style>
 </style>
 </head>
@@ -95,7 +92,7 @@
 <nav aria-label="Main navigation"><a href="#retreats">Retreats</a><a href="#statement">The Rally way</a><a href="#contact">Contact</a></nav>
 </div></header>
 <main>
-<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="heroBalls" aria-hidden="false"><span class="heroBall" aria-label="Tennis ball — tap to bounce" role="button" tabindex="0"></span></div><div class="homeHeroInner">
+<section class="homeHero"><div class="homeHeroImage" aria-hidden="true"></div><div class="homeHeroInner">
 <div class="homeHeroKicker">Tennis · Wellness · Adventure · Connection</div>
 <h1>Travel for the game.<br><em>Stay for the experience.</em></h1>
 <div class="homeHeroCopy"><p>Small-group tennis retreats in beautiful places — built around great coaching, good food and time to enjoy where you've landed.</p><a class="homeButton homeButtonLight" href="#retreats">Explore retreats <span>↓</span></a></div>
@@ -118,36 +115,6 @@
 <section id="contact" class="homeContact"><div class="shell"><div class="homeContactCard"><div><div class="homeKicker">Plan your next Rally</div><h2>Have a destination in mind?</h2><p>Tell us where you want to play. We'll take it from there.</p></div><a class="homeButton" href="mailto:mark@rallytravelretreats.com?subject=Rally%20Travel%20Retreats%20Enquiry">Contact Rally <span>→</span></a></div></div></section>
 </main>
 <footer class="homeFooter"><div class="shell homeFooterGrid"><a class="homeBrand" href="./">RALLY<span>TRAVEL RETREATS</span></a><div><p>Tennis · Wellness · Adventure · Connection</p><p>© 2026 Rally Travel Retreats</p></div></div></footer>
-<script>
-(()=>{const h=document.querySelector(".homeHero"),bs=[...document.querySelectorAll(".heroBall")];if(!h||!bs.length||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-const s=bs.map((el,i)=>({el,x:0,y:0,p:i*1.7,sp:.00055+i*.00008,d:8+i*3}));let q={x:0,y:0,on:false},raf;
-const move=(x,y)=>{const r=h.getBoundingClientRect();q.x=x-r.left;q.y=y-r.top;q.on=true};h.addEventListener("pointermove",e=>move(e.clientX,e.clientY),{passive:true});h.addEventListener("pointerleave",()=>q.on=false);
-function f(t){const hr=h.getBoundingClientRect();s.forEach((b,i)=>{let x=Math.sin(t*b.sp+b.p)*b.d,y=Math.cos(t*b.sp*.83+b.p)*b.d*.7;if(q.on){const r=b.el.getBoundingClientRect(),cx=r.left+r.width/2-hr.left,cy=r.top+r.height/2-hr.top,dx=cx-q.x,dy=cy-q.y,dist=Math.hypot(dx,dy),rad=125;if(dist<rad){const force=(1-dist/rad)*22;x+=dx/(dist||1)*force;y+=dy/(dist||1)*force}}b.x+=(x-b.x)*.08;b.y+=(y-b.y)*.08;b.el.style.transform=`translate3d(${b.x.toFixed(1)}px,${b.y.toFixed(1)}px,0) rotate(${(t*.035+i*90)%360}deg)`});raf=requestAnimationFrame(f)}raf=requestAnimationFrame(f);
-document.addEventListener("visibilitychange",()=>{if(document.hidden)cancelAnimationFrame(raf);else raf=requestAnimationFrame(f)});
-})();
-</script>
-<script>
-(()=>{const ball=document.querySelector(".heroBall");if(!ball)return;
-let active=false,raf=0,x=0,y=0,vx=0,vy=0,rotation=0;
-function bounce(){
- if(active)return; active=true;
- const r=ball.getBoundingClientRect(),hr=document.querySelector(".homeHero").getBoundingClientRect();
- x=r.left-hr.left; y=r.top-hr.top; vx=(Math.random()-.5)*7; vy=-13; rotation=(Math.random()-.5)*18;
- const gravity=.62,friction=.985;
- function frame(){
-   vy+=gravity;x+=vx;y+=vy;vx*=friction;rotation+=vx*1.8;
-   const maxX=hr.width-r.width,maxY=hr.height-r.height;
-   if(x<0){x=0;vx=Math.abs(vx)*.72}
-   if(x>maxX){x=maxX;vx=-Math.abs(vx)*.72}
-   if(y<0){y=0;vy=Math.abs(vy)*.72}
-   if(y>=maxY){y=maxY;vy=-Math.abs(vy)*.58;vx*=.92}
-   ball.style.transform=`translate3d(${x-r.left+hr.left}px,${y-r.top+hr.top}px,0) rotate(${rotation}deg)`;
-   if(Math.abs(vy)<1.2&&y>=maxY-1){active=false;return}
-   raf=requestAnimationFrame(frame);
- }
- raf=requestAnimationFrame(frame);
-}
-ball.addEventListener("pointerdown",e=>{e.preventDefault();bounce()},{passive:false});
-})();
-</script>
+
+
 </body></html>
