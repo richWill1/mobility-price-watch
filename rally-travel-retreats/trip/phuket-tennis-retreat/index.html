@@ -423,6 +423,30 @@ html{scroll-padding-top:50px}
 }
 </style>
 
+
+<style>
+.faqSection{padding:clamp(56px,8vw,100px) 0;background:#fffdfa}
+.faqShell{max-width:920px;margin:0 auto}
+.faqHead{text-align:left;margin-bottom:24px}
+.faqHead .sectionKicker{margin-bottom:8px}
+.faqHead h2{font:500 clamp(38px,5vw,60px)/.98 "Playfair Display",serif;margin:0;letter-spacing:-.025em}
+.faqList{display:grid;gap:10px}
+.faqItem{border:1px solid #e5e0d9;border-radius:22px;background:#fff;overflow:hidden;box-shadow:0 3px 14px rgba(13,42,39,.025)}
+.faqItem summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px;font-size:14px;font-weight:500;color:var(--ink)}
+.faqItem summary::-webkit-details-marker{display:none}
+.faqItem summary:after{content:"⌄";font-size:22px;line-height:1;color:#ad9878;transition:transform .2s ease}
+.faqItem[open] summary:after{transform:rotate(180deg)}
+.faqAnswer{padding:0 22px 21px;color:var(--muted);font-size:13px;line-height:1.65;max-width:820px}
+.faqAnswer strong{color:var(--ink)}
+@media(max-width:700px){
+ .faqSection{padding:52px 16px}
+ .faqHead h2{font-size:40px}
+ .faqItem{border-radius:18px}
+ .faqItem summary{padding:19px 17px;font-size:13px;min-height:62px}
+ .faqAnswer{padding:0 17px 19px;font-size:12px;line-height:1.6}
+}
+</style>
+
 </head>
 <body>
 <nav class="sectionNav" aria-label="Retreat navigation">
@@ -432,6 +456,7 @@ html{scroll-padding-top:50px}
     <a href="#stay" data-section="stay"><span class="navIcon">▣</span>Stay</a>
     <a href="#week" data-section="week"><span class="navIcon">▤</span>Itinerary</a>
     <a href="#experience" data-section="experience"><span class="navIcon">✓</span>Included</a>
+    <a href="#faqs" data-section="faqs"><span class="navIcon">?</span>FAQs</a>
   </div>
 </nav>
 <header class="retreatTop" id="top">
@@ -449,8 +474,17 @@ html{scroll-padding-top:50px}
     <div class="retreatHighlights" id="experience">
       <div><span>✓</span>5 mornings of professional tennis coaching</div>
       <div><span>✓</span>8 nights at Sole Mio Hotel & Wellness</div>
-      <div><span>✓</span>Private island-hopping day</div>
-      <div><span>✓</span>Beaches, culture & hosted dinners</div>
+      <div><span>✓</span>Breakfast at Sole Mio</div>
+      <div><span>✓</span>Selected hosted dinners</div>
+    </div>
+    <div class="optionalExperience">
+      <div class="optionalExperienceKicker">OPTIONAL EXPERIENCES</div>
+      <div class="optionalExperienceGrid">
+        <div><strong>Private island-hopping boat day</strong><span>Full-day private charter · additional cost</span></div>
+        <div><strong>Beach horse riding</strong><span>Optional afternoon · additional cost</span></div>
+        <div><strong>Freedom Beach</strong><span>Optional beach experience</span></div>
+        <div><strong>Muay Thai & Patong</strong><span>Optional evening</span></div>
+      </div>
     </div>
     <div class="retreatTopCta"><a class="btn btnPrimary" href="#enquire">Enquire about this retreat</a></div>
   </div>
@@ -569,6 +603,66 @@ html{scroll-padding-top:50px}
         <summary>More about the season</summary>
         <p>February is typically one of Phuket's driest months, with warm days, warm sea temperatures and plenty of sunshine — a good fit for mornings on court and afternoons by the water.</p>
         <div class="weatherSource">Typical February climate averages; actual conditions vary.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<section id="faqs" class="faqSection">
+  <div class="shell faqShell">
+    <div class="faqHead">
+      <div class="sectionKicker">Good to know</div>
+      <h2>FAQs</h2>
+    </div>
+    <div class="faqList">
+      <details class="faqItem">
+        <summary>What level of tennis is this for?</summary>
+        <div class="faqAnswer">The retreat is designed for adults who enjoy playing tennis and want structured coaching, match play and plenty of time to enjoy Phuket. You do not need to be an advanced player.</div>
+      </details>
+      <details class="faqItem">
+        <summary>Do guests come solo or with someone?</summary>
+        <div class="faqAnswer">Both. Some guests will travel with a partner or friend, while others will join solo. The small-group format is designed to make it easy to meet people throughout the week.</div>
+      </details>
+      <details class="faqItem">
+        <summary>Where is the trip based?</summary>
+        <div class="faqAnswer">The retreat is based at Sole Mio Boutique Hotel & Wellness in Bang Tao, Phuket.</div>
+      </details>
+      <details class="faqItem">
+        <summary>What airport should I fly into?</summary>
+        <div class="faqAnswer">Phuket International Airport (HKT) is the recommended airport. The airport is approximately 30–35 minutes from Sole Mio, depending on traffic.</div>
+      </details>
+      <details class="faqItem">
+        <summary>Are flights included?</summary>
+        <div class="faqAnswer"><strong>No.</strong> International flights to and from Phuket are not included in the retreat price. This gives you flexibility over your airline and departure airport. We'll provide recommended flight timings to help coordinate your travel with the retreat.</div>
+      </details>
+      <details class="faqItem">
+        <summary>Is travel insurance included?</summary>
+        <div class="faqAnswer"><strong>No.</strong> Travel insurance is not included. We recommend comprehensive cover for international travel, medical expenses, cancellation and tennis activities.</div>
+      </details>
+      <details class="faqItem">
+        <summary>Are the island-hopping and other optional experiences included?</summary>
+        <div class="faqAnswer"><strong>No.</strong> Some experiences are optional and carry an additional cost. These include the private island-hopping boat day, beach horse riding and selected additional activities. We'll provide details and pricing before the trip.</div>
+      </details>
+      <details class="faqItem">
+        <summary>How does pricing work?</summary>
+        <div class="faqAnswer">The retreat price is <strong>$2,995 per person</strong>. It covers the core retreat inclusions shown above. Flights, travel insurance and optional experiences are additional.</div>
+      </details>
+      <details class="faqItem">
+        <summary>Is there a private room option?</summary>
+        <div class="faqAnswer">Private room options are available subject to availability. Enquire with Mark for the current room options and pricing.</div>
+      </details>
+      <details class="faqItem">
+        <summary>What's the weather like in February?</summary>
+        <div class="faqAnswer">February is typically one of Phuket's driest months, with warm days, warm sea temperatures and plenty of sunshine. Actual conditions can vary.</div>
+      </details>
+      <details class="faqItem">
+        <summary>What happens if I need to cancel?</summary>
+        <div class="faqAnswer">Cancellation terms depend on your booking and the retreat's payment schedule. We'll confirm the applicable terms before you reserve your place.</div>
+      </details>
+      <details class="faqItem">
+        <summary>How do I book?</summary>
+        <div class="faqAnswer">Use the enquiry button below to contact Mark. We'll confirm availability, room options, payment details and the next steps.</div>
       </details>
     </div>
   </div>
